@@ -236,25 +236,29 @@ struct PracticeModeTests {
     func waitMode() {
         var driver = CoreDriver(song, TestSongs.settings { $0.mode = .wait; $0.hands = [.right]; $0.waitTolerance = 0 })
         driver.play()
-        driver.run(0.8)
-        #expect(abs(driver.time - 0.5) < 1e-6)
+        driver.run(0.8) // stops at 0.5 s, then the cursor glides back 0.2 s before the note
+        #expect(abs(driver.time - 0.3) < 1e-6)
+        #expect(abs(driver.core.time(at: driver.now) - 0.5) < 1e-6)
         #expect(driver.core.snapshot(at: driver.now).isWaiting)
         #expect(driver.started().isEmpty)
         driver.press(61)
         #expect(driver.core.stats.wrong == 1)
         driver.press(60)
         #expect(driver.judged().map(\.1) == [.perfect])
-        driver.run(0.1)
-        #expect(abs(driver.time - 0.6) < 1e-3)
-        #expect(Set(driver.started()) == [0, 1]) // the left-hand note sounds with it
-        driver.run(1)
-        #expect(abs(driver.time - 1.0) < 1e-6)
+        driver.run(0.1) // the cursor moves on from where it is drawn
+        #expect(abs(driver.time - 0.4) < 1e-3)
+        #expect(driver.started().isEmpty)
+        driver.run(0.15) // back at the note: the left hand sounds, my C is not played a second time
+        #expect(abs(driver.time - 0.55) < 1e-3)
+        #expect(driver.started() == [0])
+        driver.run(1) // waits on the chord at 1.0 s and glides back to 0.8 s
+        #expect(abs(driver.time - 0.8) < 1e-6)
         driver.press(64)
         driver.run(0.2)
-        #expect(abs(driver.time - 1.0) < 1e-6) // G is still missing
+        #expect(abs(driver.time - 0.8) < 1e-6) // G is still missing
         driver.press(67)
         driver.run(0.1)
-        #expect(abs(driver.time - 1.1) < 1e-3)
+        #expect(abs(driver.time - 0.9) < 1e-3)
         #expect(driver.core.stats.missed == 0)
     }
 
@@ -268,17 +272,33 @@ struct PracticeModeTests {
         #expect(Set(driver.started()) == [0]) // the left hand plays, my C stays silent
         driver.press(60) // within the tolerance: no stop at all
         #expect(driver.judged().map(\.1) == [.perfect])
-        #expect(driver.log.contains(.noteStarted(id: 1, pitch: 60, velocity: 90))) // my note sounds when played
         driver.run(0.7) // the E+G chord is due at 1.0 s; nothing played: stops at 1.2 s
-        #expect(abs(driver.time - 1.2) < 1e-6)
         #expect(driver.core.snapshot(at: driver.now).isWaiting)
+        #expect(driver.time < 1.2 && driver.time > 0.8) // gliding back
         driver.run(2)
+        #expect(abs(driver.time - 0.8) < 1e-6)
         driver.press(64)
         driver.press(67) // long after: still accepted, the song was waiting
         #expect(driver.judged().map(\.1) == [.perfect, .perfect, .perfect])
         #expect(driver.core.stats.missed == 0)
         driver.run(0.1)
-        #expect(abs(driver.time - 1.3) < 1e-3)
+        #expect(abs(driver.time - 0.9) < 1e-3)
+        driver.run(0.5)
+        #expect(abs(driver.time - 1.4) < 1e-3)
+    }
+
+    @Test("Pausing while the cursor is behind keeps it where it is drawn")
+    func pauseAfterRewind() {
+        var driver = CoreDriver(song, TestSongs.settings { $0.mode = .wait; $0.hands = [.right]; $0.waitTolerance = 0 })
+        driver.play()
+        driver.run(0.8)
+        driver.press(60)
+        driver.run(0.1)
+        driver.pause()
+        #expect(abs(driver.time - 0.4) < 1e-3)
+        driver.play()
+        driver.run(0.1)
+        #expect(abs(driver.time - 0.5) < 1e-3)
     }
 
     @Test func waitToleranceIsBounded() {

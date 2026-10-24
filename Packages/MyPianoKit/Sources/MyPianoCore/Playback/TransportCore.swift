@@ -66,9 +66,30 @@ public struct TransportCore: Sendable {
     private var pendingLate: [Int] = []
     private var pressedKeys: [UInt8: Int?] = [:] // key → note it correctly played
     private var waitingAt: TimeInterval?
+    /// While waiting, the cursor glides back to just before the note being waited for.
+    private var rewind: Rewind?
+    /// Where the cursor stood when paused, if behind the song position (after a rewind).
+    private var pausedDisplay: TimeInterval?
     private var lastClickTick: Double = -1
     private var countdown: Countdown?
     private var noteHands: [Hand?]
+
+    private struct Rewind: Sendable {
+        var from: TimeInterval
+        var to: TimeInterval
+        var startHost: TimeInterval
+
+        static let duration: TimeInterval = 0.3
+
+        func time(at host: TimeInterval) -> TimeInterval {
+            let progress = min(1, max(0, (host - startHost) / Self.duration))
+            let eased = progress * progress * (3 - 2 * progress)
+            return from + (to - from) * eased
+        }
+    }
+
+    /// How far before the awaited note the cursor goes back, in real seconds.
+    public static let rewindLead: TimeInterval = 0.2
 
     private struct Countdown: Sendable {
         var startHost: TimeInterval
@@ -88,16 +109,29 @@ public struct TransportCore: Sendable {
 
     // MARK: Queries
 
-    /// Song position at a host time (interpolated while playing, never past a note the wait mode holds).
+    /// Song position used for judging at a host time: interpolated while playing, held on the
+    /// note the wait mode is waiting for.
     public func time(at host: TimeInterval) -> TimeInterval {
         guard state == .playing else { return position }
-        let time = max(0, anchorSong + (host - anchorHost) * settings.speed)
-        if let waitingAt { return min(time, waitingAt) }
-        return time
+        if let waitingAt { return waitingAt }
+        return max(0, clock(at: host))
+    }
+
+    /// Where the cursor is drawn. It differs from `time(at:)` only in wait mode: while waiting it
+    /// glides back to just before the awaited note, and once the note is played it moves on from
+    /// there, the song resuming when the cursor gets back to where it stopped.
+    public func displayTime(at host: TimeInterval) -> TimeInterval {
+        guard state == .playing else { return pausedDisplay ?? position }
+        if waitingAt != nil, let rewind { return rewind.time(at: host) }
+        return max(0, clock(at: host))
+    }
+
+    private func clock(at host: TimeInterval) -> TimeInterval {
+        anchorSong + (host - anchorHost) * settings.speed
     }
 
     public func snapshot(at host: TimeInterval) -> PracticeSnapshot {
-        let time = time(at: host)
+        let time = displayTime(at: host)
         var countdownState: (Int, Int)?
         if let countdown, state == .countingDown {
             countdownState = (max(1, countdown.total - countdown.emitted + 1), countdown.total)
@@ -149,9 +183,12 @@ public struct TransportCore: Sendable {
     public mutating func pause(at host: TimeInterval) -> [PracticeEvent] {
         guard state == .playing || state == .countingDown else { return [] }
         var events = state == .playing ? advance(to: host) : []
+        let shown = displayTime(at: host)
         if state == .playing || state == .countingDown { state = .paused }
+        pausedDisplay = shown < position - 0.0005 ? shown : nil
         countdown = nil
         waitingAt = nil
+        rewind = nil
         events += silence()
         return events
     }
@@ -169,6 +206,8 @@ public struct TransportCore: Sendable {
         anchorSong = target
         anchorHost = host
         waitingAt = nil
+        rewind = nil
+        pausedDisplay = nil
         nextNote = firstNoteIndex(startingAtOrAfter: target)
         nextSustain = song.sustainChanges.firstIndex { $0.time >= target } ?? song.sustainChanges.count
         pendingLate.removeAll()
@@ -192,7 +231,7 @@ public struct TransportCore: Sendable {
     public mutating func update(settings newSettings: PracticeSettings, at host: TimeInterval) -> [PracticeEvent] {
         var events: [PracticeEvent] = []
         if state == .playing {
-            anchorSong = time(at: host)
+            anchorSong = displayTime(at: host)
             anchorHost = host
         }
         let old = settings
@@ -206,6 +245,7 @@ public struct TransportCore: Sendable {
         if old.mode != newSettings.mode || old.hands != newSettings.hands {
             pendingLate.removeAll()
             waitingAt = nil
+            rewind = nil
         }
         if let loop = loopTimes, position < loop.start - 0.0005 || position > loop.end {
             events += seek(to: loop.start, at: host)
@@ -241,14 +281,22 @@ public struct TransportCore: Sendable {
         }
         guard state == .playing else { return events }
 
-        var target = max(position, anchorSong + (host - anchorHost) * settings.speed)
-        if settings.mode == .wait, let blocking = firstBlockingNoteStart(before: target) {
+        var target = max(position, clock(at: host))
+        if settings.mode == .wait, let (blocking, note) = firstBlockingNote(before: target) {
+            if waitingAt == nil || rewind == nil {
+                let from = min(displayTime(at: host), blocking)
+                var to = note - Self.rewindLead * settings.speed
+                if let loop = loopTimes { to = max(to, loop.start) }
+                rewind = Rewind(from: from, to: min(from, max(0, to)), startHost: host)
+            }
             target = blocking
-            anchorSong = blocking
-            anchorHost = host
             waitingAt = blocking
+            // The clock follows the cursor, so playing on starts from where it is drawn.
+            anchorSong = rewind?.time(at: host) ?? blocking
+            anchorHost = host
         } else {
             waitingAt = nil
+            rewind = nil
         }
 
         if let loop = loopTimes, target >= loop.end, position < loop.end {
@@ -265,6 +313,7 @@ public struct TransportCore: Sendable {
             position = song.duration
             state = .finished
             waitingAt = nil
+            rewind = nil
             events += silence()
             events.append(.finished)
             return events
@@ -369,15 +418,7 @@ public struct TransportCore: Sendable {
         pendingLate.removeAll { $0 == best.id }
         pressedKeys[pitch] = best.id
         stats.recordHit(grade)
-        var events: [PracticeEvent] = [.judged(noteID: best.id, grade: grade, offset: best.offset)]
-        // In wait mode a note reached before being played was kept silent: let it sound now.
-        let note = song.notes[best.id]
-        if waiting && note.start < position && sounding[note.id] == nil && note.end > position && isAudible(note, active: true) {
-            let output = outputPitch(of: note)
-            sounding[note.id] = output
-            events.append(.noteStarted(id: note.id, pitch: output, velocity: note.velocity))
-        }
-        return events
+        return [.judged(noteID: best.id, grade: grade, offset: best.offset)]
     }
 
     public mutating func noteOff(_ pitch: UInt8) {
@@ -389,23 +430,26 @@ public struct TransportCore: Sendable {
     private func isAudible(_ note: Note, active: Bool) -> Bool {
         if settings.mutedTracks.contains(note.track) { return false }
         let unplayed = active && !hitNotes.contains(note.id)
+        // In wait mode the player sounds their notes themselves, sometimes before the song gets there.
+        if active && settings.mode == .wait && !unplayed { return false }
         if unplayed && (settings.muteMyPart || settings.mode == .wait) { return false }
         return true
     }
 
-    /// In wait mode, where the song must stop: the start of the earliest active note not yet
-    /// played, plus the tolerance during which it may still be played without stopping.
-    private func firstBlockingNoteStart(before target: TimeInterval) -> TimeInterval? {
+    /// In wait mode, where the song must stop (the start of the earliest active note not yet
+    /// played, plus the tolerance during which it may still be played without stopping) and
+    /// the start of that note.
+    private func firstBlockingNote(before target: TimeInterval) -> (stop: TimeInterval, note: TimeInterval)? {
         var earliest = pendingLate.map { song.notes[$0].start }.min()
         var index = nextNote
-        while index < song.notes.count, song.notes[index].start < target, earliest == nil {
+        while index < song.notes.count, song.notes[index].start <= target, earliest == nil {
             let note = song.notes[index]
             if isActive(note) && !hitNotes.contains(note.id) { earliest = note.start }
             index += 1
         }
         guard let earliest else { return nil }
         let stop = earliest + settings.waitTolerance * settings.speed
-        return stop < target ? max(position, stop) : nil
+        return stop <= target ? (max(position, stop), earliest) : nil
     }
 
     private func firstNoteIndex(startingAtOrAfter time: TimeInterval) -> Int {
@@ -431,7 +475,8 @@ public struct TransportCore: Sendable {
         }
         state = .playing
         anchorHost = host
-        anchorSong = position
+        anchorSong = pausedDisplay ?? position
+        pausedDisplay = nil
         return []
     }
 
@@ -463,7 +508,8 @@ public struct TransportCore: Sendable {
             self.countdown = nil
             state = .playing
             anchorHost = end
-            anchorSong = position
+            anchorSong = pausedDisplay ?? position
+            pausedDisplay = nil
         } else {
             self.countdown = countdown
         }

@@ -91,7 +91,7 @@ struct CoreDriver {
         core.noteOff(pitch)
     }
 
-    var time: TimeInterval { core.time(at: now) }
+    var time: TimeInterval { core.displayTime(at: now) }
 
     func started() -> [Int] {
         log.compactMap { if case let .noteStarted(id, _, _) = $0 { id } else { nil } }
