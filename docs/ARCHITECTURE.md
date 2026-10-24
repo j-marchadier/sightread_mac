@@ -20,7 +20,7 @@
 | Parsing | MIDI SMF 0/1 maison ; MusicXML via `XMLParser` ; `.mxl` via un décompresseur ZIP/DEFLATE maison en Swift pur | = (+ ZIP maison) |
 | Persistance | **SwiftData** (bibliothèque, réglages par morceau, sessions) derrière un protocole ; `@AppStorage` pour les préférences globales ; fichiers copiés dans Application Support | = |
 | Tests | **Swift Testing** ; le Core compile et se teste sous **Linux** (conteneur Swift 6.1) et sous macOS (`xcodebuild test`) | ajout : double cible Linux/macOS |
-| CI | GitHub Actions **macOS** : génération du projet, build, `xcodebuild test` | ajout (à confirmer, cf. §10) |
+| CI | Aucune (décision) : Core testé sous Linux par moi, app complète compilée et testée sur ton Mac | — |
 
 ---
 
@@ -37,7 +37,7 @@ On obtient ainsi une seule base de temps pour : la position de lecture, l'instan
 (horodatage matériel du paquet MIDI, pas l'instant de traitement) et l'image affichée. La latence de sortie
 (`outputNode.presentationLatency` + taille du tampon) est soustraite pour que ce qu'on voit corresponde à ce qu'on entend.
 
-**A3 — Banque de sons système par défaut.** Pour un piano seul, `AVAudioUnitSampler` peut charger la banque
+**A3 — Banque de sons système (décision : retenue).** Pour un piano seul, `AVAudioUnitSampler` peut charger la banque
 General MIDI fournie par macOS : qualité correcte, **aucun fichier à redistribuer, aucun risque de licence**,
 zéro octet dans l'app. Si tu veux un piano plus riche, on embarque une banque `.sf2` sous licence CC0 (ex. *Upright
 Piano KW*) ou CC BY (*Salamander*), à fournir car les sites d'hébergement ne sont pas accessibles depuis mon
@@ -51,7 +51,7 @@ Phase 6 le justifient.
 **A5 — Core indépendant d'Apple.** `MyPianoCore` n'importe que Foundation (et `FoundationXML` sous Linux). Cela
 permet de compiler et tester le Core dans mon environnement (Linux, Swift 6.1 en conteneur), donc de livrer un Core
 vérifié avant même qu'il passe par Xcode. Les modules qui touchent au matériel ou à l'UI ne compilent que sur macOS
-(CI + ta machine).
+(ta machine).
 
 **A6 — SwiftData derrière un protocole.** SwiftData sur macOS 14 a encore des angles vifs (migrations, requêtes
 complexes). Les vues ne parlent qu'à un `LibraryStore` ; les réglages par morceau sont stockés comme un `Codable`
@@ -110,7 +110,6 @@ Packages/MyPianoKit/
 project.yml                       Spécification XcodeGen
 MyPiano.xcodeproj                 Généré par XcodeGen (versionné)
 scripts/                          test-core-linux.sh, generate-project.sh, build-release.sh, make-dmg.sh
-.github/workflows/ci.yml          Build + tests macOS
 docs/                             SPEC, ARCHITECTURE, PLAN, RELEASE
 ```
 
@@ -219,7 +218,7 @@ jugement (instant du paquet MIDI) → le jugement ne dépend plus de la fréquen
 - `MIDIInputPortCreateWithProtocol(.1_0)` : réception en UMP ; décodage note on/off (vélocité 0 = off), **CC64
   sustain**, horodatages convertis en temps hôte (0 = « maintenant »).
 - Par défaut : écoute de toutes les sources **sauf** les ports de bouclage et les ports de contrôle DAW. Les claviers
-  **Arturia** exposent typiquement deux ports (`… MIDI` et `… DAW`/`MCU`) : seul le port MIDI est retenu. Choix manuel
+  **Arturia KeyLab Essential 61** expose deux ports (`KeyLab Essential 61 MIDI` et `KeyLab Essential 61 DAW`) : seul le port MIDI est retenu. Choix manuel
   possible dans Réglages > Clavier MIDI.
 - État de connexion (`déconnecté`, `connecté : <nom>`, `plusieurs sources`) affiché dans la barre d'outils et la
   barre latérale.
@@ -280,16 +279,13 @@ l'affichage.
   dédoublonnage par empreinte, parsing de validation, erreurs explicites.
 - Dossier surveillé : bookmark security-scoped, `FSEvents`/`DispatchSource`, import automatique des nouveaux fichiers.
 
-## 10. Outillage, tests, CI
+## 10. Outillage et tests
 
 - **Génération du projet** : `scripts/generate-project.sh` (XcodeGen). Je peux générer le projet depuis mon
   environnement Linux (XcodeGen y compile), toi depuis ton Mac (`brew install xcodegen`).
 - **Tests Core sous Linux** : `scripts/test-core-linux.sh` lance `swift test` dans le conteneur officiel Swift 6.1.
 - **Tests complets sous macOS** : `xcodebuild test -scheme MyPiano`.
-- **CI GitHub Actions (macOS)** : à chaque push, génère le projet, compile l'app et lance tous les tests. C'est le seul
-  moyen pour moi de vérifier ce qui dépend d'Apple (SwiftUI, CoreMIDI, AVFoundation, SwiftData) : sans elle, ces
-  parties ne seront compilées que sur ton Mac. ⚠️ Sur un dépôt privé, les minutes macOS sont décomptées ×10 du quota
-  gratuit GitHub. **À confirmer.**
+- **Pas de CI** (décision) : à chaque phase, je fournis la commande à lancer sur ton Mac (`xcodebuild test -scheme MyPiano`) ; le code dépendant d'Apple est gardé mince pour limiter les surprises.
 - Couverture : objectif ≥ 90 % des lignes sur `Playback`, `Scoring`, `Parsing` ; tests de géométrie pour `Layout`.
 
 ## 11. Sécurité, confidentialité, distribution

@@ -4,7 +4,7 @@
 > Un commit (Conventional Commits, en anglais) par étape logique ; résumé à la fin de chaque phase.
 >
 > Légende de vérification : 🐧 vérifiable dans mon environnement (Linux, Swift 6.1) · 🍎 nécessite macOS
-> (CI GitHub Actions ou ton Mac) · 👤 vérification manuelle par toi (clavier Arturia, écoute, visuel).
+> (ton Mac) · 👤 vérification manuelle par toi (clavier Arturia, écoute, visuel).
 
 ---
 
@@ -27,9 +27,9 @@
 | # | Tâche | Fichiers | Terminé quand | Risques |
 |---|---|---|---|---|
 | 3.1 | Paquet `MyPianoKit` (5 bibliothèques + tests), réglages Swift 6 stricts | `Packages/MyPianoKit/Package.swift`, squelettes de modules | `swift build` OK 🐧 ; build macOS OK 🍎 | Différences Foundation Linux/macOS → `#if canImport` limités au Core |
-| 3.2 | Projet Xcode via XcodeGen : app `MyPiano`, bundle id `com.<toi>.MyPiano` (à me donner), sandbox + hardened runtime, entitlements, Info.plist (types de documents), schéma avec tests | `project.yml`, `MyPiano.xcodeproj`, `MyPiano/Info.plist`, `MyPiano/MyPiano.entitlements`, `MyPiano/App/MyPianoApp.swift` | Le projet s'ouvre et l'app vide se lance 🍎👤 | Projet généré sous Linux : à valider sur ton Mac au premier lancement |
+| 3.2 | Projet Xcode via XcodeGen : app `MyPiano`, bundle id `fr.jmarchadier.MyPiano`, sandbox + hardened runtime, entitlements, Info.plist (types de documents), schéma avec tests | `project.yml`, `MyPiano.xcodeproj`, `MyPiano/Info.plist`, `MyPiano/MyPiano.entitlements`, `MyPiano/App/MyPianoApp.swift` | Le projet s'ouvre et l'app vide se lance 🍎👤 | Projet généré sous Linux : à valider sur ton Mac au premier lancement |
 | 3.3 | Scripts | `scripts/test-core-linux.sh`, `scripts/generate-project.sh` | Un seul appel lance les tests du Core 🐧 | — |
-| 3.4 | CI macOS (si validée) | `.github/workflows/ci.yml` | Le workflow passe au vert sur la branche 🍎 | Coût des minutes macOS (dépôt privé) |
+| 3.4 | ~~CI macOS~~ — **abandonnée (décision)** : la partie Apple est compilée et testée sur ton Mac | — | — | Erreurs de compilation Apple découvertes plus tard → je limite le code Apple au strict nécessaire et je te donne à chaque phase la commande de vérification |
 | 3.5 | Modèle : `Song`, `Note`, `Track`, `Measure`, `TempoMap`, `TimeSignature`, `KeySignature` | `MyPianoCore/Model/*` | Tests de conversion ticks ↔ secondes avec changements de tempo 🐧 | — |
 | 3.6 | Théorie : hauteurs, octaves, orthographe calculée à partir de l'armure (dièses, bémols, bécarres, doubles), transposition d'armure, noms Do fixe / alphabétique, FR/EN | `MyPianoCore/Theory/*` | Tests sur les 15 armures, transpositions −12…+12 🐧 | Cas limites (Mi♯, Do♭, armures à 7 altérations) |
 | 3.7 | Lecteur MIDI SMF 0/1 : en-têtes, VLQ, running status, méta (tempo, chiffrage, armure, nom de piste), note on/off, CC64, programme, canal ; type 0 éclaté par canal ; erreurs typées | `MyPianoCore/Parsing/MIDI/MIDIFileReader.swift`, `MIDIError.swift` | Les 17 fichiers se lisent ; nombre de notes par piste = référence (cf. ci-dessous) 🐧 | Fichiers malformés réels (longueurs fausses) → mode tolérant + tests de fichiers corrompus |
@@ -49,7 +49,7 @@
 | # | Tâche | Fichiers | Terminé quand | Risques |
 |---|---|---|---|---|
 | 4.1 | Protocoles Core : `NoteInputSource`, `NoteOutput`, `HostClock` ; événement `InputEvent { noteOn/noteOff/sustain, pitch, velocity, hostTime }` | `MyPianoCore/Platform/*` | Compilé et utilisé par un faux en test 🐧 | — |
-| 4.2 | Service CoreMIDI : liste observable des sources, filtre (bouclage, DAW/MCU), connexion, notifications de branchement, reconnexion à la source mémorisée, décodage UMP, horodatage | `MyPianoMIDI/MIDIService.swift`, `MIDISource.swift`, `UMPDecoder.swift` | Décodeur testé 🍎 ; avec l'Arturia : détection au lancement, débranchement/rebranchement sans relancer, notes et pédale reçues 👤 | Ports Arturia nommés différemment selon le modèle → nom exact à me communiquer |
+| 4.2 | Service CoreMIDI : liste observable des sources, filtre (bouclage, port DAW du KeyLab Essential 61), connexion, notifications de branchement, reconnexion à la source mémorisée, décodage UMP, horodatage | `MyPianoMIDI/MIDIService.swift`, `MIDISource.swift`, `UMPDecoder.swift` | Décodeur testé 🍎 ; avec l'Arturia : détection au lancement, débranchement/rebranchement sans relancer, notes et pédale reçues 👤 | Noms de ports du KeyLab Essential 61 à confirmer sur ta machine (fenêtre de diagnostic 4.6) |
 | 4.3 | Moteur audio : engine, sampler morceau + sampler utilisateur, banque piano (système par défaut, `.sf2` optionnelle), volumes, sustain, reconfiguration sur changement de sortie | `MyPianoAudio/AudioEngine.swift`, `PianoSampler.swift` | Son du piano à l'appui d'une touche 👤 ; changement de casque sans coupure définitive 👤 | Qualité de la banque système jugée insuffisante → `.sf2` CC0 à fournir |
 | 4.4 | Métronome et son d'erreur synthétisés (`AVAudioSourceNode`), accent distinct | `MyPianoAudio/ClickSynth.swift` | Clic audible, accent différent 👤 ; générateur testé (enveloppe) 🍎 | — |
 | 4.5 | Latence : tampon 128 trames, déclenchement depuis le thread MIDI, mesure `os_signpost`, affichage de l'estimation | `MyPianoAudio/LatencyMonitor.swift` | Latence mesurée **< 10 ms** sur ton Mac avec l'Arturia (journal) 👤 | Périphérique Bluetooth ou sortie HDMI : latence matérielle hors de notre contrôle → affichée et compensée visuellement |
@@ -98,7 +98,7 @@
 | 7.3 | Fenêtre de jeu : barre d'outils native (lecture, vitesse, mains, mode, boucle, visualisation, métronome), inspecteur repliable (réglages + stats), frise des mesures avec plage A-B, plein écran natif, bilan de fin de session | `MyPiano/Features/Player/*` | Toutes les fonctions SPEC §1.3 (hors celles supprimées) accessibles 👤 | Densité de la barre d'outils → personnalisable (`.toolbar(id:)`) |
 | 7.4 | Barre de menus complète (Fichier, Édition, Lecture, Présentation, Fenêtre, Aide) et raccourcis : espace, ⌘O, ⌘,, ⌘←/⌘→ (mesure), ⌘L (boucle), ⌘W, ⌃⌘F, etc. | `MyPiano/App/Commands/*` | Chaque action du lecteur a un élément de menu et un raccourci 👤 | Conflits avec le clavier du Mac comme piano → raccourcis sans modificateur désactivés quand l'option est active |
 | 7.5 | Scène Réglages : Clavier MIDI (source, état, test), Audio (volumes, latence, banque), Affichage (noms de notes Do Ré Mi / C D E, couleurs, clavier 88/tessiture), Pratique (fenêtres de jugement, décompte, mode attente par défaut, clavier du Mac) | `MyPiano/Features/Settings/*` | Réglages persistés et appliqués à chaud 👤 | — |
-| 7.6 | Jeu libre : clavier, notes montantes. *Enregistrement MIDI dans la bibliothèque : à confirmer (cf. question 1 ci-dessous)* | `MyPiano/Features/FreePlay/*` | Jeu libre fonctionnel 👤 | — |
+| 7.6 | Jeu libre : clavier, notes montantes (pas d'enregistrement, décision) | `MyPiano/Features/FreePlay/*` | Jeu libre fonctionnel 👤 | — |
 | 7.7 | Exercices : **Lecture de notes** (clé, armure, tessiture, nombre de notes, attente, chrono, notes/min, historique) et **Phrases** (générateur procédural : progressions d'accords, motifs rythmiques par niveau 0–3, clé Sol/Fa/grand-portée) | `MyPianoCore/Exercises/*`, `MyPiano/Features/Exercises/*` | Générateurs testés (tessiture, gamme, durées) 🐧 ; exercices jouables 👤 | — |
 | 7.8 | Apparence : clair/sombre, matériaux, SF Symbols, couleurs nommées, accessibilité (VoiceOver sur toutes les commandes, résumé vocal de la position de lecture, Dynamic Type dans la bibliothèque, contraste augmenté) | transversal | Audit VoiceOver et Accessibility Inspector sans erreur bloquante 👤 | `Canvas` n'est pas accessible nativement → éléments d'accessibilité dédiés |
 | 7.9 | Écran de bienvenue (premier lancement) : brancher le clavier (détection en direct), essayer une note, importer un premier morceau ou choisir un morceau intégré | `MyPiano/Features/Onboarding/*` | Affiché une seule fois, relançable depuis l'Aide 👤 | — |
@@ -129,7 +129,7 @@
 |---|---|---|---|---|
 | 9.1 | Icône macOS (visuel fourni par toi, ou direction proposée : touche de piano stylisée sur fond dégradé, style Big Sur+) ; fenêtre « À propos de MyPiano » © ; fenêtre « Mentions » (ACKNOWLEDGEMENTS) | `Assets.xcassets/AppIcon`, `MyPiano/Features/About/*` | Icône à toutes les tailles, À propos personnalisé 👤 | — |
 | 9.2 | Supprimer `reference/web/` et tout reliquat Bun/Node/Vite/Tailwind ; recherche globale de l'ancien nom, du domaine, de gtag | — | `grep -ri` des termes de l'inventaire 2.3 = 0 résultat (hors `ACKNOWLEDGEMENTS.md`, qui mentionne l'inspiration) 🐧 | Retrait de `LICENSE` seulement si plus aucun code/asset d'origine : les MIDI et Leland restent → **LICENSE conservé**, à rediscuter |
-| 9.3 | Script de build release (`.app` + `.dmg`), signature et notarisation documentées | `scripts/build-release.sh`, `scripts/make-dmg.sh`, `docs/RELEASE.md` | `.app` et `.dmg` produits par la CI (non signés) 🍎 ; procédure suivie par toi 👤 | Notarisation : nécessite ton compte développeur |
+| 9.3 | Script de build release (`.app` + `.dmg`), signature et notarisation documentées | `scripts/build-release.sh`, `scripts/make-dmg.sh`, `docs/RELEASE.md` | `.app` et `.dmg` produits sur ton Mac (non signés) 🍎 ; procédure suivie par toi 👤 | Notarisation : nécessite ton compte développeur |
 | 9.4 | Vérification hors ligne : aucun entitlement réseau, aucune URL dans le binaire (`strings`) | `scripts/check-offline.sh` | Script vert 🍎 | — |
 | 9.5 | Mise à jour `README.md`, `docs/` | — | Docs cohérentes avec le produit livré 🐧 | — |
 
@@ -137,11 +137,11 @@
 
 ---
 
-## Questions ouvertes avant de démarrer la Phase 2
+## Décisions prises avant la Phase 2
 
-1. **Enregistrement en jeu libre** : tu ne veux pas d'export audio. Veux-tu tout de même garder l'enregistrement de ton jeu **en MIDI** dans la bibliothèque (pour le rejouer ou le revoir en notes qui tombent), ou on supprime complètement l'enregistrement ?
-2. **CI macOS sur GitHub Actions** : d'accord pour l'ajouter ? (c'est ce qui me permet de vérifier la partie Apple ; minutes macOS décomptées ×10 si le dépôt est privé).
-3. **Identifiant de bundle** (ex. `fr.<ton-nom>.MyPiano`) et nom d'équipe à afficher dans « À propos » (© …).
-4. **Modèle exact du clavier Arturia** (KeyLab, MiniLab, Keystep… : utile pour le filtrage des ports DAW).
-5. **Banque de sons** : on commence avec le piano intégré à macOS (aucun fichier, aucune licence) et on ne passe à une banque `.sf2` embarquée que si sa qualité ne te convient pas ?
-6. **Swan Lake** : on l'écarte de la bibliothèque intégrée (provenance non vérifiable) ?
+1. **Pas d'enregistrement** du jeu (ni MIDI, ni audio).
+2. **Pas de CI GitHub** : compilation et tests Apple sur ton Mac ; le Core est testé dans mon environnement.
+3. Identifiant d'app : **`fr.jmarchadier.MyPiano`** ; © « Julien Marchadier ».
+4. Clavier : **Arturia KeyLab Essential 61** (clavier de commande, sans son interne : le son vient du Mac).
+5. Son : **piano intégré à macOS** (banque General MIDI système).
+6. **Swan Lake retiré** de la bibliothèque intégrée.
