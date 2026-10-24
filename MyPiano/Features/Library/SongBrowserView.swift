@@ -87,7 +87,7 @@ struct SongBrowserView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 220), spacing: 20)], alignment: .leading, spacing: 24) {
                 ForEach(songs) { song in
-                    SongTile(song: song, isSelected: selection == song.id)
+                    SongTile(song: song, store: model.library.artwork, isSelected: selection == song.id)
                         .onTapGesture(count: 2) { play(song.id) }
                         .simultaneousGesture(TapGesture().onEnded { selection = song.id })
                         .contextMenu { songMenu(song.id) }
@@ -102,7 +102,7 @@ struct SongBrowserView: View {
         Table(songs, selection: $selection, sortOrder: $sortOrder) {
             TableColumn("Titre", value: \.title, comparator: .localizedStandard) { song in
                 HStack(spacing: 8) {
-                    SongArtwork(song: song, cornerRadius: 4).frame(width: 28, height: 28)
+                    SongArtwork(song: song, store: model.library.artwork, cornerRadius: 4).frame(width: 28, height: 28)
                     Text(song.title)
                     if song.isFavorite {
                         Image(systemName: "star.fill").foregroundStyle(.yellow).imageScale(.small)
@@ -215,11 +215,12 @@ struct SongBrowserView: View {
 /// A cover with its title and composer, as in a music app's album grid.
 private struct SongTile: View {
     let song: LibrarySong
+    let store: ArtworkStore
     let isSelected: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            SongArtwork(song: song, cornerRadius: 10)
+            SongArtwork(song: song, store: store, cornerRadius: 10)
                 .shadow(color: .black.opacity(0.18), radius: 6, y: 3)
                 .overlay {
                     RoundedRectangle(cornerRadius: 10)

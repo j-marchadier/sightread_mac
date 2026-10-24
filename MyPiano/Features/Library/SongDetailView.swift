@@ -71,7 +71,7 @@ struct SongDetailView: View {
     /// Cover and title on a band coloured by the cover, running under the glass toolbar.
     private var hero: some View {
         HStack(alignment: .bottom, spacing: 20) {
-            SongArtwork(song: song, cornerRadius: 12)
+            SongArtwork(song: song, store: model.library.artwork, cornerRadius: 12)
                 .frame(width: 168, height: 168)
                 .shadow(color: .black.opacity(0.3), radius: 14, y: 6)
             VStack(alignment: .leading, spacing: 4) {

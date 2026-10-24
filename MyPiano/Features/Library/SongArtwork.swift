@@ -2,16 +2,18 @@ import MyPianoCore
 import SwiftUI
 
 /// A song's cover: the image chosen by the user, or one generated from its title and composer.
+/// The store is passed in rather than read from the environment: table cells are hosted on their own
+/// and do not inherit the app's environment objects.
 struct SongArtwork: View {
-    @Environment(AppModel.self) private var model
     let song: LibrarySong
+    let store: ArtworkStore
     var cornerRadius: CGFloat = 8
 
     var body: some View {
         Color.clear
             .aspectRatio(1, contentMode: .fit)
             .overlay {
-                if let image = model.library.artwork.image(for: song.id) {
+                if let image = store.image(for: song.id) {
                     Image(nsImage: image).resizable().scaledToFill()
                 } else {
                     GeneratedArtwork(title: song.title, composer: song.composer)
