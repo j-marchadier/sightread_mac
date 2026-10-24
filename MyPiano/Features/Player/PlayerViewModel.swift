@@ -4,8 +4,16 @@ import MyPianoCore
 import MyPianoRendering
 import Observation
 
+enum Visualization: String, CaseIterable {
+    case fallingNotes
+    case simplifiedSheet
+    case rhythmicSheet
+}
+
 /// How the song is displayed (independent of how it is practised).
 struct DisplayOptions: Equatable {
+    var visualization: Visualization = .fallingNotes
+    var coloredNotes = false
     var fullKeyboard = true
     var showsNoteNames = false
     var naming: NoteNamingStyle = .solfege
@@ -26,6 +34,10 @@ final class PlayerViewModel {
     private(set) var display = DisplayOptions()
     /// What the falling-notes view draws; rebuilt when settings or display options change.
     private(set) var scene: FallingNotesScene
+    /// What the score view draws, when a score visualization is chosen.
+    private(set) var sheetScene: SheetScene? = nil
+    /// The quantized rhythms were too irregular: the simplified score is shown instead.
+    private(set) var rhythmicFallback = false
 
     @ObservationIgnored let engine: PracticeEngine
     @ObservationIgnored private let input: PracticeInputRouter
@@ -75,13 +87,43 @@ final class PlayerViewModel {
     func update(_ change: (inout PracticeSettings) -> Void) {
         change(&settings)
         engine.update(settings: settings)
-        scene = Self.makeScene(song: song, settings: settings, display: display)
+        rebuildScenes()
         refresh()
     }
 
     func updateDisplay(_ change: (inout DisplayOptions) -> Void) {
         change(&display)
+        rebuildScenes()
+    }
+
+    private func rebuildScenes() {
         scene = Self.makeScene(song: song, settings: settings, display: display)
+        rhythmicFallback = false
+        guard display.visualization != .fallingNotes else {
+            sheetScene = nil
+            return
+        }
+        let hands = song.notes.map { settings.handAssignment.hand(for: $0) }
+        let style: SheetScene.Style
+        if display.visualization == .rhythmicSheet {
+            let rhythmic = RhythmicScore(song: song, hands: hands, transpose: settings.transpose)
+            if rhythmic.source == .quantized && rhythmic.quality < 0.6 {
+                rhythmicFallback = true
+                style = .simplified(SimplifiedScore(song: song, hands: hands, transpose: settings.transpose))
+            } else {
+                style = .rhythmic(rhythmic)
+            }
+        } else {
+            style = .simplified(SimplifiedScore(song: song, hands: hands, transpose: settings.transpose))
+        }
+        let keys = song.keySignatures.map { KeySignatureChange(tick: $0.tick, key: $0.key.transposed(by: settings.transpose)) }
+        sheetScene = SheetScene(
+            style: style, song: song, noteHands: hands,
+            activeHands: settings.mode == .listen ? [.left, .right] : settings.hands,
+            keys: keys, coloredNotes: display.coloredNotes,
+            noteNames: display.showsNoteNames ? display.naming : nil,
+            pointsPerSecond: display.pointsPerSecond * 0.75
+        )
     }
 
     /// State of the current frame, for the renderers.

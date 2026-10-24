@@ -13,7 +13,14 @@ struct PracticeTestView: View {
     var body: some View {
         HSplitView {
             Group {
-                if let player {
+                if let player, let sheet = player.sheetScene {
+                    SheetView(
+                        scene: sheet,
+                        frame: { [pressedKeys = model.pressedKeys] in player.frame(pressedKeys: pressedKeys) },
+                        onScrub: { player.scrub(by: $0) },
+                        onScrubEnded: { player.endScrub() }
+                    )
+                } else if let player {
                     FallingNotesView(
                         scene: player.scene,
                         frame: { [pressedKeys = model.pressedKeys] in player.frame(pressedKeys: pressedKeys) },
@@ -108,6 +115,17 @@ private struct PracticeControls: View {
         }
 
         Section("Affichage") {
+            Picker("Visualisation", selection: displayBinding(\.visualization)) {
+                Text("Notes qui tombent").tag(Visualization.fallingNotes)
+                Text("Partition simplifiée").tag(Visualization.simplifiedSheet)
+                Text("Partition rythmique").tag(Visualization.rhythmicSheet)
+            }
+            if player.rhythmicFallback {
+                Text("Rythmes trop irréguliers pour une partition lisible : affichage simplifié.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+            }
+            Toggle("Notes colorées", isOn: displayBinding(\.coloredNotes))
             Toggle("Clavier complet (88 touches)", isOn: displayBinding(\.fullKeyboard))
             Toggle("Noms des notes", isOn: displayBinding(\.showsNoteNames))
             Picker("Nommage", selection: displayBinding(\.naming)) {
