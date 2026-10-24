@@ -102,6 +102,7 @@ struct MyPianoCommands: Commands {
                 Text("Notes qui tombent").tag(Visualization.fallingNotes)
                 Text("Partition simplifiée").tag(Visualization.simplifiedSheet)
                 Text("Partition rythmique").tag(Visualization.rhythmicSheet)
+                Text("Partition complète").tag(Visualization.pageSheet)
             }
             .disabled(player == nil)
             Toggle("Noms des notes", isOn: displayBinding(\.showsNoteNames, default: false))

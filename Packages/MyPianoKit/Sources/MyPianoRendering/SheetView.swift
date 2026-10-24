@@ -165,15 +165,26 @@ struct SheetRenderer {
         staffLeft = space * 2.2
     }
 
+    /// One line of the full-page score: a grand staff of the given size, `trebleTop` below the line's top.
+    init(scene: SheetScene, palette: SheetPalette, size: CGSize, space: CGFloat, trebleTop: CGFloat) {
+        self.scene = scene
+        self.palette = palette
+        self.size = size
+        self.space = space
+        self.trebleTop = trebleTop
+        bassTop = trebleTop + space * 10
+        staffLeft = space * 2.2
+    }
+
     // MARK: Geometry
 
     private func top(_ clef: Clef) -> CGFloat { clef == .treble ? trebleTop : bassTop }
 
     private func y(_ step: Int, _ clef: Clef) -> CGFloat { top(clef) + CGFloat(step) * space / 2 }
 
-    private func headerWidth(key: KeySignature?, time: TimeSignature) -> CGFloat {
+    func headerWidth(key: KeySignature?, time: TimeSignature?) -> CGFloat {
         let accidentals = CGFloat(abs(key?.fifths ?? 0))
-        let digits = CGFloat(max(String(time.numerator).count, String(time.denominator).count))
+        let digits = time.map { CGFloat(max(String($0.numerator).count, String($0.denominator).count)) } ?? 0
         return staffLeft + space * (4.2 + accidentals * 1.05 + 0.6 + digits * 1.9 + 0.8)
     }
 
@@ -214,6 +225,72 @@ struct SheetRenderer {
         drawHeader(in: &context, key: key, time: time)
     }
 
+    // MARK: Full-page score
+
+    /// Draws one line of the full-page score, with the cursor when the line holds the current time.
+    /// Key and time signature written at the start of a line (the time only on the first line and where it changes).
+    func systemHeader(_ system: PageLayout.System, isFirst: Bool) -> (key: KeySignature?, time: TimeSignature?, width: CGFloat) {
+        let startTick = scene.song.tempoMap.tick(atSeconds: system.start)
+        let key = scene.key(atTick: startTick)
+        let signature = scene.song.timeSignature(atTick: startTick)
+        let showsTime = isFirst || system.measures.first.map { index in
+            index > 0 && scene.song.timeSignature(atTick: scene.song.measures[index - 1].startTick) != signature
+        } == true
+        let time = showsTime ? signature : nil
+        return (key, time, headerWidth(key: key, time: time))
+    }
+
+    func drawSystem(_ system: PageLayout.System, isFirst: Bool, in context: inout GraphicsContext, frame: FallingNotesFrame) {
+        let (key, time, header) = systemHeader(system, isFirst: isFirst)
+        let right = size.width - space
+        let width = right - header - space
+        func x(_ seconds: TimeInterval) -> CGFloat { header + space + CGFloat(system.position(of: seconds)) * width }
+        let end = x(system.end)
+
+        var lines = Path()
+        for top in [trebleTop, bassTop] {
+            for line in 0..<5 {
+                lines.addRect(CGRect(x: staffLeft, y: top + CGFloat(line) * space - 0.5, width: end - staffLeft, height: 1))
+            }
+        }
+        for index in system.measures.dropFirst() {
+            lines.addRect(CGRect(x: x(scene.song.measures[index].start) - 0.6, y: trebleTop, width: 1.2, height: bassTop + space * 4 - trebleTop))
+        }
+        let isEnd = system.measures.upperBound == scene.song.measures.count
+        lines.addRect(CGRect(x: end - (isEnd ? 3.5 : 0.6), y: trebleTop, width: isEnd ? 3.5 : 1.2, height: bassTop + space * 4 - trebleTop))
+        if isEnd {
+            lines.addRect(CGRect(x: end - 6.5, y: trebleTop, width: 1.2, height: bassTop + space * 4 - trebleTop))
+        }
+        context.fill(lines, with: .color(palette.staffLine))
+        if let first = system.measures.first {
+            let number = Text(verbatim: String(scene.song.measures[first].number)).font(.system(size: space * 1.1)).foregroundStyle(palette.measureNumber)
+            context.draw(number, at: CGPoint(x: staffLeft, y: trebleTop - space * 2.2), anchor: .bottomLeading)
+        }
+
+        if let loop = frame.loop, loop.upperBound > system.start, loop.lowerBound < system.end {
+            let from = x(max(loop.lowerBound, system.start))
+            let to = x(min(loop.upperBound, system.end))
+            context.fill(Path(CGRect(x: from, y: trebleTop - space * 2, width: to - from, height: bassTop - trebleTop + space * 8)),
+                         with: .color(palette.loopFill))
+        }
+
+        var music = context
+        music.clip(to: Path(CGRect(x: header, y: 0, width: end - header + space, height: size.height)))
+        let to = system.end - 0.0001
+        switch scene.style {
+        case let .simplified(score): drawSimplified(score, in: &music, frame: frame, x: x, from: system.start, to: to, startingOnly: true)
+        case let .rhythmic(score): drawRhythmic(score, in: &music, frame: frame, x: x, from: system.start, to: to, startingOnly: true)
+        }
+        drawHeader(in: &context, key: key, time: time)
+
+        if frame.time >= system.start && (frame.time < system.end || isEnd) {
+            let cursorX = x(frame.time)
+            let rect = CGRect(x: cursorX - 1, y: trebleTop - space * 2.5, width: 2.5, height: bassTop + space * 6.5 - trebleTop)
+            context.fill(Path(roundedRect: rect, cornerRadius: 1.25), with: .color(palette.playLine.opacity(0.85)))
+            drawPressedKeys(in: &context, frame: frame, x: cursorX)
+        }
+    }
+
     private func drawStaffLines(in context: inout GraphicsContext, from startX: CGFloat) {
         var lines = Path()
         for top in [trebleTop, bassTop] {
@@ -240,7 +317,8 @@ struct SheetRenderer {
         context.fill(Path(roundedRect: rect, cornerRadius: 1), with: .color(palette.playLine.opacity(0.8)))
     }
 
-    private func drawHeader(in context: inout GraphicsContext, key: KeySignature?, time: TimeSignature) {
+    /// Brace, clefs, key signature and, when given, time signature.
+    private func drawHeader(in context: inout GraphicsContext, key: KeySignature?, time: TimeSignature?) {
         let width = headerWidth(key: key, time: time)
         context.fill(Path(CGRect(x: 0, y: 0, width: width, height: size.height)), with: .color(palette.background))
         var lines = Path()
@@ -278,6 +356,7 @@ struct SheetRenderer {
             cursor += CGFloat(abs(key.fifths)) * space * 1.05
         }
         cursor += space * 0.6
+        guard let time else { return }
         for clef in Clef.allCases {
             drawNumber(time.numerator, in: &context, x: cursor, baseline: y(2, clef))
             drawNumber(time.denominator, in: &context, x: cursor, baseline: y(6, clef))
@@ -310,11 +389,12 @@ struct SheetRenderer {
 
     // MARK: Simplified
 
+    /// `startingOnly` keeps only notes starting in the range (a line of the full-page score).
     private func drawSimplified(_ score: SimplifiedScore, in context: inout GraphicsContext, frame: FallingNotesFrame,
-                                x: (TimeInterval) -> CGFloat, from: TimeInterval, to: TimeInterval) {
+                                x: (TimeInterval) -> CGFloat, from: TimeInterval, to: TimeInterval, startingOnly: Bool = false) {
         guard let head = glyphs.glyph(.noteheadBlack, staffSpace: space) else { return }
         let headWidth = head.bounds.width
-        for note in score.heads where note.end >= from && note.start <= to {
+        for note in score.heads where (startingOnly ? note.start >= from - 0.0001 : note.end >= from) && note.start <= to {
             let left = x(note.start)
             let color = noteColor(noteIDs: [note.noteID], pitch: note.pitch, start: note.start, frame: frame)
             let baseline = y(note.step, note.clef)
@@ -331,8 +411,8 @@ struct SheetRenderer {
     // MARK: Rhythmic
 
     private func drawRhythmic(_ score: RhythmicScore, in context: inout GraphicsContext, frame: FallingNotesFrame,
-                              x: (TimeInterval) -> CGFloat, from: TimeInterval, to: TimeInterval) {
-        let visible = score.events.filter { $0.end >= from - 1 && $0.start <= to }
+                              x: (TimeInterval) -> CGFloat, from: TimeInterval, to: TimeInterval, startingOnly: Bool = false) {
+        let visible = score.events.filter { (startingOnly ? $0.start >= from - 0.0001 : $0.end >= from - 1) && $0.start <= to }
         var stems: [Int: (x: CGFloat, tip: CGFloat, base: CGFloat, up: Bool)] = [:]
 
         for event in visible {

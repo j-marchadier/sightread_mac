@@ -30,6 +30,7 @@
 		AF16A893FE8F765A633FF454 /* MyPianoMIDI in Frameworks */ = {isa = PBXBuildFile; productRef = 72482C0D4B8B566823B3CA87 /* MyPianoMIDI */; };
 		B14BBCD4C424A0916D88377E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB8818E3EE629384664F36 /* AppModel.swift */; };
 		B315CED9754B8D1DB755A289 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C249E346337CA08026F971 /* PlayerViewModel.swift */; };
+		B5B6F371FB9AD810913DDB4B /* VolumeControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1F62E1791CC49FDF6204A8 /* VolumeControls.swift */; };
 		B89339EC39FCD03398B95288 /* MeasureTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9B06E6F11DEC4A63C5DEAF /* MeasureTimelineView.swift */; };
 		C2807581D2D4EE3242672FF5 /* MyPianoAudio in Frameworks */ = {isa = PBXBuildFile; productRef = 08C5595DBF698F7CD815318B /* MyPianoAudio */; };
 		DBE2DAD3E047E0C05666C92B /* SongBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534376F9C00F4CF050AEA6D9 /* SongBrowserView.swift */; };
@@ -59,6 +60,7 @@
 		CE8FFDD3A66349493EEF45E1 /* PlayerTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTarget.swift; sourceTree = "<group>"; };
 		D2902E5EE59EB0A9D0BE4C8E /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		DC9EC4BF683064278C120C97 /* KeyboardDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDiagnosticsView.swift; sourceTree = "<group>"; };
+		DD1F62E1791CC49FDF6204A8 /* VolumeControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControls.swift; sourceTree = "<group>"; };
 		DF9B06E6F11DEC4A63C5DEAF /* MeasureTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureTimelineView.swift; sourceTree = "<group>"; };
 		E68AD20650FDA30674091F23 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E824EC134F2575661FB4CFB3 /* ExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesView.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			children = (
 				DC9EC4BF683064278C120C97 /* KeyboardDiagnosticsView.swift */,
 				E68AD20650FDA30674091F23 /* SettingsView.swift */,
+				DD1F62E1791CC49FDF6204A8 /* VolumeControls.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				304FD25DB376B50AD3254B5A /* SettingsView.swift in Sources */,
 				DBE2DAD3E047E0C05666C92B /* SongBrowserView.swift in Sources */,
 				958B2420687916C8197EDB06 /* SongDetailView.swift in Sources */,
+				B5B6F371FB9AD810913DDB4B /* VolumeControls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

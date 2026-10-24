@@ -128,3 +128,35 @@ struct LiveNoteRecorderTests {
         #expect(recorder.notes(at: 30).isEmpty)
     }
 }
+
+@Suite("Full-page score layout")
+struct PageLayoutTests {
+    // Eight 4/4 measures at 120 bpm: 2 s each.
+    let song = TestSongs.song((0..<32).map { TestSongs.N(pitch: 60, beat: Double($0)) })
+
+    @Test func breaksMeasuresIntoJustifiedLines() {
+        // 2 s × 50 pt/s = 100 pt per measure: three measures fit in 320 pt.
+        let layout = PageLayout(measures: song.measures, width: 320, pointsPerSecond: 50, minimumMeasureWidth: 40)
+        #expect(layout.systems.map(\.measures) == [0..<3, 3..<6, 6..<8])
+        #expect(abs(layout.systems[0].edges.last! - 1) < 1e-9)
+        #expect(abs(layout.systems[0].edges[1] - 1.0 / 3) < 1e-9)
+        // The last line (200 of 320 pt) is not stretched.
+        #expect(abs(layout.systems[2].edges.last! - 200.0 / 320) < 1e-9)
+    }
+
+    @Test func mapsTimesToPositionsAndBack() {
+        let layout = PageLayout(measures: song.measures, width: 320, pointsPerSecond: 50, minimumMeasureWidth: 40)
+        let line = layout.systems[1]
+        #expect(layout.systemIndex(at: 7) == 1)
+        #expect(abs(line.position(of: 9) - 0.5) < 1e-9) // middle of the middle measure
+        #expect(abs(line.time(at: 0.5) - 9) < 1e-9)
+        #expect(layout.systemIndex(at: 0) == 0)
+        #expect(layout.systemIndex(at: 100) == 2)
+    }
+
+    @Test func aMeasureWiderThanTheLineGetsItsOwnLine() {
+        let layout = PageLayout(measures: song.measures, width: 80, pointsPerSecond: 50, minimumMeasureWidth: 40)
+        #expect(layout.systems.count == 8)
+        #expect(layout.systems.allSatisfy { abs($0.edges.last! - 1) < 1e-9 })
+    }
+}

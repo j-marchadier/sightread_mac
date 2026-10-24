@@ -37,6 +37,7 @@ private struct DisplaySettingsView: View {
                     Text("Notes qui tombent").tag(Visualization.fallingNotes)
                     Text("Partition simplifiée").tag(Visualization.simplifiedSheet)
                     Text("Partition rythmique").tag(Visualization.rhythmicSheet)
+                    Text("Partition complète").tag(Visualization.pageSheet)
                 }
             }
             Section("Notes qui tombent") {

@@ -8,6 +8,10 @@ enum Visualization: String, CaseIterable {
     case fallingNotes
     case simplifiedSheet
     case rhythmicSheet
+    /// The whole score in lines, like a printed page.
+    case pageSheet
+
+    var showsRhythms: Bool { self == .rhythmicSheet || self == .pageSheet }
 }
 
 /// How the song is displayed (independent of how it is practised).
@@ -242,7 +246,7 @@ final class PlayerViewModel {
         }
         let hands = song.notes.map { settings.handAssignment.hand(for: $0) }
         let style: SheetScene.Style
-        if display.visualization == .rhythmicSheet {
+        if display.visualization.showsRhythms {
             let rhythmic = RhythmicScore(song: song, hands: hands, transpose: settings.transpose)
             if rhythmic.source == .quantized && rhythmic.quality < 0.6 {
                 rhythmicFallback = true

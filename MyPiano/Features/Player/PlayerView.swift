@@ -44,7 +44,11 @@ struct PlayerView: View {
     @ViewBuilder
     private var visualization: some View {
         let frame: @MainActor () -> FallingNotesFrame = { [pressedKeys = model.pressedKeys] in player.frame(pressedKeys: pressedKeys) }
-        if let sheet = player.sheetScene {
+        if let sheet = player.sheetScene, player.display.visualization == .pageSheet {
+            SheetPageView(scene: sheet, frame: frame, onSeek: { player.seek(to: $0) },
+                          onScrub: { player.scrub(by: $0) }, onScrubEnded: { player.endScrub() })
+                .accessibilityValue(Text(positionDescription))
+        } else if let sheet = player.sheetScene {
             SheetView(scene: sheet, frame: frame, onScrub: { player.scrub(by: $0) }, onScrubEnded: { player.endScrub() })
                 .accessibilityValue(Text(positionDescription))
         } else {
@@ -119,6 +123,7 @@ struct PlayerView: View {
                 Label("Notes qui tombent", systemImage: "pianokeys").tag(Visualization.fallingNotes)
                 Label("Partition simplifiée", systemImage: "music.note").tag(Visualization.simplifiedSheet)
                 Label("Partition rythmique", systemImage: "music.quarternote.3").tag(Visualization.rhythmicSheet)
+                Label("Partition complète", systemImage: "doc.richtext").tag(Visualization.pageSheet)
             }
             .pickerStyle(.menu)
             .help("Visualisation")
