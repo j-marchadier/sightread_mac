@@ -26,6 +26,8 @@ struct AboutView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 4)
             Button("Mentions et licences…") { openWindow(id: WindowID.acknowledgements) }
+                .buttonStyle(.glass)
+                .tint(.clear)
                 .padding(.top, 4)
             Text(copyright)
                 .font(.caption)

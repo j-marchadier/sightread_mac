@@ -12,8 +12,8 @@ struct SongDetailView: View {
         let progress = model.library.database.progress(for: song.id)
         let records = model.library.database.records(for: song.id)
         ScrollView {
+            hero
             VStack(alignment: .leading, spacing: 20) {
-                header
                 Grid(alignment: .leading, horizontalSpacing: 28, verticalSpacing: 10) {
                     GridRow {
                         fact("Durée", Duration.seconds(song.duration).formatted(.time(pattern: .minuteSecond)))
@@ -41,6 +41,7 @@ struct SongDetailView: View {
             .padding(24)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .ignoresSafeArea(edges: .top)
         .navigationTitle(song.title)
         .sheet(isPresented: $isEditing) { SongEditorView(songID: song.id) }
         .toolbar {
@@ -59,24 +60,40 @@ struct SongDetailView: View {
         }
     }
 
-    private var header: some View {
-        HStack(alignment: .top) {
+    /// Title band on a gradient that runs under the glass toolbar.
+    private var hero: some View {
+        HStack(alignment: .bottom) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(song.title).font(.largeTitle.bold())
                 if let composer = song.composer {
-                    Text(composer).font(.title3).foregroundStyle(.secondary)
+                    Text(composer).font(.title3).foregroundStyle(.white.opacity(0.8))
                 }
-                DifficultyView(level: song.difficulty).padding(.top, 4)
+                DifficultyView(level: song.difficulty, filled: .white, empty: .white.opacity(0.3)).padding(.top, 4)
             }
+            .foregroundStyle(.white)
             Spacer()
             Button {
                 openWindow(id: WindowID.player, value: PlayerTarget.song(id: song.id))
             } label: {
                 Label("Jouer", systemImage: "play.fill").padding(.horizontal, 8)
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
+            .buttonStyle(.glassProminent)
+            .controlSize(.extraLarge)
             .keyboardShortcut(.defaultAction)
+        }
+        .padding(24)
+        .frame(maxWidth: .infinity, minHeight: 230, alignment: .bottom)
+        .background {
+            LinearGradient(colors: [Color("HeroStart"), Color("HeroEnd")], startPoint: .topLeading, endPoint: .bottomTrailing)
+                .overlay(alignment: .topTrailing) {
+                    Image(systemName: "music.quarternote.3")
+                        .font(.system(size: 150, weight: .light))
+                        .foregroundStyle(.white.opacity(0.14))
+                        .padding(.top, 40)
+                        .padding(.trailing, 28)
+                        .accessibilityHidden(true)
+                }
+                .backgroundExtensionEffect()
         }
     }
 

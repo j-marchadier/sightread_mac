@@ -31,8 +31,8 @@ struct NoteReadingSetupView: View {
                 } label: {
                     Label("Commencer", systemImage: "play.fill").frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
+                .buttonStyle(.glassProminent)
+                .controlSize(.extraLarge)
             }
         }
         .formStyle(.grouped)
@@ -77,8 +77,8 @@ struct PhraseSetupView: View {
                 } label: {
                     Label("Commencer", systemImage: "play.fill").frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
+                .buttonStyle(.glassProminent)
+                .controlSize(.extraLarge)
             }
         }
         .formStyle(.grouped)

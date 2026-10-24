@@ -46,6 +46,8 @@ struct ScoreSourcesView: View {
                             Text(source.name).font(.headline)
                             Spacer()
                             Button("Ouvrir") { openURL(source.url) }
+                                .buttonStyle(.glass)
+                                .tint(.clear)
                         }
                         Text(source.summary).fixedSize(horizontal: false, vertical: true)
                         Label(source.license, systemImage: "checkmark.seal").font(.caption).foregroundStyle(.secondary)

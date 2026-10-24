@@ -127,7 +127,8 @@ private struct FreePlayLauncher: View {
             Text("Jouez librement : les notes s'affichent au fur et à mesure.")
         } actions: {
             Button("Ouvrir le jeu libre") { openWindow(id: WindowID.freePlay) }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.glassProminent)
+                .controlSize(.large)
         }
     }
 }

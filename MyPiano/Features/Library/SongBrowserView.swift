@@ -141,12 +141,14 @@ extension LibrarySong {
 /// Difficulty from 1 to 5 as filled dots.
 struct DifficultyView: View {
     let level: Int
+    var filled: Color = .accentColor
+    var empty: Color = .secondary.opacity(0.25)
 
     var body: some View {
         HStack(spacing: 2) {
             ForEach(1...5, id: \.self) { index in
                 Circle()
-                    .fill(index <= level ? Color.accentColor : Color.secondary.opacity(0.25))
+                    .fill(index <= level ? filled : empty)
                     .frame(width: 6, height: 6)
             }
         }

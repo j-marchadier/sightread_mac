@@ -31,7 +31,7 @@ struct OnboardingView: View {
                     onboardingDone = true
                     dismiss()
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.glassProminent)
                 .controlSize(.large)
                 .keyboardShortcut(.defaultAction)
             }

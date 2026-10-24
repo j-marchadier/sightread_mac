@@ -2,7 +2,7 @@ import MyPianoCore
 import MyPianoRendering
 import SwiftUI
 
-/// The practice screen: visualization, measure timeline, toolbar and inspector.
+/// The practice screen: visualization under a floating glass control bar, toolbar and inspector.
 struct PlayerView: View {
     @Environment(AppModel.self) private var model
     let player: PlayerViewModel
@@ -11,12 +11,13 @@ struct PlayerView: View {
     @State private var showsInspector = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            visualization
-            Divider()
-            MeasureTimelineView(player: player)
-                .frame(height: 36)
-        }
+        visualization
+            .overlay { CountdownBadge(remaining: player.snapshot.countdown?.remaining) }
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                PlayerControlBar(player: player)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+            }
         .navigationTitle(player.title)
         .navigationSubtitle(player.subtitle ?? "")
         .toolbar { toolbarContent }
@@ -68,26 +69,14 @@ struct PlayerView: View {
 
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
-        ToolbarItemGroup(placement: .navigation) {
-            Button { player.restart() } label: { Label("Revenir au début", systemImage: "backward.end.fill") }
-                .help("Revenir au début")
-            Button { player.previousMeasure() } label: { Label("Mesure précédente", systemImage: "backward.fill") }
-                .help("Mesure précédente")
-            Button { player.togglePlayback() } label: {
-                Label(player.isPlaying ? LocalizedStringKey("Pause") : "Lecture", systemImage: player.isPlaying ? "pause.fill" : "play.fill")
-            }
-            .help(player.isPlaying ? LocalizedStringKey("Pause") : "Lecture")
-            Button { player.nextMeasure() } label: { Label("Mesure suivante", systemImage: "forward.fill") }
-                .help("Mesure suivante")
-        }
-        ToolbarItem(placement: .principal) {
-            PlaybackStatusView(player: player)
-        }
-        ToolbarItemGroup(placement: .primaryAction) {
-            if isExercise {
+        if isExercise {
+            ToolbarItem {
                 Button(action: onNewExercise) { Label("Nouvelle série", systemImage: "arrow.triangle.2.circlepath") }
                     .help("Générer de nouvelles notes")
             }
+            ToolbarSpacer(.fixed)
+        }
+        ToolbarItemGroup {
             Picker("Mode", selection: settingBinding(\.mode)) {
                 Label("Apprendre", systemImage: "graduationcap").tag(PracticeMode.learn)
                 Label("Attendre", systemImage: "hourglass").tag(PracticeMode.wait)
@@ -110,15 +99,21 @@ struct PlayerView: View {
                 Label(player.settings.speed.formatted(.percent.precision(.fractionLength(0))), systemImage: "speedometer")
             }
             .help("Vitesse")
+        }
+        ToolbarSpacer(.fixed)
+        ToolbarItemGroup {
             Toggle(isOn: Binding(get: { player.settings.loop != nil }, set: { _ in player.toggleLoop() })) {
                 Label("Boucle", systemImage: "repeat")
             }
             .help("Boucler des mesures")
-            VolumeButton(metronome: settingBinding(\.metronome.volume))
             Toggle(isOn: settingBinding(\.metronome.isEnabled)) {
                 Label("Métronome", systemImage: "metronome")
             }
             .help("Métronome")
+            VolumeButton(metronome: settingBinding(\.metronome.volume))
+        }
+        ToolbarSpacer(.fixed)
+        ToolbarItem {
             Picker("Visualisation", selection: displayBinding(\.visualization)) {
                 Label("Notes qui tombent", systemImage: "pianokeys").tag(Visualization.fallingNotes)
                 Label("Partition simplifiée", systemImage: "music.note").tag(Visualization.simplifiedSheet)
@@ -127,6 +122,9 @@ struct PlayerView: View {
             }
             .pickerStyle(.menu)
             .help("Visualisation")
+        }
+        ToolbarSpacer(.fixed)
+        ToolbarItem {
             Button { showsInspector.toggle() } label: { Label("Réglages", systemImage: "sidebar.trailing") }
                 .help("Afficher ou masquer les réglages")
         }
@@ -153,7 +151,84 @@ struct PlayerView: View {
     }
 }
 
-/// Time, measure and state, shown in the middle of the toolbar.
+/// Transport, measure timeline and position, floating in Liquid Glass above the bottom of the player.
+struct PlayerControlBar: View {
+    let player: PlayerViewModel
+
+    var body: some View {
+        GlassEffectContainer(spacing: 10) {
+            HStack(spacing: 10) {
+                HStack(spacing: 2) {
+                    transportButton("Revenir au début", systemImage: "backward.end.fill") { player.restart() }
+                    transportButton("Mesure précédente", systemImage: "backward.fill") { player.previousMeasure() }
+                    transportButton("Mesure suivante", systemImage: "forward.fill") { player.nextMeasure() }
+                }
+                .padding(.horizontal, 6)
+                .frame(height: 40)
+                .glassEffect()
+
+                Button { player.togglePlayback() } label: {
+                    Label(player.isPlaying ? LocalizedStringKey("Pause") : "Lecture",
+                          systemImage: player.isPlaying ? "pause.fill" : "play.fill")
+                        .labelStyle(.iconOnly)
+                        .font(.title3)
+                        .contentTransition(.symbolEffect(.replace))
+                        .frame(width: 30, height: 30)
+                }
+                .buttonStyle(.glassProminent)
+                .buttonBorderShape(.circle)
+                .controlSize(.large)
+                .help(player.isPlaying ? LocalizedStringKey("Pause") : "Lecture")
+
+                MeasureTimelineView(player: player)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 6)
+                    .frame(height: 40)
+                    .frame(minWidth: 200)
+                    .glassEffect()
+
+                PlaybackStatusView(player: player)
+                    .frame(height: 40)
+                    .glassEffect()
+            }
+        }
+    }
+
+    private func transportButton(_ title: LocalizedStringKey, systemImage: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .labelStyle(.iconOnly)
+                .frame(width: 32, height: 32)
+                .contentShape(.rect)
+        }
+        .buttonStyle(.borderless)
+        .help(title)
+    }
+}
+
+/// The count-in before playback, in a glass bubble over the visualization.
+struct CountdownBadge: View {
+    let remaining: Int?
+
+    var body: some View {
+        ZStack {
+            if let remaining {
+                Text("\(remaining)")
+                    .font(.system(size: 56, weight: .semibold, design: .rounded))
+                    .monospacedDigit()
+                    .contentTransition(.numericText(countsDown: true))
+                    .frame(width: 112, height: 112)
+                    .glassEffect(.regular, in: .circle)
+                    .transition(.scale.combined(with: .opacity))
+                    .accessibilityLabel(Text("Décompte : \(remaining)"))
+            }
+        }
+        .animation(.spring(duration: 0.3), value: remaining)
+        .allowsHitTesting(false)
+    }
+}
+
+/// Time, measure and state, at the end of the control bar.
 struct PlaybackStatusView: View {
     let player: PlayerViewModel
 
@@ -163,14 +238,17 @@ struct PlaybackStatusView: View {
             Text("Mesure \(player.currentMeasureNumber)/\(player.song.measures.count)")
                 .monospacedDigit()
                 .foregroundStyle(.secondary)
-            if let countdown = player.snapshot.countdown {
-                Text("\(countdown.remaining)").bold().foregroundStyle(.tint)
-            } else if player.snapshot.isWaiting {
-                Image(systemName: "hourglass").foregroundStyle(.orange).help("En attente de la bonne note")
+            if player.snapshot.isWaiting {
+                Image(systemName: "hourglass")
+                    .foregroundStyle(.orange)
+                    .symbolEffect(.pulse)
+                    .help("En attente de la bonne note")
             }
         }
         .font(.callout)
-        .padding(.horizontal, 10)
+        .lineLimit(1)
+        .fixedSize()
+        .padding(.horizontal, 14)
         .accessibilityElement(children: .combine)
     }
 

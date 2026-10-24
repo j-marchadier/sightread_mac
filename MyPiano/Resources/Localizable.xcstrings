@@ -1001,6 +1001,16 @@
         }
       }
     },
+    "Décompte : %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count-in: %lld"
+          }
+        }
+      }
+    },
     "Décompte avant de jouer": {
       "localizations": {
         "en": {

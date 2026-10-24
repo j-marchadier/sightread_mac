@@ -11,10 +11,11 @@ struct MeasureTimelineView: View {
             let duration = max(player.song.duration, 0.001)
             let x = { (time: TimeInterval) in CGFloat(time / duration) * width }
             ZStack(alignment: .topLeading) {
-                Rectangle().fill(.background.secondary)
+                // Transparent: the timeline sits on the control bar's glass.
+                Color.clear
                 if let range = player.settings.loop?.timeRange(in: player.song) {
                     Rectangle()
-                        .fill(Color.accentColor.opacity(0.18))
+                        .fill(Color.accentColor.opacity(0.22))
                         .frame(width: max(2, x(range.upperBound) - x(range.lowerBound)))
                         .offset(x: x(range.lowerBound))
                     loopHandle(at: x(range.lowerBound), width: width, isStart: true)

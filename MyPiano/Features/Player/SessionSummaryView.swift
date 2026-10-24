@@ -14,6 +14,7 @@ struct SessionSummaryView: View {
             Image(systemName: symbol)
                 .font(.system(size: 44))
                 .foregroundStyle(.tint)
+                .symbolEffect(.bounce, options: .nonRepeating)
                 .accessibilityHidden(true)
             Text(headline).font(.title2.bold())
             if summary.mode != .listen {
@@ -21,17 +22,26 @@ struct SessionSummaryView: View {
             }
             Text("Temps de pratique : \(Duration.seconds(summary.practiceSeconds).formatted(.units(allowed: [.minutes, .seconds], width: .wide)))")
                 .foregroundStyle(.secondary)
-            HStack {
-                Button("Fermer") { onAction(.close) }
-                    .keyboardShortcut(.cancelAction)
-                if isExercise {
-                    Button("Nouvelle série") { onAction(.newExercise) }
-                        .keyboardShortcut(.defaultAction)
-                    Button("Recommencer") { onAction(.again) }
-                } else {
-                    Button("Recommencer") { onAction(.again) }
-                        .keyboardShortcut(.defaultAction)
+            GlassEffectContainer {
+                HStack {
+                    Button("Fermer") { onAction(.close) }
+                        .buttonStyle(.glass)
+                        .tint(.clear)
+                        .keyboardShortcut(.cancelAction)
+                    if isExercise {
+                        Button("Recommencer") { onAction(.again) }
+                            .buttonStyle(.glass)
+                            .tint(.clear)
+                        Button("Nouvelle série") { onAction(.newExercise) }
+                            .buttonStyle(.glassProminent)
+                            .keyboardShortcut(.defaultAction)
+                    } else {
+                        Button("Recommencer") { onAction(.again) }
+                            .buttonStyle(.glassProminent)
+                            .keyboardShortcut(.defaultAction)
+                    }
                 }
+                .controlSize(.large)
             }
         }
         .padding(28)
