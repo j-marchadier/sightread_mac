@@ -123,13 +123,47 @@ final class LibraryModel {
 
     struct ImportResult {
         var added: [LibrarySong] = []
-        var duplicates: [String] = []
+        var duplicates: [(file: String, id: String)] = []
         var failures: [(file: String, reason: String)] = []
+
+        /// The song to show when a single file was imported (or was already in the library).
+        var singleSongID: String? {
+            let ids = added.map(\.id) + duplicates.map(\.id)
+            return ids.count == 1 && failures.isEmpty ? ids[0] : nil
+        }
+    }
+
+    /// A message about the last import, shown by the main window.
+    struct ImportNotice: Identifiable {
+        let id = UUID()
+        let message: String
+    }
+
+    var importNotice: ImportNotice?
+    /// A song the main window should select (after an import).
+    var songToSelect: String?
+
+    /// Imports files and reports the outcome to the main window: the first new song is selected,
+    /// and a message lists duplicates and failures.
+    @discardableResult
+    func importAndReport(_ urls: [URL]) -> ImportResult {
+        let result = importFiles(urls)
+        songToSelect = result.added.first?.id ?? result.duplicates.first?.id
+        var lines: [String] = []
+        if !result.added.isEmpty { lines.append(String(localized: "\(result.added.count) morceau(x) ajouté(s).")) }
+        if !result.duplicates.isEmpty {
+            lines.append(String(localized: "Déjà dans la bibliothèque : \(result.duplicates.map(\.file).joined(separator: ", "))"))
+        }
+        for failure in result.failures { lines.append("\(failure.file) : \(failure.reason)") }
+        if result.added.count + result.duplicates.count > 1 || !result.failures.isEmpty {
+            importNotice = ImportNotice(message: lines.joined(separator: "\n"))
+        }
+        return result
     }
 
     /// Copies supported files into the library. Files already imported are recognised by content.
     @discardableResult
-    func importFiles(_ urls: [URL]) -> ImportResult {
+    func importFiles(_ urls: [URL], source: SongSource = .imported) -> ImportResult {
         var result = ImportResult()
         try? FileManager.default.createDirectory(at: songsFolder, withIntermediateDirectories: true)
         for url in urls {
@@ -140,18 +174,20 @@ final class LibraryModel {
                 let data = try Data(contentsOf: url)
                 let song = try SongLoader.load(data: data, fileExtension: url.pathExtension)
                 let hash = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
-                if database.songs.contains(where: { $0.contentHash == hash }) {
-                    result.duplicates.append(name)
+                if let existing = database.songs.first(where: { $0.contentHash == hash }) {
+                    result.duplicates.append((name, existing.id))
                     continue
                 }
                 let id = "imported." + UUID().uuidString
                 let ext = url.pathExtension.isEmpty ? "mid" : url.pathExtension.lowercased()
                 let fileName = id + "." + ext
                 try data.write(to: songsFolder.appendingPathComponent(fileName), options: .atomic)
-                let entry = LibrarySong(
-                    id: id, title: url.deletingPathExtension().lastPathComponent, composer: nil, source: .imported,
-                    fileName: fileName, duration: song.duration, difficulty: DifficultyEstimator.rating(for: song), contentHash: hash
+                var entry = LibrarySong(
+                    id: id, title: song.title ?? url.deletingPathExtension().lastPathComponent, composer: song.composer,
+                    source: source, fileName: fileName, duration: song.duration,
+                    difficulty: DifficultyEstimator.rating(for: song), contentHash: hash
                 )
+                entry.sourcePath = source == .watched ? url.path : nil
                 database.upsert(entry)
                 cache[id] = song
                 result.added.append(entry)

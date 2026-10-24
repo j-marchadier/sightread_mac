@@ -2,13 +2,17 @@ import SwiftUI
 
 @main
 struct MyPianoApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var model = AppModel()
 
     var body: some Scene {
         Window("MyPiano", id: WindowID.main) {
             MainWindow()
                 .environment(model)
-                .task { model.start() }
+                .task {
+                    model.start()
+                    appDelegate.openHandler = { [model] urls in model.openFiles(urls) }
+                }
         }
         .defaultSize(width: 1100, height: 720)
         .commands { MyPianoCommands(model: model) }
@@ -20,6 +24,7 @@ struct MyPianoApp: App {
             }
         }
         .defaultSize(width: 1240, height: 800)
+        .handlesExternalEvents(matching: [])
 
         Window("Jeu libre", id: WindowID.freePlay) {
             FreePlayView()

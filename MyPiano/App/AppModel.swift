@@ -4,6 +4,7 @@ import MyPianoAudio
 import MyPianoCore
 import MyPianoMIDI
 import Observation
+import SwiftUI
 
 /// One keyboard event shown in the keyboard settings.
 struct KeyboardEventRecord: Identifiable {
@@ -44,6 +45,8 @@ final class AppModel {
     }
     /// Octave shift of the computer keyboard when it is used as a piano.
     private(set) var computerKeyboardOctave = 0
+    /// Opens windows from outside a view (files opened from the Finder); set by the main window.
+    @ObservationIgnored var openWindowAction: OpenWindowAction?
     @ObservationIgnored private var isStarted = false
     @ObservationIgnored private var keyMonitor: Any?
     @ObservationIgnored private var heldComputerKeys: [UInt16: UInt8] = [:]
@@ -76,6 +79,16 @@ final class AppModel {
         }
         midi.start()
         installComputerKeyboard()
+    }
+
+    /// Files opened from the Finder or dropped on the Dock icon: imported, and played when there is just one.
+    func openFiles(_ urls: [URL]) {
+        let result = library.importAndReport(urls)
+        if let id = result.singleSongID {
+            openWindowAction?(id: WindowID.player, value: PlayerTarget.song(id: id))
+        } else {
+            openWindowAction?(id: WindowID.main)
+        }
     }
 
     func restartAudio() {

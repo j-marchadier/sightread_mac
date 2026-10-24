@@ -17,7 +17,6 @@ struct MainWindow: View {
     @AppStorage(PreferenceKey.onboardingDone) private var onboardingDone = false
     @State private var selection: SidebarItem? = .library(.all)
     @State private var selectedSong: LibrarySong.ID?
-    @State private var importMessage: String?
 
     var body: some View {
         @Bindable var library = model.library
@@ -60,31 +59,29 @@ struct MainWindow: View {
         }
         .fileImporter(isPresented: $library.isImporterPresented, allowedContentTypes: SongFileTypes.importable,
                       allowsMultipleSelection: true) { result in
-            if case let .success(urls) = result { importFiles(urls) }
+            if case let .success(urls) = result { library.importAndReport(urls) }
         }
-        .alert("Importation", isPresented: Binding(get: { importMessage != nil }, set: { if !$0 { importMessage = nil } })) {
+        .dropDestination(for: URL.self) { urls, _ in
+            library.importAndReport(urls)
+            return true
+        }
+        .alert("Importation", isPresented: Binding(get: { library.importNotice != nil }, set: { if !$0 { library.importNotice = nil } })) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(importMessage ?? "")
+            Text(library.importNotice?.message ?? "")
+        }
+        .onChange(of: library.songToSelect) { _, id in
+            guard let id else { return }
+            if let song = library.database.song(id) {
+                selection = .library(song.source == .builtin ? .all : .imported)
+                selectedSong = id
+            }
+            library.songToSelect = nil
         }
         .onAppear {
+            model.openWindowAction = openWindow
             if !onboardingDone { openWindow(id: WindowID.welcome) }
         }
-    }
-
-    private func importFiles(_ urls: [URL]) {
-        let result = model.library.importFiles(urls)
-        if let first = result.added.first {
-            selection = .library(.imported)
-            selectedSong = first.id
-        }
-        var lines: [String] = []
-        if !result.added.isEmpty { lines.append(String(localized: "\(result.added.count) morceau(x) ajouté(s).")) }
-        if !result.duplicates.isEmpty {
-            lines.append(String(localized: "Déjà dans la bibliothèque : \(result.duplicates.joined(separator: ", "))"))
-        }
-        for failure in result.failures { lines.append("\(failure.file) : \(failure.reason)") }
-        if !result.duplicates.isEmpty || !result.failures.isEmpty { importMessage = lines.joined(separator: "\n") }
     }
 }
 
