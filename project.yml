@@ -4,7 +4,7 @@ name: MyPiano
 options:
   bundleIdPrefix: fr.jmarchadier
   deploymentTarget:
-    macOS: "14.0"
+    macOS: "26.0"
   developmentLanguage: fr
   createIntermediateGroups: true
   groupSortPosition: top
@@ -15,7 +15,7 @@ options:
 settings:
   base:
     SDKROOT: macosx
-    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    MACOSX_DEPLOYMENT_TARGET: "26.0"
     SWIFT_VERSION: "6.0"
     SWIFT_STRICT_CONCURRENCY: complete
     MARKETING_VERSION: "0.1.0"
