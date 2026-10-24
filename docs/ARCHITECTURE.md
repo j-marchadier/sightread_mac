@@ -16,7 +16,7 @@
 | Son | **AVAudioEngine + AVAudioUnitSampler**, piano seul. Banque par défaut : **banque General MIDI intégrée à macOS** (aucun fichier à redistribuer) ; banque `.sf2` CC0 embarquée en option | soundfont embarquée devient optionnelle |
 | Horloge | **Horloge hôte** (`mach_absolute_time`, base de temps commune à CoreAudio et CoreMIDI) corrigée de la latence de sortie | précisé (cf. Arbitrage A2) |
 | Rendu | SwiftUI `Canvas` + `TimelineView(.animation)` ; glyphes SMuFL convertis en `Path` via CoreText et mis en cache | = (Metal non prévu) |
-| Partition | Moteur maison, police **Leland** (OFL, déjà présente) ; deux modes : **Simplifiée** (traînes) et **Rythmique** (quantification) | = |
+| Partition | Moteur maison, police **Leland** (OFL, déjà présente) ; trois vues de partition : **Simplifiée** (traînes), **Rythmique** (quantification) et **Complète** (page avec retours à la ligne), en plus des notes qui tombent | = (+ partition complète, décision §6.4) |
 | Parsing | MIDI SMF 0/1 maison ; MusicXML via `XMLParser` ; `.mxl` via un décompresseur ZIP/DEFLATE maison en Swift pur | = (+ ZIP maison) |
 | Persistance | **SwiftData** (bibliothèque, réglages par morceau, sessions) derrière un protocole ; `@AppStorage` pour les préférences globales ; fichiers copiés dans Application Support | = |
 | Tests | **Swift Testing** ; le Core compile et se teste sous **Linux** (conteneur Swift 6.1) et sous macOS (`xcodebuild test`) | ajout : double cible Linux/macOS |
@@ -65,7 +65,7 @@ serrés → réglage de zoom horizontal et espacement minimal entre têtes de no
 
 ---
 
-## 3. Arborescence du dépôt (cible, après Phase 3)
+## 3. Arborescence du dépôt (état livré, Phase 9)
 
 ```
 MyPiano/                          Cible App (SwiftUI)
@@ -77,8 +77,9 @@ MyPiano/                          Cible App (SwiftUI)
     Exercises/                    Lecture de notes, Phrases
     Settings/                     Scène Réglages (MIDI, Audio, Affichage, Pratique)
     Onboarding/                   Bienvenue au premier lancement
+    About/                        À propos de MyPiano, Mentions (ACKNOWLEDGEMENTS.md embarqué)
   Resources/
-    Assets.xcassets               Icône, couleurs nommées (clair/sombre)
+    Assets.xcassets               Icône (générée par scripts/render-app-icon.swift), couleur d'accent
     Localizable.xcstrings         FR + EN
     BuiltinSongs/                 Fichiers MIDI intégrés + catalog.json
     Fonts/Leland.otf, OFL.txt
@@ -109,8 +110,10 @@ Packages/MyPianoKit/
     MyPianoLibraryTests/          (macOS)
 project.yml                       Spécification XcodeGen
 MyPiano.xcodeproj                 Généré par XcodeGen (versionné)
-scripts/                          test-core-linux.sh, generate-project.sh, build-release.sh, make-dmg.sh
-docs/                             SPEC, ARCHITECTURE, PLAN, RELEASE
+scripts/                          generate-project.sh, test-core-linux.sh, render-app-icon.swift,
+                                  build-release.sh, make-dmg.sh, check-offline.sh, check-legacy-traces.sh
+docs/                             SPEC, ARCHITECTURE, PLAN, RELEASE, REMOVAL_INVENTORY
+ACKNOWLEDGEMENTS.md, LICENSE      Mentions (aussi affichées dans l'app), GPL-3.0 (morceaux et Leland issus du projet d'origine)
 ```
 
 ### Graphe de dépendances
@@ -287,12 +290,19 @@ l'affichage.
 - **Tests complets sous macOS** : `xcodebuild test -scheme MyPiano`.
 - **Pas de CI** (décision) : à chaque phase, je fournis la commande à lancer sur ton Mac (`xcodebuild test -scheme MyPiano`) ; le code dépendant d'Apple est gardé mince pour limiter les surprises.
 - Couverture : objectif ≥ 90 % des lignes sur `Playback`, `Scoring`, `Parsing` ; tests de géométrie pour `Layout`.
+- **Garde-fous de publication** : `scripts/check-legacy-traces.sh` (aucune trace de l'ancien produit hors
+  `ACKNOWLEDGEMENTS.md`, aucun outillage web) et `scripts/check-offline.sh` (aucun entitlement ni API réseau, aucune
+  URL dans le binaire hors des sources de partitions).
+- **Release** : `scripts/build-release.sh` (archive + export) et `scripts/make-dmg.sh` (image disque).
 
 ## 11. Sécurité, confidentialité, distribution
 
 - App Sandbox : `app-sandbox`, `files.user-selected.read-only`, `files.bookmarks.app-scope`. **Aucun entitlement
   réseau** : l'app est techniquement incapable d'appeler un service externe.
-- Hardened Runtime activé ; signature et notarisation par toi (procédure dans `docs/RELEASE.md`, Phase 9).
+- Hardened Runtime activé ; signature Developer ID, notarisation et agrafage par toi (procédure dans `docs/RELEASE.md`).
+- Seules URL présentes dans le binaire : les trois sources de partitions de `ScoreSourcesView.swift`, ouvertes dans le
+  navigateur avec `openURL` (vérifié par `scripts/check-offline.sh`).
+- Distribution : `.dmg` notarisé, hors Mac App Store.
 - Types de documents déclarés : `.mid`, `.midi` (`public.midi-audio`), `.musicxml`, `.xml` (MusicXML),
   `.mxl` (UTI déclaré `com.recordare.musicxml.compressed`, importé).
 - Localisation : String Catalog FR (langue de développement) + EN.

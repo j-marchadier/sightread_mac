@@ -1,10 +1,25 @@
-# MyPiano — Plan de réalisation (phases 2 à 9)
+# MyPiano — Plan de réalisation (phases 0 à 9)
 
 > Chaque tâche liste les fichiers créés ou modifiés, un critère « terminé » vérifiable et les risques.
 > Un commit (Conventional Commits, en anglais) par étape logique ; résumé à la fin de chaque phase.
 >
 > Légende de vérification : 🐧 vérifiable dans mon environnement (Linux, Swift 6.1) · 🍎 nécessite macOS
 > (ton Mac) · 👤 vérification manuelle par toi (clavier Arturia, écoute, visuel).
+
+## État d'avancement
+
+| Phase | Contenu | État |
+|---|---|---|
+| 0 | Spécification fonctionnelle de l'application d'origine (`docs/SPEC.md`) | ✅ Terminée |
+| 1 | Architecture technique (`docs/ARCHITECTURE.md`) et décisions (SPEC §6.4) | ✅ Terminée |
+| 2 | Nettoyage du dépôt | ✅ Terminée |
+| 3 | Projet Xcode et Core | ✅ Terminée |
+| 4 | MIDI et audio | ✅ Terminée |
+| 5 | Moteur de lecture | ✅ Terminée |
+| 6 | Rendu | ✅ Terminée |
+| 7 | Interface Apple | ✅ Terminée |
+| 8 | Import de partitions | ✅ Terminée |
+| 9 | Finitions et distribution | ✅ Terminée |
 
 ---
 
@@ -130,13 +145,13 @@
 
 | # | Tâche | Fichiers | Terminé quand | Risques |
 |---|---|---|---|---|
-| 9.1 | Icône macOS (visuel fourni par toi, ou direction proposée : touche de piano stylisée sur fond dégradé, style Big Sur+) ; fenêtre « À propos de MyPiano » © ; fenêtre « Mentions » (ACKNOWLEDGEMENTS) | `Assets.xcassets/AppIcon`, `MyPiano/Features/About/*` | Icône à toutes les tailles, À propos personnalisé 👤 | — |
-| 9.2 | Supprimer `reference/web/` et tout reliquat Bun/Node/Vite/Tailwind ; recherche globale de l'ancien nom, du domaine, de gtag | — | `grep -ri` des termes de l'inventaire 2.3 = 0 résultat (hors `ACKNOWLEDGEMENTS.md`, qui mentionne l'inspiration) 🐧 | Retrait de `LICENSE` seulement si plus aucun code/asset d'origine : les MIDI et Leland restent → **LICENSE conservé**, à rediscuter |
-| 9.3 | Script de build release (`.app` + `.dmg`), signature et notarisation documentées | `scripts/build-release.sh`, `scripts/make-dmg.sh`, `docs/RELEASE.md` | `.app` et `.dmg` produits sur ton Mac (non signés) 🍎 ; procédure suivie par toi 👤 | Notarisation : nécessite ton compte développeur |
-| 9.4 | Vérification hors ligne : aucun entitlement réseau, aucune API réseau (URLSession…) ; seules URL autorisées dans le binaire : celles de « Trouver des partitions… » (ouvertes dans le navigateur) | `scripts/check-offline.sh` | Script vert 🍎 | — |
-| 9.5 | Mise à jour `README.md`, `docs/` | — | Docs cohérentes avec le produit livré 🐧 | — |
+| 9.1 | Icône macOS (touche de piano stylisée sur dégradé indigo → violet), toutes les tailles ; fenêtre « À propos de MyPiano » (version, build, ©) et fenêtre « Mentions » qui affiche `ACKNOWLEDGEMENTS.md` embarqué | `scripts/render-app-icon.swift`, `Assets.xcassets/AppIcon.appiconset`, `MyPiano/Features/About/*`, `MyPianoApp.swift`, `Commands.swift`, `project.yml` | Icône visible dans le Dock et le Finder ; menus MyPiano › À propos et Aide › Mentions et licences 👤 | Rendu des petites tailles → icône dessinée en vectoriel à chaque taille |
+| 9.2 | Suppression de `reference/web/` et de tout l'outillage Bun/Node/Vite/PostCSS/Tailwind ; `LICENSE` conservé (morceaux MIDI et Leland) ; docs nettoyées | `reference/` (supprimé), `scripts/check-legacy-traces.sh`, `docs/REMOVAL_INVENTORY.md` | `check-legacy-traces.sh` vert, seul `ACKNOWLEDGEMENTS.md` nomme l'ancien produit 🐧 ; tests du Core verts sans `reference/` 🐧🍎 | — |
+| 9.3 | Scripts de release : archive Release + export `.app` (Developer ID si `TEAM_ID`, *ad hoc* sinon), `.dmg` avec lien vers /Applications ; procédure de signature, notarisation et agrafage | `scripts/build-release.sh`, `scripts/make-dmg.sh`, `docs/RELEASE.md` | `.app` et `.dmg` produits 🍎 ; notarisation acceptée 👤 | Certificat Developer ID et compte Apple nécessaires (étapes faites par toi) |
+| 9.4 | Garde-fou hors ligne : aucun entitlement réseau ni exception ATS, aucune API réseau dans les sources, aucune URL dans le binaire hors des sources de partitions | `scripts/check-offline.sh` | Vert sur les sources 🐧 et sur l'app construite 🍎 | — |
+| 9.5 | Documentation du produit livré : visualisations, modes, doigtés, import, exercices, jeu libre, volumes, raccourcis, build, tests, publication | `README.md`, `docs/ARCHITECTURE.md`, `docs/PLAN.md` | README à jour, phases 0 à 9 terminées | — |
 
-**Livrable :** `MyPiano.app` et `.dmg` prêts à signer, `xcodebuild test` vert.
+**Livrable :** application prête à distribuer (`.dmg` signé et notarisé), documentation à jour. 🐧🍎👤
 
 ---
 
