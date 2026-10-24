@@ -130,6 +130,8 @@ struct SongLoaderTests {
         #expect(try SongLoader.load(data: Fixtures.builtinSong("ode-to-joy.mid")).notes.count == 62)
         #expect(try SongLoader.load(data: Fixtures.data("MusicXML/two-staves.mxl")).notes.count == 11)
         #expect(throws: SongLoadingError.unsupportedFormat) { try SongLoader.load(data: Data("%PDF-1.7".utf8), fileExtension: "pdf") }
+        let silent = MIDIFileWriter.data(for: .empty)
+        #expect(throws: SongLoadingError.noNotes) { try SongLoader.load(data: silent, fileExtension: "mid") }
         #expect(throws: SongLoadingError.midi(.truncated)) { try SongLoader.load(data: Data(Array("MThd".utf8) + [0, 0, 0, 6, 0])) }
     }
 }

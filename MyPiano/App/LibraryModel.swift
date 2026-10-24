@@ -264,7 +264,7 @@ final class LibraryModel {
             String(localized: "Le fichier MIDI est invalide ou incomplet.")
         case .midi(.unsupportedTimeDivision), .midi(.unsupportedFormat):
             String(localized: "Ce type de fichier MIDI n'est pas pris en charge.")
-        case .musicXML(.noNotes):
+        case .noNotes, .musicXML(.noNotes):
             String(localized: "La partition ne contient aucune note.")
         case .musicXML(.notMusicXML):
             String(localized: "Ce fichier XML n'est pas une partition MusicXML.")

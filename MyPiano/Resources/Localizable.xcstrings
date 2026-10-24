@@ -81,6 +81,16 @@
         }
       }
     },
+    "%lld notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld notes"
+          }
+        }
+      }
+    },
     "0 s": {
       "localizations": {
         "en": {
@@ -171,6 +181,16 @@
         }
       }
     },
+    "Accès perdu : choisissez à nouveau le dossier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Access lost: choose the folder again"
+          }
+        }
+      }
+    },
     "Activer": {
       "localizations": {
         "en": {
@@ -241,6 +261,26 @@
         }
       }
     },
+    "Annuler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "Aperçu des mains": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hands preview"
+          }
+        }
+      }
+    },
     "Apprendre": {
       "localizations": {
         "en": {
@@ -277,6 +317,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Wait"
+          }
+        }
+      }
+    },
+    "Aucun": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
           }
         }
       }
@@ -531,12 +581,72 @@
         }
       }
     },
+    "CC0 (aucune restriction)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CC0 (no restrictions)"
+          }
+        }
+      }
+    },
+    "Ce fichier XML n'est pas une partition MusicXML.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This XML file is not a MusicXML score."
+          }
+        }
+      }
+    },
+    "Ce format de fichier n'est pas pris en charge (MIDI ou MusicXML attendu).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This file format isn't supported (MIDI or MusicXML expected)."
+          }
+        }
+      }
+    },
+    "Ce type de fichier MIDI n'est pas pris en charge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This kind of MIDI file isn't supported."
+          }
+        }
+      }
+    },
+    "Ces collections proposent des partitions libres de droits. Elles s'ouvrent dans votre navigateur ; MyPiano n'accède jamais à Internet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "These collections offer free scores. They open in your browser; MyPiano never goes online."
+          }
+        }
+      }
+    },
     "Ces réglages s'appliquent aux morceaux que vous ouvrez pour la première fois. Chaque morceau garde ensuite ses propres réglages.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "These settings apply to songs you open for the first time. Each song then keeps its own settings."
+          }
+        }
+      }
+    },
+    "Changer de dossier…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change Folder…"
           }
         }
       }
@@ -557,6 +667,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose input automatically"
+          }
+        }
+      }
+    },
+    "Choisir un dossier…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a Folder…"
           }
         }
       }
@@ -711,6 +831,16 @@
         }
       }
     },
+    "Creative Commons BY-SA (citer l'auteur, Bernd Krueger)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creative Commons BY-SA (credit the author, Bernd Krueger)"
+          }
+        }
+      }
+    },
     "De courtes pièces générées sur une suite d'accords, avec des rythmes de plus en plus riches.": {
       "localizations": {
         "en": {
@@ -811,6 +941,36 @@
         }
       }
     },
+    "Doigtés": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fingering"
+          }
+        }
+      }
+    },
+    "Domaine public et Creative Commons": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Public domain and Creative Commons"
+          }
+        }
+      }
+    },
+    "Dossier surveillé": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watched folder"
+          }
+        }
+      }
+    },
     "Durée": {
       "localizations": {
         "en": {
@@ -861,6 +1021,16 @@
         }
       }
     },
+    "Détecter automatiquement": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detect Automatically"
+          }
+        }
+      }
+    },
     "Effacer": {
       "localizations": {
         "en": {
@@ -901,6 +1071,16 @@
         }
       }
     },
+    "Enregistrer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
     "Entendre cette piste": {
       "localizations": {
         "en": {
@@ -911,12 +1091,42 @@
         }
       }
     },
+    "Environ 2 000 œuvres classiques gravées avec soin, avec un fichier MIDI pour chacune. Idéal pour une partition rythmique propre.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About 2,000 carefully engraved classical works, each with a MIDI file. Ideal for a clean rhythmic score."
+          }
+        }
+      }
+    },
     "Erreur": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Error"
+          }
+        }
+      }
+    },
+    "Estimer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimate"
+          }
+        }
+      }
+    },
+    "Estimer la difficulté d'après les notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimate the difficulty from the notes"
           }
         }
       }
@@ -1181,12 +1391,52 @@
         }
       }
     },
+    "La bibliothèque n'a pas pu être enregistrée : %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The library couldn't be saved: %@"
+          }
+        }
+      }
+    },
+    "La partition MusicXML est invalide.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The MusicXML score is invalid."
+          }
+        }
+      }
+    },
+    "La partition ne contient aucune note.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The score contains no notes."
+          }
+        }
+      }
+    },
     "Latence": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Latency"
+          }
+        }
+      }
+    },
+    "Le fichier MIDI est invalide ou incomplet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The MIDI file is invalid or incomplete."
           }
         }
       }
@@ -1221,6 +1471,16 @@
         }
       }
     },
+    "Le répertoire classique pour piano, de Bach à Debussy, en fichiers MIDI joués avec expression : la partition simplifiée convient mieux.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The classical piano repertoire, from Bach to Debussy, as expressively played MIDI files: the simplified score suits them best."
+          }
+        }
+      }
+    },
     "Lecture": {
       "localizations": {
         "en": {
@@ -1251,12 +1511,42 @@
         }
       }
     },
+    "Les deux mains": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Both hands"
+          }
+        }
+      }
+    },
+    "Les fichiers MIDI et MusicXML ajoutés à ce dossier (et à ses sous-dossiers) apparaissent dans la bibliothèque en quelques secondes. Un fichier supprimé du dossier disparaît de la bibliothèque.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MIDI and MusicXML files added to this folder (and its subfolders) appear in the library within seconds. A file deleted from the folder leaves the library."
+          }
+        }
+      }
+    },
     "Les morceaux que vous travaillez apparaîtront ici.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Songs you practice will appear here."
+          }
+        }
+      }
+    },
+    "Les pistes en accompagnement sont jouées par MyPiano et ne sont pas évaluées.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accompaniment tracks are played by MyPiano and aren't scored."
           }
         }
       }
@@ -1301,6 +1591,16 @@
         }
       }
     },
+    "Main droite à partir de": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right hand from"
+          }
+        }
+      }
+    },
     "Main gauche": {
       "localizations": {
         "en": {
@@ -1321,6 +1621,16 @@
         }
       }
     },
+    "Mains": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hands"
+          }
+        }
+      }
+    },
     "Mains à travailler": {
       "localizations": {
         "en": {
@@ -1337,6 +1647,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Missed"
+          }
+        }
+      }
+    },
+    "Masqués": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hidden"
           }
         }
       }
@@ -1451,6 +1771,36 @@
         }
       }
     },
+    "Modifier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        }
+      }
+    },
+    "Modifier le titre, la difficulté et les mains": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit the title, difficulty and hands"
+          }
+        }
+      }
+    },
+    "Modifier…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit…"
+          }
+        }
+      }
+    },
     "Mon piano": {
       "localizations": {
         "en": {
@@ -1510,6 +1860,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Only hear what you play for the hands you practice"
+          }
+        }
+      }
+    },
+    "Ne plus surveiller": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop Watching"
           }
         }
       }
@@ -1604,6 +1964,16 @@
         }
       }
     },
+    "Ouvrir": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        }
+      }
+    },
     "Ouvrir le jeu libre": {
       "localizations": {
         "en": {
@@ -1650,6 +2020,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Simplified Score"
+          }
+        }
+      }
+    },
+    "Partitions libres transcrites par des bénévoles sur MuseScore. Choisissez « Télécharger › MusicXML » (compte gratuit nécessaire).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free scores transcribed by volunteers on MuseScore. Choose “Download › MusicXML” (free account required)."
           }
         }
       }
@@ -2164,6 +2544,26 @@
         }
       }
     },
+    "Trouver des partitions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find Scores"
+          }
+        }
+      }
+    },
+    "Trouver des partitions…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find Scores…"
+          }
+        }
+      }
+    },
     "Un par temps": {
       "localizations": {
         "en": {
@@ -2190,6 +2590,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "One color per note"
+          }
+        }
+      }
+    },
+    "Une fois téléchargés, glissez les fichiers sur la fenêtre ou l'icône de MyPiano, utilisez Fichier › Importer… (⌘O), ou rangez-les dans votre dossier surveillé.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Once downloaded, drag the files onto MyPiano's window or icon, use File › Import… (⌘O), or put them in your watched folder."
           }
         }
       }
@@ -2320,6 +2730,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Listen"
+          }
+        }
+      }
+    },
+    "Écrits et suggérés": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Written and Suggested"
+          }
+        }
+      }
+    },
+    "Écrits seulement": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Written Only"
           }
         }
       }

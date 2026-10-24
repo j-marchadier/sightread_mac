@@ -40,6 +40,11 @@ struct MyPianoApp: App {
         .windowResizability(.contentSize)
         .windowStyle(.hiddenTitleBar)
 
+        Window("Trouver des partitions", id: WindowID.scoreSources) {
+            ScoreSourcesView()
+        }
+        .windowResizability(.contentSize)
+
         Settings {
             SettingsView()
                 .environment(model)
@@ -53,4 +58,5 @@ enum WindowID {
     static let player = "player"
     static let freePlay = "free-play"
     static let welcome = "welcome"
+    static let scoreSources = "score-sources"
 }

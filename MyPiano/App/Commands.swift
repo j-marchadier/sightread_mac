@@ -43,6 +43,7 @@ struct MyPianoCommands: Commands {
                 model.library.isImporterPresented = true
             }
             .keyboardShortcut("o")
+            Button("Trouver des partitions…") { openWindow(id: WindowID.scoreSources) }
             Button("Jeu libre") { openWindow(id: WindowID.freePlay) }
                 .keyboardShortcut("j", modifiers: [.command, .shift])
         }
@@ -124,6 +125,7 @@ struct MyPianoCommands: Commands {
 
         CommandGroup(replacing: .help) {
             Button("Bienvenue dans MyPiano") { openWindow(id: WindowID.welcome) }
+            Button("Trouver des partitions…") { openWindow(id: WindowID.scoreSources) }
         }
     }
 

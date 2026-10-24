@@ -120,6 +120,7 @@ struct SongBrowserView: View {
                     Text("Importez vos fichiers MIDI ou MusicXML.")
                 } actions: {
                     Button("Importer…") { model.library.isImporterPresented = true }
+                    Button("Trouver des partitions…") { openWindow(id: WindowID.scoreSources) }
                 }
             case .all:
                 ContentUnavailableView("Bibliothèque vide", systemImage: "music.note.list")

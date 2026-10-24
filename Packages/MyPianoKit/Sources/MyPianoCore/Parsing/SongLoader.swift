@@ -24,6 +24,8 @@ public enum SongFileFormat: String, Sendable, CaseIterable {
 
 public enum SongLoadingError: Error, Equatable, Sendable {
     case unsupportedFormat
+    /// The file is valid but holds no playable note.
+    case noNotes
     case midi(MIDIFileError)
     case musicXML(MusicXMLError)
 }
@@ -32,7 +34,10 @@ public enum SongLoader {
     public static func load(data: Data, fileExtension: String? = nil) throws(SongLoadingError) -> Song {
         switch SongFileFormat.detect(data: data, fileExtension: fileExtension) {
         case .midi:
-            do { return try MIDISongBuilder.song(from: data) } catch { throw .midi(error) }
+            let song: Song
+            do { song = try MIDISongBuilder.song(from: data) } catch { throw .midi(error) }
+            guard !song.notes.isEmpty else { throw .noNotes }
+            return song
         case .musicXML, .compressedMusicXML:
             do { return try MusicXMLImporter.song(from: data) } catch { throw .musicXML(error) }
         case nil:
