@@ -293,7 +293,7 @@ public struct TransportCore: Sendable {
         while nextNote < song.notes.count, song.notes[nextNote].start < target {
             let note = song.notes[nextNote]
             let active = isActive(note)
-            if active && settings.mode == .learn && !hitNotes.contains(note.id) {
+            if active && settings.mode != .listen && !hitNotes.contains(note.id) {
                 pendingLate.append(note.id)
             }
             if isAudible(note, active: active) {
@@ -303,15 +303,15 @@ public struct TransportCore: Sendable {
             }
             nextNote += 1
         }
-        // Notes not played in time.
-        pendingLate.removeAll { id in
+        // Notes not played in time (the wait mode waits instead).
+        if settings.mode == .learn { pendingLate.removeAll { id in
             let late = (target - song.notes[id].start) / settings.speed
             guard late > settings.windows.good else { return false }
             missedNotes.insert(id)
             stats.recordMiss()
             events.append(.missed(noteID: id))
             return true
-        }
+        } }
         // Metronome.
         if settings.metronome.isEnabled {
             events += metronomeClicks(upTo: target)
@@ -339,11 +339,17 @@ public struct TransportCore: Sendable {
         let window = settings.windows.good
         var best: (id: Int, offset: TimeInterval)?
 
+        let waiting = settings.mode == .wait
         func consider(_ id: Int) {
             let note = song.notes[id]
             guard outputPitch(of: note) == pitch, !hitNotes.contains(id) else { return }
-            let offset = (now - note.start) / settings.speed
-            guard abs(offset) <= window else { return }
+            var offset = (now - note.start) / settings.speed
+            if waiting && offset > 0 {
+                // The song waits for this note: lateness only counts beyond the tolerance.
+                offset = max(0, offset - settings.waitTolerance)
+            } else if abs(offset) > window {
+                return
+            }
             if best == nil || abs(offset) < abs(best!.offset) { best = (id, offset) }
         }
         for id in pendingLate { consider(id) }
@@ -363,7 +369,15 @@ public struct TransportCore: Sendable {
         pendingLate.removeAll { $0 == best.id }
         pressedKeys[pitch] = best.id
         stats.recordHit(grade)
-        return [.judged(noteID: best.id, grade: grade, offset: best.offset)]
+        var events: [PracticeEvent] = [.judged(noteID: best.id, grade: grade, offset: best.offset)]
+        // In wait mode a note reached before being played was kept silent: let it sound now.
+        let note = song.notes[best.id]
+        if waiting && note.start < position && sounding[note.id] == nil && note.end > position && isAudible(note, active: true) {
+            let output = outputPitch(of: note)
+            sounding[note.id] = output
+            events.append(.noteStarted(id: note.id, pitch: output, velocity: note.velocity))
+        }
+        return events
     }
 
     public mutating func noteOff(_ pitch: UInt8) {
@@ -374,19 +388,24 @@ public struct TransportCore: Sendable {
 
     private func isAudible(_ note: Note, active: Bool) -> Bool {
         if settings.mutedTracks.contains(note.track) { return false }
-        if settings.muteMyPart && active && !hitNotes.contains(note.id) { return false }
+        let unplayed = active && !hitNotes.contains(note.id)
+        if unplayed && (settings.muteMyPart || settings.mode == .wait) { return false }
         return true
     }
 
-    /// In wait mode, the start of the first note of the active hands not yet played, if it is due.
+    /// In wait mode, where the song must stop: the start of the earliest active note not yet
+    /// played, plus the tolerance during which it may still be played without stopping.
     private func firstBlockingNoteStart(before target: TimeInterval) -> TimeInterval? {
+        var earliest = pendingLate.map { song.notes[$0].start }.min()
         var index = nextNote
-        while index < song.notes.count, song.notes[index].start < target {
+        while index < song.notes.count, song.notes[index].start < target, earliest == nil {
             let note = song.notes[index]
-            if isActive(note) && !hitNotes.contains(note.id) { return max(position, note.start) }
+            if isActive(note) && !hitNotes.contains(note.id) { earliest = note.start }
             index += 1
         }
-        return nil
+        guard let earliest else { return nil }
+        let stop = earliest + settings.waitTolerance * settings.speed
+        return stop < target ? max(position, stop) : nil
     }
 
     private func firstNoteIndex(startingAtOrAfter time: TimeInterval) -> Int {

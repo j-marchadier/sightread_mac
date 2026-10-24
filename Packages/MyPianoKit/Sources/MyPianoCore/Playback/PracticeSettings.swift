@@ -77,6 +77,12 @@ public struct PracticeSettings: Sendable, Equatable, Codable {
     public var handAssignment = HandAssignment()
     public var mutedTracks: Set<Int> = []
     public var windows = JudgingWindows()
+    /// Wait mode: real seconds the song keeps going after a note is due before it stops and waits.
+    /// A note played within this delay keeps the music flowing.
+    public var waitTolerance: TimeInterval = 0.25 {
+        didSet { waitTolerance = min(Self.waitToleranceRange.upperBound, max(0, waitTolerance)) }
+    }
+    public static let waitToleranceRange: ClosedRange<TimeInterval> = 0...1
     /// Play a short cue on wrong keys.
     public var wrongNoteSound = false
 

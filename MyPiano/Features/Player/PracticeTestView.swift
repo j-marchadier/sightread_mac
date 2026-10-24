@@ -100,6 +100,16 @@ private struct PracticeControls: View {
                 Text("Écouter").tag(PracticeMode.listen)
             }
             .pickerStyle(.segmented)
+            if player.settings.mode == .wait {
+                LabeledContent("Tolérance avant l'arrêt") {
+                    HStack {
+                        Slider(value: binding(\.waitTolerance), in: PracticeSettings.waitToleranceRange, step: 0.05)
+                        Text(player.settings.waitTolerance.formatted(.number.precision(.fractionLength(2))) + " s")
+                            .monospacedDigit()
+                            .frame(width: 52, alignment: .trailing)
+                    }
+                }
+            }
             Picker("Vitesse", selection: binding(\.speed)) {
                 ForEach(PracticeSettings.speedPresets, id: \.self) { speed in
                     Text(speed.formatted(.percent.precision(.fractionLength(0)))).tag(speed)

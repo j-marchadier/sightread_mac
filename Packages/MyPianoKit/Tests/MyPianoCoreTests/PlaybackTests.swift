@@ -234,7 +234,7 @@ struct PracticeModeTests {
 
     @Test("Wait mode holds every note of the active hands, chords included")
     func waitMode() {
-        var driver = CoreDriver(song, TestSongs.settings { $0.mode = .wait; $0.hands = [.right] })
+        var driver = CoreDriver(song, TestSongs.settings { $0.mode = .wait; $0.hands = [.right]; $0.waitTolerance = 0 })
         driver.play()
         driver.run(0.8)
         #expect(abs(driver.time - 0.5) < 1e-6)
@@ -256,6 +256,38 @@ struct PracticeModeTests {
         driver.run(0.1)
         #expect(abs(driver.time - 1.1) < 1e-3)
         #expect(driver.core.stats.missed == 0)
+    }
+
+    @Test("Wait mode keeps going for a short tolerance before stopping")
+    func waitModeTolerance() {
+        var driver = CoreDriver(song, TestSongs.settings { $0.mode = .wait; $0.hands = [.right]; $0.waitTolerance = 0.2 })
+        driver.play()
+        driver.run(0.6) // C is due at 0.5 s: still moving 0.1 s later
+        #expect(abs(driver.time - 0.6) < 1e-3)
+        #expect(!driver.core.snapshot(at: driver.now).isWaiting)
+        #expect(Set(driver.started()) == [0]) // the left hand plays, my C stays silent
+        driver.press(60) // within the tolerance: no stop at all
+        #expect(driver.judged().map(\.1) == [.perfect])
+        #expect(driver.log.contains(.noteStarted(id: 1, pitch: 60, velocity: 90))) // my note sounds when played
+        driver.run(0.7) // the E+G chord is due at 1.0 s; nothing played: stops at 1.2 s
+        #expect(abs(driver.time - 1.2) < 1e-6)
+        #expect(driver.core.snapshot(at: driver.now).isWaiting)
+        driver.run(2)
+        driver.press(64)
+        driver.press(67) // long after: still accepted, the song was waiting
+        #expect(driver.judged().map(\.1) == [.perfect, .perfect, .perfect])
+        #expect(driver.core.stats.missed == 0)
+        driver.run(0.1)
+        #expect(abs(driver.time - 1.3) < 1e-3)
+    }
+
+    @Test func waitToleranceIsBounded() {
+        var settings = PracticeSettings()
+        #expect(settings.waitTolerance == 0.25)
+        settings.waitTolerance = 5
+        #expect(settings.waitTolerance == 1)
+        settings.waitTolerance = -1
+        #expect(settings.waitTolerance == 0)
     }
 
     @Test func listenModeJudgesNothing() {
