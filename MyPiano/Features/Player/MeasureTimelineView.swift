@@ -1,4 +1,5 @@
 import MyPianoCore
+import MyPianoRendering
 import SwiftUI
 
 /// The song as a strip of measures: click or drag to move, drag the handles to change the loop.
@@ -33,7 +34,7 @@ struct MeasureTimelineView: View {
                         }
                     }
                 }
-                TimelineView(.animation) { _ in
+                DisplayTicker {
                     let time = player.engine.snapshot().time
                     Rectangle()
                         .fill(Color.accentColor)

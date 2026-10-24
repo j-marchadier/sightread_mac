@@ -70,7 +70,7 @@ public struct SheetView: View {
     public var body: some View {
         GeometryReader { geometry in
             let renderer = SheetRenderer(scene: scene, palette: SheetPalette.standard(for: colorScheme), size: geometry.size)
-            TimelineView(.animation) { _ in
+            DisplayTicker {
                 let current = frame()
                 Canvas { context, _ in
                     renderer.draw(in: &context, frame: current)

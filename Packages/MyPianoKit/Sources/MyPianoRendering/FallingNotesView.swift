@@ -100,7 +100,7 @@ public struct FallingNotesView: View {
     public var body: some View {
         GeometryReader { geometry in
             let renderer = FallingNotesRenderer(scene: scene, palette: .standard(for: colorScheme), size: geometry.size)
-            TimelineView(.animation) { _ in
+            DisplayTicker {
                 let current = frame()
                 Canvas { context, _ in
                     renderer.draw(in: &context, frame: current)

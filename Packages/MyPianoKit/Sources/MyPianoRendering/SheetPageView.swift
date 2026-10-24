@@ -30,7 +30,7 @@ public struct SheetPageView: View {
     public var body: some View {
         GeometryReader { geometry in
             let page = PageGeometry(scene: scene, size: geometry.size, palette: SheetPalette.standard(for: colorScheme))
-            TimelineView(.animation) { _ in
+            DisplayTicker {
                 let current = frame()
                 Canvas { context, _ in
                     page.draw(in: &context, frame: current)
