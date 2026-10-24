@@ -106,6 +106,15 @@ final class LibraryModel {
         }
     }
 
+    func updateDetails(_ id: String, title: String, composer: String?, difficulty: Int) {
+        database.update(id) { song in
+            song.title = title
+            song.composer = composer
+            song.difficulty = min(5, max(1, difficulty))
+        }
+        save()
+    }
+
     func record(_ summary: SessionSummary, for id: String) {
         database.record(summary, for: id)
         save()

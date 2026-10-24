@@ -6,6 +6,7 @@ struct SongDetailView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.openWindow) private var openWindow
     let song: LibrarySong
+    @State private var isEditing = false
 
     var body: some View {
         let progress = model.library.database.progress(for: song.id)
@@ -41,7 +42,13 @@ struct SongDetailView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .navigationTitle(song.title)
+        .sheet(isPresented: $isEditing) { SongEditorView(songID: song.id) }
         .toolbar {
+            ToolbarItem {
+                Button { isEditing = true } label: { Label("Modifier", systemImage: "pencil") }
+                    .help("Modifier le titre, la difficulté et les mains")
+                    .keyboardShortcut("e")
+            }
             ToolbarItem {
                 Button { model.library.toggleFavorite(song.id) } label: {
                     Label(song.isFavorite ? LocalizedStringKey("Retirer des favoris") : "Ajouter aux favoris",

@@ -10,6 +10,7 @@ struct SongBrowserView: View {
     @State private var search = ""
     @State private var sortOrder = [KeyPathComparator(\LibrarySong.title, comparator: .localizedStandard)]
     @State private var songToRemove: LibrarySong?
+    @State private var songToEdit: String?
 
     var body: some View {
         let songs = model.library.songs(in: category, matching: search).sorted(using: sortOrder)
@@ -47,6 +48,7 @@ struct SongBrowserView: View {
             if let id = ids.first, let song = model.library.database.song(id) {
                 Button("Jouer") { play(id) }
                 Button(song.isFavorite ? LocalizedStringKey("Retirer des favoris") : "Ajouter aux favoris") { model.library.toggleFavorite(id) }
+                Button("Modifier…") { songToEdit = id }
                 if song.source != .builtin {
                     Divider()
                     Button("Supprimer de la bibliothèque…", role: .destructive) { songToRemove = song }
@@ -68,6 +70,9 @@ struct SongBrowserView: View {
         }
         .overlay {
             if songs.isEmpty { emptyState }
+        }
+        .sheet(item: Binding(get: { songToEdit.map(EditedSong.init) }, set: { songToEdit = $0?.id })) { edited in
+            SongEditorView(songID: edited.id)
         }
         .confirmationDialog("Supprimer « \(songToRemove?.title ?? "") » ?", isPresented: Binding(
             get: { songToRemove != nil }, set: { if !$0 { songToRemove = nil } }
@@ -121,6 +126,10 @@ struct SongBrowserView: View {
             }
         }
     }
+}
+
+private struct EditedSong: Identifiable {
+    let id: String
 }
 
 extension LibrarySong {
