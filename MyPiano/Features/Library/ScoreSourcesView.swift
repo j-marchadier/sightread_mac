@@ -8,7 +8,7 @@ struct ScoreSource: Identifiable {
     let summary: LocalizedStringKey
     let license: LocalizedStringKey
 
-    static let all: [ScoreSource] = [
+    static var all: [ScoreSource] { [
         ScoreSource(
             id: "mutopia", name: "Mutopia Project",
             url: URL(string: "https://www.mutopiaproject.org/cgibin/make-table.cgi?Instrument=Piano")!,
@@ -27,7 +27,7 @@ struct ScoreSource: Identifiable {
             summary: "Partitions libres transcrites par des bénévoles sur MuseScore. Choisissez « Télécharger › MusicXML » (compte gratuit nécessaire).",
             license: "CC0 (aucune restriction)"
         ),
-    ]
+    ] }
 }
 
 struct ScoreSourcesView: View {
