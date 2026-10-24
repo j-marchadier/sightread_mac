@@ -219,8 +219,8 @@ struct FallingNotesRenderer {
         for index in indices {
             let y = layout.y(for: scene.song.measures[index].start, now: frame.time)
             lines.addRect(CGRect(x: 0, y: y, width: size.width, height: 1))
-            let number = Text(verbatim: String(scene.song.measures[index].number)).font(.caption2.monospacedDigit()).foregroundStyle(palette.measureText)
-            context.draw(number, at: CGPoint(x: 6, y: y - 3), anchor: .bottomLeading)
+            let number = TextPaths.shared.label(String(scene.song.measures[index].number), size: 10, monospacedDigits: true)
+            context.fill(number, at: CGPoint(x: 6, y: y - 3), anchor: .bottomLeading, with: palette.measureText)
         }
         context.fill(lines, with: .color(palette.measureLine))
     }
@@ -248,8 +248,8 @@ struct FallingNotesRenderer {
             var labelTop = shape.maxY - 3
             if let labels = scene.labels, labels.indices.contains(note.id), rect.width >= 9, rect.height >= 14 {
                 let fontSize = min(12, max(7, rect.width * 0.5))
-                let label = Text(verbatim: labels[note.id]).font(.system(size: fontSize, weight: .semibold)).foregroundStyle(palette.noteText)
-                context.draw(label, at: CGPoint(x: shape.midX, y: shape.maxY - 3), anchor: .bottom)
+                let label = TextPaths.shared.label(labels[note.id], size: fontSize, weight: .semibold)
+                context.fill(label, at: CGPoint(x: shape.midX, y: shape.maxY - 3), anchor: .bottom, with: palette.noteText)
                 labelTop -= fontSize + 3
             }
             if let fingers = scene.fingers, fingers.indices.contains(note.id), let finger = fingers[note.id],
@@ -257,10 +257,8 @@ struct FallingNotesRenderer {
                 let size = min(15, max(11, rect.width * 0.8))
                 let disc = CGRect(x: shape.midX - size / 2, y: labelTop - size, width: size, height: size)
                 context.fill(Path(ellipseIn: disc), with: .color(.white.opacity(finger.isWritten ? 0.95 : 0.7)))
-                let digit = Text(verbatim: String(finger.number))
-                    .font(.system(size: size * 0.72, weight: .bold, design: .rounded))
-                    .foregroundStyle(color.opacity(1))
-                context.draw(digit, at: CGPoint(x: disc.midX, y: disc.midY))
+                let digit = TextPaths.shared.label(String(finger.number), size: size * 0.72, weight: .bold, rounded: true)
+                context.fill(digit, at: CGPoint(x: disc.midX, y: disc.midY), with: color.opacity(1))
             }
         }
     }
@@ -317,8 +315,8 @@ struct FallingNotesRenderer {
             if let color = fill(for: key) { context.fill(path, with: .color(color)) }
             if let style = scene.keyNames, key.pitch % 12 == 0, key.width >= 11 {
                 let name = style.name(of: Speller.spell(Int(key.pitch), in: nil), includeOctave: true)
-                let label = Text(verbatim: name).font(.system(size: min(11, key.width * 0.45))).foregroundStyle(palette.keyLabel)
-                context.draw(label, at: CGPoint(x: rect.midX, y: rect.maxY - 4), anchor: .bottom)
+                let label = TextPaths.shared.label(name, size: min(11, key.width * 0.45))
+                context.fill(label, at: CGPoint(x: rect.midX, y: rect.maxY - 4), anchor: .bottom, with: palette.keyLabel)
             }
         }
         for key in keyboard.keys where key.isBlack {

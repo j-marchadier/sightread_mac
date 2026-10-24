@@ -266,8 +266,8 @@ struct SheetRenderer {
         }
         context.fill(lines, with: .color(palette.staffLine))
         if let first = system.measures.first {
-            let number = Text(verbatim: String(scene.song.measures[first].number)).font(.system(size: space * 1.1)).foregroundStyle(palette.measureNumber)
-            context.draw(number, at: CGPoint(x: staffLeft, y: trebleTop - space * 2.2), anchor: .bottomLeading)
+            let number = TextPaths.shared.label(String(scene.song.measures[first].number), size: space * 1.1)
+            context.fill(number, at: CGPoint(x: staffLeft, y: trebleTop - space * 2.2), anchor: .bottomLeading, with: palette.measureNumber)
         }
 
         if let loop = frame.loop, loop.upperBound > system.start, loop.lowerBound < system.end {
@@ -309,8 +309,8 @@ struct SheetRenderer {
         for measure in scene.song.measures where measure.start >= from - 1 && measure.start <= to {
             let position = x(measure.start)
             lines.addRect(CGRect(x: position - 0.6, y: trebleTop, width: 1.2, height: bassTop + space * 4 - trebleTop))
-            let number = Text(verbatim: String(measure.number)).font(.system(size: space * 1.1)).foregroundStyle(palette.measureNumber)
-            context.draw(number, at: CGPoint(x: position + 2, y: trebleTop - space * 0.6), anchor: .bottomLeading)
+            let number = TextPaths.shared.label(String(measure.number), size: space * 1.1)
+            context.fill(number, at: CGPoint(x: position + 2, y: trebleTop - space * 0.6), anchor: .bottomLeading, with: palette.measureNumber)
         }
         context.fill(lines, with: .color(palette.staffLine))
     }
@@ -638,10 +638,11 @@ struct SheetRenderer {
             edge = max(y(numbered.map(\.step).max()!, clef), top(clef) + space * 4) + space * 0.9 + extra
         }
         for item in ordered {
-            var text = Text(verbatim: String(item.finger.number)).font(.system(size: space * 1.05, weight: item.finger.isWritten ? .semibold : .regular))
-            if !item.finger.isWritten { text = text.italic() }
-            context.draw(text.foregroundStyle(item.finger.isWritten ? palette.ink : palette.faded),
-                         at: CGPoint(x: centerX, y: edge), anchor: above ? .bottom : .top)
+            let written = item.finger.isWritten
+            let label = TextPaths.shared.label(String(item.finger.number), size: space * 1.05,
+                                               weight: written ? .semibold : .regular, italic: !written)
+            context.fill(label, at: CGPoint(x: centerX, y: edge), anchor: above ? .bottom : .top,
+                         with: written ? palette.ink : palette.faded)
             edge += above ? -lineHeight : lineHeight
         }
     }
@@ -671,9 +672,9 @@ struct SheetRenderer {
 
     private func drawName(_ name: String, x: CGFloat, step: Int, clef: Clef, color: Color, in context: inout GraphicsContext) {
         let below = step < StaffGeometry.middleLineStep
-        let label = Text(verbatim: name).font(.system(size: space * 0.95, weight: .medium)).foregroundStyle(color)
+        let label = TextPaths.shared.label(name, size: space * 0.95, weight: .medium)
         let anchorY = y(step, clef) + (below ? space * 1.1 : -space * 1.1)
-        context.draw(label, at: CGPoint(x: x, y: anchorY), anchor: below ? .top : .bottom)
+        context.fill(label, at: CGPoint(x: x, y: anchorY), anchor: below ? .top : .bottom, with: color)
     }
 
     private func drawPressedKeys(in context: inout GraphicsContext, frame: FallingNotesFrame, x: CGFloat) {
