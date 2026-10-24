@@ -23,7 +23,7 @@ struct MyPianoApp: App {
             PracticeTestView()
                 .environment(model)
         }
-        .defaultSize(width: 540, height: 760)
+        .defaultSize(width: 1240, height: 800)
     }
 }
 

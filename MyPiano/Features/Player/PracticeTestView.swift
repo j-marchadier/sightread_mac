@@ -1,4 +1,5 @@
 import MyPianoCore
+import MyPianoRendering
 import SwiftUI
 
 /// Temporary practice window (Phase 5): plays a built-in song with the real engine, without the
@@ -10,21 +11,38 @@ struct PracticeTestView: View {
     @State private var player: PlayerViewModel?
 
     var body: some View {
-        Form {
-            Section {
-                Picker("Morceau", selection: $selectedID) {
-                    Text("Choisir…").tag(String?.none)
-                    ForEach(songs) { song in
-                        Text(song.composer.map { "\(song.title) — \($0)" } ?? song.title).tag(Optional(song.id))
-                    }
+        HSplitView {
+            Group {
+                if let player {
+                    FallingNotesView(
+                        scene: player.scene,
+                        frame: { [pressedKeys = model.pressedKeys] in player.frame(pressedKeys: pressedKeys) },
+                        onKey: { pitch, isDown in model.playMouseKey(pitch, isDown: isDown) },
+                        onScrub: { player.scrub(by: $0) },
+                        onScrubEnded: { player.endScrub() }
+                    )
+                } else {
+                    ContentUnavailableView("Choisissez un morceau", systemImage: "music.note.list")
                 }
             }
-            if let player {
-                PracticeControls(player: player)
+            .frame(minWidth: 560, minHeight: 480)
+
+            Form {
+                Section {
+                    Picker("Morceau", selection: $selectedID) {
+                        Text("Choisir…").tag(String?.none)
+                        ForEach(songs) { song in
+                            Text(song.composer.map { "\(song.title) — \($0)" } ?? song.title).tag(Optional(song.id))
+                        }
+                    }
+                }
+                if let player {
+                    PracticeControls(player: player)
+                }
             }
+            .formStyle(.grouped)
+            .frame(minWidth: 320, idealWidth: 360, maxWidth: 440)
         }
-        .formStyle(.grouped)
-        .frame(minWidth: 480, idealWidth: 540, minHeight: 620)
         .task {
             model.start()
             if songs.isEmpty { songs = BuiltinLibrary.load() }
@@ -89,6 +107,18 @@ private struct PracticeControls: View {
             Toggle("Boucler les 4 premières mesures", isOn: loopBinding)
         }
 
+        Section("Affichage") {
+            Toggle("Clavier complet (88 touches)", isOn: displayBinding(\.fullKeyboard))
+            Toggle("Noms des notes", isOn: displayBinding(\.showsNoteNames))
+            Picker("Nommage", selection: displayBinding(\.naming)) {
+                Text("Do Ré Mi").tag(NoteNamingStyle.solfege)
+                Text("C D E").tag(NoteNamingStyle.letters)
+            }
+            Slider(value: displayBinding(\.pointsPerSecond), in: 100...500) {
+                Text("Vitesse de défilement")
+            }
+        }
+
         Section("Statistiques") {
             let stats = player.snapshot.stats
             LabeledContent("Précision", value: "\(stats.accuracyPercent) %")
@@ -120,6 +150,10 @@ private struct PracticeControls: View {
 
     private func binding<Value: Sendable>(_ keyPath: WritableKeyPath<PracticeSettings, Value>) -> Binding<Value> {
         Binding(get: { player.settings[keyPath: keyPath] }, set: { value in player.update { $0[keyPath: keyPath] = value } })
+    }
+
+    private func displayBinding<Value: Sendable>(_ keyPath: WritableKeyPath<DisplayOptions, Value>) -> Binding<Value> {
+        Binding(get: { player.display[keyPath: keyPath] }, set: { value in player.updateDisplay { $0[keyPath: keyPath] = value } })
     }
 
     private func handBinding(_ hand: Hand) -> Binding<Bool> {

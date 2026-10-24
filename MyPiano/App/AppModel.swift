@@ -20,6 +20,8 @@ final class AppModel {
     @ObservationIgnored let latency = LatencyMonitor()
     /// Delivers keyboard events to the practice session currently open.
     @ObservationIgnored let practiceInput = PracticeInputRouter()
+    /// Keys held right now, read by the renderers every frame.
+    @ObservationIgnored let pressedKeys = PressedKeys()
 
     private(set) var recentEvents: [KeyboardEventRecord] = []
     private(set) var pressedPitches: Set<UInt8> = []
@@ -36,9 +38,11 @@ final class AppModel {
         let audio = self.audio
         let latency = self.latency
         let practiceInput = self.practiceInput
+        let pressedKeys = self.pressedKeys
         midi.setEventHandler { [weak self] event in
             // On CoreMIDI's thread: sound first, then judging, bookkeeping last.
             audio.playerPiano.handle(event)
+            pressedKeys.apply(event)
             if case .noteOn = event.kind {
                 latency.record(HostTime.now - event.time)
             }
@@ -47,6 +51,15 @@ final class AppModel {
             Task { @MainActor in model?.record(event) }
         }
         midi.start()
+    }
+
+    /// A key played with the mouse on an on-screen keyboard.
+    func playMouseKey(_ pitch: UInt8, isDown: Bool) {
+        let event = InputEvent(kind: isDown ? .noteOn(pitch: pitch, velocity: 80) : .noteOff(pitch: pitch), time: HostTime.now)
+        audio.playerPiano.handle(event)
+        pressedKeys.apply(event)
+        practiceInput.handle(event)
+        record(event)
     }
 
     func restartAudio() {

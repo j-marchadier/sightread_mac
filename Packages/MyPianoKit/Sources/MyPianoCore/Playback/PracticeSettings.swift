@@ -19,6 +19,14 @@ public struct LoopRange: Sendable, Equatable, Codable {
         self.firstMeasure = min(firstMeasure, lastMeasure)
         self.lastMeasure = max(firstMeasure, lastMeasure)
     }
+
+    /// Song seconds covered by the loop, with measure indices clamped to the song.
+    public func timeRange(in song: Song) -> ClosedRange<TimeInterval>? {
+        guard !song.measures.isEmpty else { return nil }
+        let first = min(max(0, firstMeasure), song.measures.count - 1)
+        let last = min(max(first, lastMeasure), song.measures.count - 1)
+        return song.measures[first].start...song.measures[last].end
+    }
 }
 
 public struct MetronomeSettings: Sendable, Equatable, Codable {

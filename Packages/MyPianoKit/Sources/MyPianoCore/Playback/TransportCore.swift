@@ -110,10 +110,8 @@ public struct TransportCore: Sendable {
     }
 
     public var loopTimes: (start: TimeInterval, end: TimeInterval)? {
-        guard let loop = settings.loop, !song.measures.isEmpty else { return nil }
-        let first = min(max(0, loop.firstMeasure), song.measures.count - 1)
-        let last = min(max(first, loop.lastMeasure), song.measures.count - 1)
-        return (song.measures[first].start, song.measures[last].end)
+        guard let range = settings.loop?.timeRange(in: song) else { return nil }
+        return (range.lowerBound, range.upperBound)
     }
 
     /// Whether the note belongs to a hand being practised.
