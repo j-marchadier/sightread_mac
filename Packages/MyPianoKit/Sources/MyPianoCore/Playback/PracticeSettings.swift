@@ -97,3 +97,29 @@ public struct PracticeSettings: Sendable, Equatable, Codable {
         return (min(speedRange.upperBound, max(speedRange.lowerBound, value)) * 100).rounded() / 100
     }
 }
+
+extension PracticeSettings {
+    enum CodingKeys: String, CodingKey {
+        case hands, mode, speed, loop, metronome, countdownEnabled, transpose, muteMyPart
+        case handAssignment, mutedTracks, windows, wrongNoteSound, waitTolerance
+    }
+
+    /// Missing keys keep their default, so settings saved by an older version still load.
+    public init(from decoder: Decoder) throws {
+        self.init()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        hands = try container.decodeIfPresent(Set<Hand>.self, forKey: .hands) ?? hands
+        mode = try container.decodeIfPresent(PracticeMode.self, forKey: .mode) ?? mode
+        speed = try container.decodeIfPresent(Double.self, forKey: .speed) ?? speed
+        loop = try container.decodeIfPresent(LoopRange.self, forKey: .loop)
+        metronome = try container.decodeIfPresent(MetronomeSettings.self, forKey: .metronome) ?? metronome
+        countdownEnabled = try container.decodeIfPresent(Bool.self, forKey: .countdownEnabled) ?? countdownEnabled
+        transpose = try container.decodeIfPresent(Int.self, forKey: .transpose) ?? transpose
+        muteMyPart = try container.decodeIfPresent(Bool.self, forKey: .muteMyPart) ?? muteMyPart
+        handAssignment = try container.decodeIfPresent(HandAssignment.self, forKey: .handAssignment) ?? handAssignment
+        mutedTracks = try container.decodeIfPresent(Set<Int>.self, forKey: .mutedTracks) ?? mutedTracks
+        windows = try container.decodeIfPresent(JudgingWindows.self, forKey: .windows) ?? windows
+        wrongNoteSound = try container.decodeIfPresent(Bool.self, forKey: .wrongNoteSound) ?? wrongNoteSound
+        waitTolerance = try container.decodeIfPresent(TimeInterval.self, forKey: .waitTolerance) ?? waitTolerance
+    }
+}
