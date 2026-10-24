@@ -39,6 +39,10 @@ série, score) et historique de progression par morceau.
 
 ### Bibliothèque et import
 
+- **Pochettes** façon album : chaque morceau a une pochette colorée générée par l'app (dégradé propre au
+  compositeur, motif musical, titre), remplaçable par votre propre image dans « Modifier… ». La bibliothèque
+  s'affiche en **grille de pochettes** (triable par titre, compositeur, difficulté ou dernière séance) ou en
+  **liste** ; la fiche du morceau prend les couleurs de sa pochette.
 - **16 morceaux intégrés** (Bach, Beethoven, Debussy, Mozart, Satie, Joplin…), disponibles hors ligne.
 - Import de fichiers **MIDI** (`.mid`, `.midi`) et **MusicXML** (`.musicxml`, `.xml`, `.mxl`) :
   **Fichier › Importer… (⌘O)**, **glisser-déposer** sur la fenêtre, sur l'**icône du Dock**, **Ouvrir avec**

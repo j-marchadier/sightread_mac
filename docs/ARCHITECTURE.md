@@ -76,8 +76,12 @@ formulaires) reste opaque.
   boucle, métronome, volume · visualisation · réglages). Le transport, la frise des mesures et la position forment
   une barre flottante (`PlayerControlBar`) dans un `GlassEffectContainer`, posée en `safeAreaInset` sous la
   visualisation pour ne jamais masquer le clavier. Le décompte s'affiche dans une bulle de verre circulaire.
-- **Fiche d'un morceau** : bandeau dégradé (couleurs `HeroStart`/`HeroEnd`) qui passe sous la barre d'outils avec
-  `backgroundExtensionEffect()`.
+- **Pochettes** : `GeneratedArtwork` dessine une pochette par morceau (16 dégradés, choisis par un hachage stable
+  du compositeur ; motif clé de sol, portée, anneaux ou clavier selon le titre ; titre et compositeur). Les images
+  choisies par l'utilisateur sont recadrées en carré 800 px et rangées dans `Application Support/MyPiano/Artwork`
+  (`ArtworkStore`). La bibliothèque s'affiche en grille de pochettes ou en tableau.
+- **Fiche d'un morceau** : pochette et titre sur un bandeau aux couleurs de la pochette (image floutée ou dégradé)
+  qui passe sous la barre d'outils avec `backgroundExtensionEffect()`.
 - **Boutons** : action principale en `.glassProminent`, actions secondaires en `.glass` avec `.tint(.clear)`
   (recommandation macOS). Couleur d'accent indigo, assortie à l'icône.
 - **Icône** : touches de verre dépoli et fumé sur dégradé indigo → violet, bord lumineux

@@ -31,6 +31,7 @@
 		958B2420687916C8197EDB06 /* SongDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8CEDB7BB1BCFAD5C0FD10E /* SongDetailView.swift */; };
 		9BE1950DC9DF60530E347531 /* MyPianoCore in Frameworks */ = {isa = PBXBuildFile; productRef = 11A26D8A143B7E13524621A8 /* MyPianoCore */; };
 		9D2E97B0DE7715952335E38E /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2902E5EE59EB0A9D0BE4C8E /* MainWindow.swift */; };
+		9E41B374D32D6922600C6CAB /* SongArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759283C08E8BED7E98AA636 /* SongArtwork.swift */; };
 		9F7BF2F0080B3CE58F8E9F03 /* ScoreSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611648CACD0F0ED4E63DDEA3 /* ScoreSourcesView.swift */; };
 		A689439571392CD64BE8B965 /* SongEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6EB11262A7CDCE0B50478B /* SongEditorView.swift */; };
 		AF16A893FE8F765A633FF454 /* MyPianoMIDI in Frameworks */ = {isa = PBXBuildFile; productRef = 72482C0D4B8B566823B3CA87 /* MyPianoMIDI */; };
@@ -44,11 +45,13 @@
 		C64D1E3899CDF8971F8D0E6B /* ScoreExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80978526262E65AD8A1F731B /* ScoreExport.swift */; };
 		DBE2DAD3E047E0C05666C92B /* SongBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534376F9C00F4CF050AEA6D9 /* SongBrowserView.swift */; };
 		EBF00EE1F0977CCC37147D25 /* BuiltinSongs in Resources */ = {isa = PBXBuildFile; fileRef = F163C893E4B4EB3B27CB39E8 /* BuiltinSongs */; };
+		F5C301A1FBD8D48389C626DD /* ArtworkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA403E9857552A247F8C1B3 /* ArtworkStore.swift */; };
 		F62F73340DE9B450852DBF92 /* PlayerInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BBE09A2448B6DCCE81E2B /* PlayerInspector.swift */; };
 		FD0D7DFD891FF4D789259F64 /* PlayerTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FFDD3A66349493EEF45E1 /* PlayerTarget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1759283C08E8BED7E98AA636 /* SongArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongArtwork.swift; sourceTree = "<group>"; };
 		17F6FBAE371CC4A3CDAE71A2 /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
 		21E7B24E64B2C5EBED98E74B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		28C7B80554D7070359260FCE /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
@@ -70,6 +73,7 @@
 		82BB8818E3EE629384664F36 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		972613E22810CB83BAA6311D /* WatchedFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedFolder.swift; sourceTree = "<group>"; };
 		987E24F6218FDF56729C58C9 /* FreePlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreePlayView.swift; sourceTree = "<group>"; };
+		9DA403E9857552A247F8C1B3 /* ArtworkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkStore.swift; sourceTree = "<group>"; };
 		AB6EB11262A7CDCE0B50478B /* SongEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongEditorView.swift; sourceTree = "<group>"; };
 		B8311EE303E657376CB0620E /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		BCBD4182D016515FBBADCE5E /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = MyPiano/Resources/Fonts; sourceTree = SOURCE_ROOT; };
@@ -145,6 +149,7 @@
 			children = (
 				D2902E5EE59EB0A9D0BE4C8E /* MainWindow.swift */,
 				611648CACD0F0ED4E63DDEA3 /* ScoreSourcesView.swift */,
+				1759283C08E8BED7E98AA636 /* SongArtwork.swift */,
 				534376F9C00F4CF050AEA6D9 /* SongBrowserView.swift */,
 				FD8CEDB7BB1BCFAD5C0FD10E /* SongDetailView.swift */,
 				AB6EB11262A7CDCE0B50478B /* SongEditorView.swift */,
@@ -248,6 +253,7 @@
 			children = (
 				340B6E85A322123EB714C291 /* AppDelegate.swift */,
 				82BB8818E3EE629384664F36 /* AppModel.swift */,
+				9DA403E9857552A247F8C1B3 /* ArtworkStore.swift */,
 				40ADC6EB9A9DF6EC6CBB7303 /* Commands.swift */,
 				3871069E2B3BA1C5035701A9 /* LibraryModel.swift */,
 				389C5A973807A99336A23409 /* MyPianoApp.swift */,
@@ -345,6 +351,7 @@
 				B5A44BE881992670DAF40074 /* AcknowledgementsView.swift in Sources */,
 				303F7CC51D8ED7E57F38AD09 /* AppDelegate.swift in Sources */,
 				B14BBCD4C424A0916D88377E /* AppModel.swift in Sources */,
+				F5C301A1FBD8D48389C626DD /* ArtworkStore.swift in Sources */,
 				7BC088B31B233FD631BED0B0 /* Commands.swift in Sources */,
 				1C45540912D57D2F0F9BA488 /* ExercisesView.swift in Sources */,
 				943338A5AE016B32AE8AF8F7 /* FreePlayView.swift in Sources */,
@@ -365,6 +372,7 @@
 				9F7BF2F0080B3CE58F8E9F03 /* ScoreSourcesView.swift in Sources */,
 				27CA2E880370BEC3F9F1A49E /* SessionSummaryView.swift in Sources */,
 				304FD25DB376B50AD3254B5A /* SettingsView.swift in Sources */,
+				9E41B374D32D6922600C6CAB /* SongArtwork.swift in Sources */,
 				DBE2DAD3E047E0C05666C92B /* SongBrowserView.swift in Sources */,
 				958B2420687916C8197EDB06 /* SongDetailView.swift in Sources */,
 				A689439571392CD64BE8B965 /* SongEditorView.swift in Sources */,

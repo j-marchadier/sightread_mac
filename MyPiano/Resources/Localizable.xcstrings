@@ -243,6 +243,16 @@
         }
       }
     },
+    "Afficher les pochettes ou la liste": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show covers or the list"
+          }
+        }
+      }
+    },
     "Afficher ou masquer les réglages": {
       "localizations": {
         "en": {
@@ -665,6 +675,16 @@
         }
       }
     },
+    "Cette image ne peut pas être lue.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This image can't be read."
+          }
+        }
+      }
+    },
     "Changer de dossier…": {
       "localizations": {
         "en": {
@@ -702,6 +722,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose a Folder…"
+          }
+        }
+      }
+    },
+    "Choisir une image…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose an Image…"
           }
         }
       }
@@ -884,6 +914,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Last measure"
+          }
+        }
+      }
+    },
+    "Dernière séance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last Session"
           }
         }
       }
@@ -1268,6 +1308,16 @@
         }
       }
     },
+    "Grille": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grid"
+          }
+        }
+      }
+    },
     "Générer de nouvelles notes": {
       "localizations": {
         "en": {
@@ -1519,6 +1569,16 @@
         }
       }
     },
+    "La pochette n'a pas pu être enregistrée.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cover couldn't be saved."
+          }
+        }
+      }
+    },
     "Latence": {
       "localizations": {
         "en": {
@@ -1665,6 +1725,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Read music"
+          }
+        }
+      }
+    },
+    "Liste": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "List"
           }
         }
       }
@@ -2263,6 +2333,16 @@
         }
       }
     },
+    "Pochette": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cover"
+          }
+        }
+      }
+    },
     "Portée": {
       "localizations": {
         "en": {
@@ -2309,6 +2389,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Accuracy"
+          }
+        }
+      }
+    },
+    "Présentation": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View"
           }
         }
       }
@@ -2684,6 +2774,36 @@
         }
       }
     },
+    "Trier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort"
+          }
+        }
+      }
+    },
+    "Trier les morceaux": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort songs"
+          }
+        }
+      }
+    },
+    "Trier par": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort By"
+          }
+        }
+      }
+    },
     "Trouver des partitions": {
       "localizations": {
         "en": {
@@ -2740,6 +2860,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Once downloaded, drag the files onto MyPiano's window or icon, use File › Import… (⌘O), or put them in your watched folder."
+          }
+        }
+      }
+    },
+    "Utiliser la pochette générée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the Generated Cover"
           }
         }
       }

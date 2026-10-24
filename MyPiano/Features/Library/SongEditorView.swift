@@ -1,3 +1,4 @@
+import AppKit
 import MyPianoCore
 import SwiftUI
 
@@ -12,10 +13,32 @@ struct SongEditorView: View {
     @State private var composer = ""
     @State private var difficulty = 1
     @State private var settings = PracticeSettings()
+    @State private var newArtwork: NSImage?
+    @State private var resetsArtwork = false
+    @State private var isPickingArtwork = false
+    @State private var artworkError: String?
 
     var body: some View {
         VStack(spacing: 0) {
             Form {
+                Section("Pochette") {
+                    HStack(spacing: 16) {
+                        artworkPreview
+                            .frame(width: 96, height: 96)
+                            .shadow(color: .black.opacity(0.15), radius: 4, y: 2)
+                        VStack(alignment: .leading, spacing: 8) {
+                            Button("Choisir une image…") { isPickingArtwork = true }
+                            Button("Utiliser la pochette générée") {
+                                newArtwork = nil
+                                resetsArtwork = true
+                            }
+                            .disabled(!hasCustomArtwork)
+                            if let artworkError {
+                                Text(artworkError).font(.caption).foregroundStyle(.red)
+                            }
+                        }
+                    }
+                }
                 Section("Morceau") {
                     TextField("Titre", text: $title)
                     TextField("Compositeur", text: $composer)
@@ -67,8 +90,41 @@ struct SongEditorView: View {
             }
             .padding()
         }
-        .frame(width: 560, height: 640)
+        .frame(width: 560, height: 720)
         .task { load() }
+        .fileImporter(isPresented: $isPickingArtwork, allowedContentTypes: [.image]) { result in
+            guard case let .success(url) = result else { return }
+            let access = url.startAccessingSecurityScopedResource()
+            defer { if access { url.stopAccessingSecurityScopedResource() } }
+            if let image = NSImage(contentsOf: url) {
+                newArtwork = image
+                resetsArtwork = false
+                artworkError = nil
+            } else {
+                artworkError = String(localized: "Cette image ne peut pas être lue.")
+            }
+        }
+    }
+
+    private var hasCustomArtwork: Bool {
+        newArtwork != nil || (!resetsArtwork && model.library.artwork.image(for: songID) != nil)
+    }
+
+    /// The cover as it will be once saved.
+    @ViewBuilder
+    private var artworkPreview: some View {
+        if let newArtwork {
+            Color.clear.aspectRatio(1, contentMode: .fit)
+                .overlay { Image(nsImage: newArtwork).resizable().scaledToFill() }
+                .clipShape(.rect(cornerRadius: 8))
+        } else if !resetsArtwork, let image = model.library.artwork.image(for: songID) {
+            Color.clear.aspectRatio(1, contentMode: .fit)
+                .overlay { Image(nsImage: image).resizable().scaledToFill() }
+                .clipShape(.rect(cornerRadius: 8))
+        } else {
+            GeneratedArtwork(title: title, composer: composer.isEmpty ? nil : composer)
+                .clipShape(.rect(cornerRadius: 8))
+        }
     }
 
     private func load() {
@@ -87,6 +143,16 @@ struct SongEditorView: View {
         model.library.updateDetails(songID, title: title.trimmingCharacters(in: .whitespaces),
                                     composer: composer.isEmpty ? nil : composer, difficulty: difficulty)
         if song != nil { model.library.saveSettings(settings, for: songID) }
+        if let newArtwork {
+            do {
+                try model.library.artwork.setImage(newArtwork, for: songID)
+            } catch {
+                artworkError = String(localized: "La pochette n'a pas pu être enregistrée.")
+                return
+            }
+        } else if resetsArtwork {
+            model.library.artwork.removeImage(for: songID)
+        }
         dismiss()
     }
 }

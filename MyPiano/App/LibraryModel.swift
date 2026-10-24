@@ -14,6 +14,8 @@ final class LibraryModel {
 
     @ObservationIgnored private let store: LibraryFileStore
     @ObservationIgnored let songsFolder: URL
+    /// Covers chosen by the user.
+    let artwork: ArtworkStore
     @ObservationIgnored private let builtinFolder: URL?
     @ObservationIgnored private var cache: [String: Song] = [:]
     @ObservationIgnored private var pendingSave: Task<Void, Never>?
@@ -24,6 +26,7 @@ final class LibraryModel {
         let folder = support.appendingPathComponent("MyPiano", isDirectory: true)
         store = LibraryFileStore(url: folder.appendingPathComponent("Library.json"))
         songsFolder = folder.appendingPathComponent("Songs", isDirectory: true)
+        artwork = ArtworkStore(folder: folder.appendingPathComponent("Artwork", isDirectory: true))
         builtinFolder = Bundle.main.url(forResource: "BuiltinSongs", withExtension: nil)
         load()
     }
@@ -131,6 +134,7 @@ final class LibraryModel {
         if let url = fileURL(for: entry) { try? FileManager.default.removeItem(at: url) }
         database.remove(id)
         cache[id] = nil
+        artwork.removeImage(for: id)
         save()
     }
 

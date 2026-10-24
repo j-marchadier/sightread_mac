@@ -68,9 +68,12 @@ struct SongDetailView: View {
         }
     }
 
-    /// Title band on a gradient that runs under the glass toolbar.
+    /// Cover and title on a band coloured by the cover, running under the glass toolbar.
     private var hero: some View {
-        HStack(alignment: .bottom) {
+        HStack(alignment: .bottom, spacing: 20) {
+            SongArtwork(song: song, cornerRadius: 12)
+                .frame(width: 168, height: 168)
+                .shadow(color: .black.opacity(0.3), radius: 14, y: 6)
             VStack(alignment: .leading, spacing: 4) {
                 Text(song.title).font(.largeTitle.bold())
                 if let composer = song.composer {
@@ -79,6 +82,7 @@ struct SongDetailView: View {
                 DifficultyView(level: song.difficulty, filled: .white, empty: .white.opacity(0.3)).padding(.top, 4)
             }
             .foregroundStyle(.white)
+            .shadow(color: .black.opacity(0.2), radius: 4)
             Spacer()
             Button {
                 openWindow(id: WindowID.player, value: PlayerTarget.song(id: song.id))
@@ -90,18 +94,26 @@ struct SongDetailView: View {
             .keyboardShortcut(.defaultAction)
         }
         .padding(24)
-        .frame(maxWidth: .infinity, minHeight: 230, alignment: .bottom)
+        .padding(.top, 52)
+        .frame(maxWidth: .infinity, alignment: .bottom)
         .background {
-            LinearGradient(colors: [Color("HeroStart"), Color("HeroEnd")], startPoint: .topLeading, endPoint: .bottomTrailing)
-                .overlay(alignment: .topTrailing) {
-                    Image(systemName: "music.quarternote.3")
-                        .font(.system(size: 150, weight: .light))
-                        .foregroundStyle(.white.opacity(0.14))
-                        .padding(.top, 40)
-                        .padding(.trailing, 28)
-                        .accessibilityHidden(true)
-                }
+            heroBackground
+                .overlay(LinearGradient(colors: [.clear, .black.opacity(0.25)], startPoint: .top, endPoint: .bottom))
                 .backgroundExtensionEffect()
+        }
+    }
+
+    /// The custom cover blurred, or the generated cover's gradient.
+    @ViewBuilder
+    private var heroBackground: some View {
+        if let image = model.library.artwork.image(for: song.id) {
+            Image(nsImage: image)
+                .resizable()
+                .scaledToFill()
+                .blur(radius: 40, opaque: true)
+                .clipped()
+        } else {
+            ArtworkPalette.palette(title: song.title, composer: song.composer).gradient
         }
     }
 
