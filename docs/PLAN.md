@@ -118,30 +118,6 @@
 | 8.4 | Heuristique de difficulté (notes/s, polyphonie, étendue, altérations), modifiable | `MyPianoCore/Library/DifficultyEstimator.swift` | Tests : classement cohérent des 17 morceaux (Twinkle < Für Elise < Rondo) 🐧 | — |
 | 8.5 | Dossier surveillé (option) : bookmark security-scoped, surveillance, import automatique, suppression/renommage gérés | `MyPianoLibrary/FolderWatcher.swift` | Un fichier déposé dans le dossier apparaît dans la bibliothèque en < 5 s, y compris après redémarrage 👤 | Accès perdu (bookmark périmé) → demande de réautorisation |
 | 8.6 | Erreurs claires : fichier corrompu, format non supporté, MusicXML sans notes, piste vide ; rapport d'import multi-fichiers | `MyPianoLibrary/ImportError.swift` + localisation | Chaque cas testé avec un fichier de test et un message localisé 🍎 | — |
-
-**Livrable :** import complet et robuste. 🍎👤
-
----
-
-## Phase 9 — Finitions et distribution
-
-| # | Tâche | Fichiers | Terminé quand | Risques |
-|---|---|---|---|---|
-| 9.1 | Icône macOS (visuel fourni par toi, ou direction proposée : touche de piano stylisée sur fond dégradé, style Big Sur+) ; fenêtre « À propos de MyPiano » © ; fenêtre « Mentions » (ACKNOWLEDGEMENTS) | `Assets.xcassets/AppIcon`, `MyPiano/Features/About/*` | Icône à toutes les tailles, À propos personnalisé 👤 | — |
-| 9.2 | Supprimer `reference/web/` et tout reliquat Bun/Node/Vite/Tailwind ; recherche globale de l'ancien nom, du domaine, de gtag | — | `grep -ri` des termes de l'inventaire 2.3 = 0 résultat (hors `ACKNOWLEDGEMENTS.md`, qui mentionne l'inspiration) 🐧 | Retrait de `LICENSE` seulement si plus aucun code/asset d'origine : les MIDI et Leland restent → **LICENSE conservé**, à rediscuter |
-| 9.3 | Script de build release (`.app` + `.dmg`), signature et notarisation documentées | `scripts/build-release.sh`, `scripts/make-dmg.sh`, `docs/RELEASE.md` | `.app` et `.dmg` produits sur ton Mac (non signés) 🍎 ; procédure suivie par toi 👤 | Notarisation : nécessite ton compte développeur |
-| 9.4 | Vérification hors ligne : aucun entitlement réseau, aucune URL dans le binaire (`strings`) | `scripts/check-offline.sh` | Script vert 🍎 | — |
-| 9.5 | Mise à jour `README.md`, `docs/` | — | Docs cohérentes avec le produit livré 🐧 | — |
-
-**Livrable :** `MyPiano.app` et `.dmg` prêts à signer, `xcodebuild test` vert.
-
----
-
-## Décisions prises avant la Phase 2
-
-1. **Pas d'enregistrement** du jeu (ni MIDI, ni audio).
-2. **Pas de CI GitHub** : compilation et tests Apple sur ton Mac ; le Core est testé dans mon environnement.
-3. Identifiant d'app : **`fr.jmarchadier.MyPiano`** ; © « Julien Marchadier ».
-4. Clavier : **Arturia KeyLab Essential 61** (clavier de commande, sans son interne : le son vient du Mac).
-5. Son : **piano intégré à macOS** (banque General MIDI système).
-6. **Swan Lake retiré** de la bibliothèque intégrée.
+| 8.7 | Doigtés écrits : lecture de `<fingering>` dans le MusicXML (note, main, doigt 1–5), affichage au-dessus/au-dessous des têtes de note et sur les notes qui tombent, option d'affichage | `MyPianoCore/Parsing/MusicXML/MusicXMLImporter.swift`, `MyPianoCore/Model/Song.swift`, `MyPianoRendering/*` | Tests : doigtés d'un fichier de test lus et rattachés aux bonnes notes 🐧 ; affichés dans les trois vues 👤 | Doigtés multiples ou de substitution sur une même note → on garde le premier |
+| 8.8 | Doigtés suggérés : calcul par main du doigté de moindre coût (écarts entre doigts, passages du pouce, touches noires, accords), utilisé quand le fichier n'en contient pas ; distingués visuellement des doigtés écrits ; désactivable | `MyPianoCore/Fingering/FingeringSuggester.swift` | Tests : gammes de Do et Sol majeur, arpèges et accords simples → doigtés classiques 🐧 ; rapide (< 100 ms) sur les 16 morceaux 🐧 | Polyphonie dense moins fiable → présenté comme suggestion |
+| 8.9 | « Trouver des partitions… » (menu Aide et bibliothèque vide) : liste de sources libres (Mutopia, piano-midi.de, OpenScore) avec licence, ouverte dans le navigateur ; les fichiers téléchargés s'importent par glisser-déposer, « Ouvrir avec » ou le dossier surveillé | `MyPiano/Features/Library/ScoreSourcesView.swift` | Liens ouverts dans le navigateur, aucune connexion réseau depuis l'app 👤 | Sites qui changent d'adresse → liens regroupés dans un seul fichier |

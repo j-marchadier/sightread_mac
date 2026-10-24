@@ -887,6 +887,11 @@ Légende : **Garder** (réimplémenter tel quel), **Adapter** (garder l'intentio
 | Exercices | **Lecture de notes** + **phrases générées** uniquement. |
 | Clavier du Mac comme piano | **Conservé, en option.** |
 | Noms de notes | **Do, Ré, Mi, Fa, Sol, La, Si** par défaut. |
+| Mode Attendre | Tolérance réglable (0,25 s par défaut) ; une fois dépassée, le curseur revient en douceur juste avant la note attendue. |
+| Visualisations | Notes qui tombent, partition simplifiée, partition rythmique, **partition complète** (page avec retours à la ligne et curseur). |
+| Volume | Volume général de l'app + piano de l'utilisateur, morceau et métronome, réglables depuis le lecteur. |
+| Doigtés | **Oui** : lire les doigtés présents dans les MusicXML, puis suggestions automatiques (calcul hors ligne, désactivable). |
+| Banques de partitions | **Liens vers des sources libres** (Mutopia, piano-midi.de, OpenScore) ouverts dans le navigateur, puis import ; pas d'accès réseau dans l'app. |
 
 ---
 
