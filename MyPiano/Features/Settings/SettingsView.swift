@@ -9,6 +9,8 @@ struct SettingsView: View {
                 .tabItem { Label("Clavier MIDI", systemImage: "pianokeys") }
             KeyboardDiagnosticsView(part: .audio)
                 .tabItem { Label("Audio", systemImage: "speaker.wave.2") }
+            LibrarySettingsView()
+                .tabItem { Label("Bibliothèque", systemImage: "books.vertical") }
             DisplaySettingsView()
                 .tabItem { Label("Affichage", systemImage: "eye") }
             PracticeSettingsView()

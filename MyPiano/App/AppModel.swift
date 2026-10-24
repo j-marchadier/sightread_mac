@@ -17,7 +17,9 @@ struct KeyboardEventRecord: Identifiable {
 @MainActor
 @Observable
 final class AppModel {
-    let library = LibraryModel()
+    let library: LibraryModel
+    /// Optional folder whose files join the library by themselves.
+    let watchedFolder: WatchedFolder
     let midi = MIDIService()
     let audio = PianoAudioEngine()
     @ObservationIgnored let latency = LatencyMonitor()
@@ -51,6 +53,12 @@ final class AppModel {
     @ObservationIgnored private var keyMonitor: Any?
     @ObservationIgnored private var heldComputerKeys: [UInt16: UInt8] = [:]
 
+    init() {
+        let library = LibraryModel()
+        self.library = library
+        watchedFolder = WatchedFolder(library: library)
+    }
+
     func start() {
         guard !isStarted else { return }
         isStarted = true
@@ -79,6 +87,7 @@ final class AppModel {
         }
         midi.start()
         installComputerKeyboard()
+        watchedFolder.start()
     }
 
     /// Files opened from the Finder or dropped on the Dock icon: imported, and played when there is just one.

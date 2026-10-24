@@ -122,9 +122,55 @@ final class LibraryModel {
 
     func remove(_ id: String) {
         guard let entry = database.song(id), entry.source != .builtin else { return }
+        if entry.source == .watched, let hash = entry.contentHash {
+            // Removed on purpose: not imported again from the watched folder.
+            var ignored = Self.ignoredWatchedHashes
+            ignored.insert(hash)
+            UserDefaults.standard.set(Array(ignored), forKey: Self.ignoredKey)
+        }
         if let url = fileURL(for: entry) { try? FileManager.default.removeItem(at: url) }
         database.remove(id)
         cache[id] = nil
+        save()
+    }
+
+    // MARK: Watched folder
+
+    private static let ignoredKey = "library.ignoredWatchedHashes"
+
+    private static var ignoredWatchedHashes: Set<String> {
+        Set(UserDefaults.standard.stringArray(forKey: ignoredKey) ?? [])
+    }
+
+    /// Brings the library in line with the files found in the watched folder.
+    func sync(with found: [WatchedFolderSync.FoundFile]) {
+        let actions = WatchedFolderSync.plan(found: found, library: database.songs, ignoring: Self.ignoredWatchedHashes)
+        guard !actions.isEmpty else { return }
+        var added: [URL] = []
+        for action in actions {
+            switch action {
+            case let .add(path):
+                added.append(URL(fileURLWithPath: path))
+            case let .move(id, path):
+                database.update(id) { $0.sourcePath = path }
+            case let .remove(id):
+                if let entry = database.song(id), let url = fileURL(for: entry) { try? FileManager.default.removeItem(at: url) }
+                database.remove(id)
+                cache[id] = nil
+            }
+        }
+        if !added.isEmpty { importFiles(added, source: .watched) }
+        save()
+    }
+
+    /// The watched folder was given up: its songs become ordinary imported songs.
+    func detachWatchedSongs() {
+        for song in database.songs where song.source == .watched {
+            database.update(song.id) {
+                $0.source = .imported
+                $0.sourcePath = nil
+            }
+        }
         save()
     }
 

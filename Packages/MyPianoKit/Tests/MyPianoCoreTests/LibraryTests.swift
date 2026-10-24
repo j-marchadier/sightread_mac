@@ -163,3 +163,36 @@ struct ExerciseTests {
         }
     }
 }
+
+@Suite("Watched folder")
+struct WatchedFolderSyncTests {
+    private func song(_ id: String, path: String?, hash: String, source: SongSource = .watched) -> LibrarySong {
+        var song = LibrarySong(id: id, title: id, source: source, fileName: id + ".mid", duration: 10, difficulty: 1, contentHash: hash)
+        song.sourcePath = path
+        return song
+    }
+
+    @Test func addsNewFilesButNotDuplicatesOrIgnoredOnes() {
+        let library = [song("a", path: "/w/a.mid", hash: "A"), song("b", path: nil, hash: "B", source: .imported)]
+        let found = [
+            WatchedFolderSync.FoundFile(path: "/w/a.mid", hash: "A"),
+            .init(path: "/w/b-copy.mid", hash: "B"), // already imported by hand
+            .init(path: "/w/c.mid", hash: "C"),
+            .init(path: "/w/c2.mid", hash: "C"), // same content twice
+            .init(path: "/w/d.mid", hash: "D"), // removed by the player earlier
+        ]
+        #expect(WatchedFolderSync.plan(found: found, library: library, ignoring: ["D"]) == [.add(path: "/w/c.mid")])
+    }
+
+    @Test func followsRenamesAndRemovesMissingFiles() {
+        let library = [song("a", path: "/w/a.mid", hash: "A"), song("b", path: "/w/b.mid", hash: "B")]
+        let found = [WatchedFolderSync.FoundFile(path: "/w/sub/a renamed.mid", hash: "A")]
+        #expect(WatchedFolderSync.plan(found: found, library: library) == [.move(id: "a", to: "/w/sub/a renamed.mid"), .remove(id: "b")])
+    }
+
+    @Test func anEditedFileIsReplaced() {
+        let library = [song("a", path: "/w/a.mid", hash: "A")]
+        let found = [WatchedFolderSync.FoundFile(path: "/w/a.mid", hash: "A2")]
+        #expect(WatchedFolderSync.plan(found: found, library: library) == [.remove(id: "a"), .add(path: "/w/a.mid")])
+    }
+}
