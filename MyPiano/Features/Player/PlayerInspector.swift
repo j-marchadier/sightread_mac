@@ -8,7 +8,7 @@ struct PlayerInspector: View {
     var body: some View {
         Form {
             Section("Statistiques") {
-                StatsGrid(stats: player.snapshot.stats, isJudged: player.settings.mode != .listen)
+                StatsGrid(stats: player.stats, isJudged: player.settings.mode != .listen)
             }
             Section("Pratique") {
                 Picker("Mode", selection: setting(\.mode)) {

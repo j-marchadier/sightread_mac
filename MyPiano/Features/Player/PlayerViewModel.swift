@@ -36,8 +36,9 @@ struct DisplayOptions: Equatable {
 
 /// One open practice session: the real-time engine plus the state SwiftUI shows.
 ///
-/// The engine runs on its own high-priority queue; this model refreshes a snapshot about 30 times
-/// per second for the controls. Rendering views read `engine.snapshot()` themselves at frame rate.
+/// The engine runs on its own high-priority queue; this model polls it about 30 times per second but
+/// only publishes values that actually changed (playing state, measure, displayed second…), so views
+/// are not rebuilt on every poll. Rendering views read `engine.snapshot()` themselves at frame rate.
 @MainActor
 @Observable
 final class PlayerViewModel {
@@ -45,7 +46,15 @@ final class PlayerViewModel {
     let title: String
     let subtitle: String?
     private(set) var settings: PracticeSettings
-    private(set) var snapshot: PracticeSnapshot
+    /// The engine state at the last poll. Not observed: it changes on every poll.
+    @ObservationIgnored private(set) var snapshot: PracticeSnapshot
+    private(set) var isPlaying = false
+    private(set) var measureIndex = 0
+    /// Song position in whole seconds, for the time shown in the control bar.
+    private(set) var displayedSecond = 0
+    private(set) var isWaiting = false
+    private(set) var countdownRemaining: Int?
+    private(set) var stats = PracticeStats()
     private(set) var display: DisplayOptions
     /// What the falling-notes view draws; rebuilt when settings or display options change.
     private(set) var scene: FallingNotesScene
@@ -92,6 +101,7 @@ final class PlayerViewModel {
         input.attach(engine)
         engine.startTimer()
         rebuildScenes()
+        publish(snapshot)
         refreshTask = Task { [weak self] in
             while !Task.isCancelled {
                 self?.refresh()
@@ -110,10 +120,8 @@ final class PlayerViewModel {
         endActivity()
     }
 
-    var isPlaying: Bool { snapshot.state == .playing || snapshot.state == .countingDown }
-
     var currentMeasureNumber: Int {
-        song.measures.indices.contains(snapshot.measureIndex) ? song.measures[snapshot.measureIndex].number : 1
+        song.measures.indices.contains(measureIndex) ? song.measures[measureIndex].number : 1
     }
 
     func togglePlayback() { engine.togglePlayback(); refresh() }
@@ -201,6 +209,7 @@ final class PlayerViewModel {
     private func refresh() {
         let now = Date()
         snapshot = engine.snapshot()
+        publish(snapshot)
         if isPlaying {
             if sessionStart == nil { sessionStart = now }
             playingSeconds += now.timeIntervalSince(lastRefresh)
@@ -215,6 +224,19 @@ final class PlayerViewModel {
             reportSession()
         }
         lastState = snapshot.state
+    }
+
+    /// Assigns only what changed: every assignment of an observed property rebuilds the views reading it.
+    private func publish(_ snapshot: PracticeSnapshot) {
+        func set<Value: Equatable>(_ keyPath: ReferenceWritableKeyPath<PlayerViewModel, Value>, _ value: Value) {
+            if self[keyPath: keyPath] != value { self[keyPath: keyPath] = value }
+        }
+        set(\.isPlaying, snapshot.state == .playing || snapshot.state == .countingDown)
+        set(\.measureIndex, snapshot.measureIndex)
+        set(\.displayedSecond, Int(snapshot.time))
+        set(\.isWaiting, snapshot.isWaiting)
+        set(\.countdownRemaining, snapshot.countdown?.remaining)
+        set(\.stats, snapshot.stats)
     }
 
     private func reportSession() {

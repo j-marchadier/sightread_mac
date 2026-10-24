@@ -16,7 +16,7 @@ struct PlayerView: View {
         let _ = PerformanceProbe.shared?.bodyEvaluated()
         #endif
         visualization
-            .overlay { CountdownBadge(remaining: player.snapshot.countdown?.remaining) }
+            .overlay { CountdownBadge(player: player) }
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 PlayerControlBar(player: player)
                     .padding(.horizontal, 16)
@@ -56,10 +56,8 @@ struct PlayerView: View {
         if let sheet = player.sheetScene, player.display.visualization == .pageSheet {
             SheetPageView(scene: sheet, frame: frame, onSeek: { player.seek(to: $0) },
                           onScrub: { player.scrub(by: $0) }, onScrubEnded: { player.endScrub() })
-                .accessibilityValue(Text(positionDescription))
         } else if let sheet = player.sheetScene {
             SheetView(scene: sheet, frame: frame, onScrub: { player.scrub(by: $0) }, onScrubEnded: { player.endScrub() })
-                .accessibilityValue(Text(positionDescription))
         } else {
             FallingNotesView(
                 scene: player.scene, frame: frame,
@@ -67,12 +65,7 @@ struct PlayerView: View {
                 onScrub: { player.scrub(by: $0) },
                 onScrubEnded: { player.endScrub() }
             )
-            .accessibilityValue(Text(positionDescription))
         }
-    }
-
-    private var positionDescription: String {
-        String(localized: "Mesure \(player.currentMeasureNumber) sur \(player.song.measures.count)")
     }
 
     @ToolbarContentBuilder
@@ -218,11 +211,13 @@ struct PlayerControlBar: View {
     }
 }
 
-/// The count-in before playback, in a glass bubble over the visualization.
+/// The count-in before playback, in a glass bubble over the visualization. Reads the count itself,
+/// so the player view is not rebuilt on each beat.
 struct CountdownBadge: View {
-    let remaining: Int?
+    let player: PlayerViewModel
 
     var body: some View {
+        let remaining = player.countdownRemaining
         ZStack {
             if let remaining {
                 Text("\(remaining)")
@@ -250,7 +245,7 @@ struct PlaybackStatusView: View {
             Text("Mesure \(player.currentMeasureNumber)/\(player.song.measures.count)")
                 .monospacedDigit()
                 .foregroundStyle(.secondary)
-            if player.snapshot.isWaiting {
+            if player.isWaiting {
                 Image(systemName: "hourglass")
                     .foregroundStyle(.orange)
                     .symbolEffect(.pulse)
@@ -266,7 +261,7 @@ struct PlaybackStatusView: View {
 
     private var timeText: String {
         let format = Duration.TimeFormatStyle(pattern: .minuteSecond(padMinuteToLength: 1))
-        let current = Duration.seconds(Int(player.snapshot.time)).formatted(format)
+        let current = Duration.seconds(player.displayedSecond).formatted(format)
         let total = Duration.seconds(Int(player.song.duration.rounded(.up))).formatted(format)
         return "\(current) / \(total)"
     }
