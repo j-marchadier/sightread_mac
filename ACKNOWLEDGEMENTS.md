@@ -8,6 +8,10 @@ une application web libre d'apprentissage du piano publiée sous licence GNU GPL
 la police listés ci-dessous, qui ont leurs propres licences, proviennent de son dépôt. Le texte de la licence GPL-3.0
 est conservé dans [`LICENSE`](LICENSE) tant que le dépôt contient des fichiers issus du projet d'origine.
 
+## Icône
+
+L'icône de MyPiano est une création originale, dessinée pour l'application (`scripts/render-app-icon.swift`).
+
 ## Police de notation musicale
 
 **Leland** — Copyright © 2021, MuseScore BVBA (<https://musescore.org>), avec le nom de police réservé « Leland ».

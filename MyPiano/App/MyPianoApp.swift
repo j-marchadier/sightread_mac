@@ -45,6 +45,17 @@ struct MyPianoApp: App {
         }
         .windowResizability(.contentSize)
 
+        Window("À propos de MyPiano", id: WindowID.about) {
+            AboutView()
+        }
+        .windowResizability(.contentSize)
+        .windowStyle(.hiddenTitleBar)
+
+        Window("Mentions", id: WindowID.acknowledgements) {
+            AcknowledgementsView()
+        }
+        .defaultSize(width: 720, height: 640)
+
         Settings {
             SettingsView()
                 .environment(model)
@@ -59,4 +70,6 @@ enum WindowID {
     static let freePlay = "free-play"
     static let welcome = "welcome"
     static let scoreSources = "score-sources"
+    static let about = "about"
+    static let acknowledgements = "acknowledgements"
 }

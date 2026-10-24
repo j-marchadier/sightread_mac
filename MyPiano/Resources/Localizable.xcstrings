@@ -291,6 +291,16 @@
         }
       }
     },
+    "Apprenez le piano avec votre clavier MIDI : notes qui tombent, partitions, doigtés et exercices, entièrement hors ligne.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Learn the piano with your MIDI keyboard: falling notes, sheet music, fingerings and exercises, entirely offline."
+          }
+        }
+      }
+    },
     "Apprenez à votre rythme": {
       "localizations": {
         "en": {
@@ -1681,6 +1691,36 @@
         }
       }
     },
+    "Mentions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acknowledgements"
+          }
+        }
+      }
+    },
+    "Mentions et licences": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acknowledgements and Licenses"
+          }
+        }
+      }
+    },
+    "Mentions et licences…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acknowledgements and Licenses…"
+          }
+        }
+      }
+    },
     "Mesure %lld": {
       "localizations": {
         "en": {
@@ -2604,6 +2644,16 @@
         }
       }
     },
+    "Version %@ (%@)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %1$@ (%2$@)"
+          }
+        }
+      }
+    },
     "Visualisation": {
       "localizations": {
         "en": {
@@ -2710,6 +2760,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "up"
+          }
+        }
+      }
+    },
+    "À propos de MyPiano": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About MyPiano"
           }
         }
       }

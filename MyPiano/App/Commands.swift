@@ -28,7 +28,7 @@ extension FocusedValues {
     }
 }
 
-/// File, Lecture, Présentation and Help menu items.
+/// App, File, Lecture, Présentation and Help menu items.
 struct MyPianoCommands: Commands {
     let model: AppModel
     @FocusedValue(\.player) private var player
@@ -37,6 +37,10 @@ struct MyPianoCommands: Commands {
     @Environment(\.openWindow) private var openWindow
 
     var body: some Commands {
+        CommandGroup(replacing: .appInfo) {
+            Button("À propos de MyPiano") { openWindow(id: WindowID.about) }
+        }
+
         CommandGroup(after: .newItem) {
             Button("Importer…") {
                 openWindow(id: WindowID.main)
@@ -126,6 +130,8 @@ struct MyPianoCommands: Commands {
         CommandGroup(replacing: .help) {
             Button("Bienvenue dans MyPiano") { openWindow(id: WindowID.welcome) }
             Button("Trouver des partitions…") { openWindow(id: WindowID.scoreSources) }
+            Divider()
+            Button("Mentions et licences") { openWindow(id: WindowID.acknowledgements) }
         }
     }
 

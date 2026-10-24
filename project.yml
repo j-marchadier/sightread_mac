@@ -69,6 +69,8 @@ targets:
       - path: MyPiano/Resources/Fonts
         type: folder
         buildPhase: resources
+      - path: ACKNOWLEDGEMENTS.md
+        buildPhase: resources
     dependencies:
       - package: MyPianoKit
         product: MyPianoCore
