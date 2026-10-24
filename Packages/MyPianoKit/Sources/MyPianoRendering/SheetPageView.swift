@@ -4,6 +4,9 @@ import SwiftUI
 
 /// The whole score laid out in lines, like a printed page, with a cursor moving through it.
 /// The page scrolls by itself to keep the current line in view.
+///
+/// Each line is its own view: only the line under the cursor is redrawn every frame, the others only
+/// when their notes change colour or the loop moves, and scrolling just moves them.
 public struct SheetPageView: View {
     private let scene: SheetScene
     private let frame: @MainActor () -> FallingNotesFrame
@@ -31,10 +34,7 @@ public struct SheetPageView: View {
         GeometryReader { geometry in
             let page = PageGeometry(scene: scene, size: geometry.size, palette: SheetPalette.standard(for: colorScheme))
             DisplayTicker {
-                let current = frame()
-                Canvas { context, _ in
-                    page.draw(in: &context, frame: current)
-                }
+                PageSystemsView(page: page, frame: frame())
             }
             .contentShape(Rectangle())
             .onTapGesture { location in
@@ -62,6 +62,12 @@ struct PageGeometry {
     let space: CGFloat
     let systemHeight: CGFloat
     let topMargin: CGFloat
+    /// Ids of the notes starting in each line, to know when a line's colours change.
+    let systemNotes: [[Int]]
+    /// Distinguishes this layout from earlier ones (new size, scene or colours).
+    let generation: Int
+
+    private static var generations = 0
 
     /// `staffSpace` defaults to a size readable on screen for the given width.
     init(scene: SheetScene, size: CGSize, palette: SheetPalette, staffSpace: CGFloat? = nil) {
@@ -76,6 +82,13 @@ struct PageGeometry {
         let header = renderer.headerWidth(key: widestKey, time: scene.song.primaryTimeSignature)
         layout = PageLayout(measures: scene.song.measures, width: Double(size.width - header - space * 3),
                             pointsPerSecond: scene.pointsPerSecond * 0.75, minimumMeasureWidth: Double(space * 9))
+        var notes = [[Int]](repeating: [], count: layout.systems.count)
+        if !notes.isEmpty {
+            for note in scene.song.notes { notes[layout.systemIndex(at: note.start)].append(note.id) }
+        }
+        systemNotes = notes
+        Self.generations += 1
+        generation = Self.generations
     }
 
     var averageSystemDuration: TimeInterval {
@@ -85,7 +98,34 @@ struct PageGeometry {
 
     private var contentHeight: CGFloat { topMargin * 2 + CGFloat(layout.systems.count) * systemHeight }
 
-    private func top(ofSystem index: Int) -> CGFloat { topMargin + CGFloat(index) * systemHeight }
+    func top(ofSystem index: Int) -> CGFloat { topMargin + CGFloat(index) * systemHeight }
+
+    /// Lines at least partly visible when the page is scrolled by `offset`.
+    func visibleSystems(offset: CGFloat) -> Range<Int> {
+        guard !layout.systems.isEmpty else { return 0..<0 }
+        let first = max(0, Int(floor((offset - topMargin) / systemHeight)))
+        let last = min(layout.systems.count - 1, Int(floor((offset + size.height - topMargin) / systemHeight)))
+        return first..<max(first, last + 1)
+    }
+
+    /// What line `index` shows at the frame `frame`: the line under the cursor follows the frame;
+    /// the others only depend on their notes' colours and the loop.
+    func lineState(_ index: Int, frame: FallingNotesFrame) -> LineState {
+        let system = layout.systems[index]
+        let current = layout.systemIndex(at: frame.time)
+        if index == current {
+            return LineState(generation: generation, index: index, phase: .current, frame: frame)
+        }
+        let isPast = index < current
+        var lineFrame = FallingNotesFrame(time: isPast ? system.end + 1 : system.start - 1, loop: frame.loop)
+        if isPast {
+            // Only the notes of this line matter: comparing small sets keeps unchanged lines cached.
+            let ids = systemNotes[index]
+            lineFrame.hitNotes = Set(ids.filter(frame.hitNotes.contains))
+            lineFrame.missedNotes = Set(ids.filter(frame.missedNotes.contains))
+        }
+        return LineState(generation: generation, index: index, phase: isPast ? .past : .future, frame: lineFrame)
+    }
 
     /// Scroll offset keeping the current line about a fifth down the view. Near the end of a line
     /// the page glides to the next one, so the eye can read ahead.
@@ -102,19 +142,6 @@ struct PageGeometry {
         return target(index) + (target(index + 1) - target(index)) * CGFloat(eased)
     }
 
-    func draw(in context: inout GraphicsContext, frame: FallingNotesFrame) {
-        RenderingDiagnostics.onDraw?()
-        context.fill(Path(CGRect(origin: .zero, size: size)), with: .color(renderer.palette.background))
-        let offset = scrollOffset(at: frame.time)
-        for (index, system) in layout.systems.enumerated() {
-            let y = top(ofSystem: index) - offset
-            guard y + systemHeight > 0, y < size.height else { continue }
-            var line = context
-            line.translateBy(x: 0, y: y)
-            renderer.drawSystem(system, isFirst: index == 0, in: &line, frame: frame)
-        }
-    }
-
     /// The song time under a point of the view, if it falls on a line's music.
     func time(at point: CGPoint, currentTime: TimeInterval) -> TimeInterval? {
         let y = point.y + scrollOffset(at: currentTime) - topMargin
@@ -126,5 +153,60 @@ struct PageGeometry {
         guard width > 0, point.x >= header else { return nil }
         return system.time(at: Double((point.x - header - space) / width))
     }
+}
+
+/// The state a line is drawn from; a line is redrawn only when it changes.
+struct LineState: Equatable {
+    enum Phase { case past, current, future }
+
+    let generation: Int
+    let index: Int
+    let phase: Phase
+    let frame: FallingNotesFrame
+
+    nonisolated static func == (lhs: LineState, rhs: LineState) -> Bool {
+        lhs.generation == rhs.generation && lhs.index == rhs.index && lhs.phase == rhs.phase
+            // The line under the cursor changes every frame.
+            && lhs.phase != .current
+            && lhs.frame.loop == rhs.frame.loop && lhs.frame.hitNotes == rhs.frame.hitNotes
+            && lhs.frame.missedNotes == rhs.frame.missedNotes
+    }
+}
+
+/// The visible lines of the page, scrolled to keep the current one in view.
+@MainActor
+private struct PageSystemsView: View {
+    let page: PageGeometry
+    let frame: FallingNotesFrame
+
+    var body: some View {
+        let _ = RenderingDiagnostics.onDraw?()
+        let offset = page.scrollOffset(at: frame.time)
+        ZStack(alignment: .topLeading) {
+            page.renderer.palette.background
+            ForEach(page.visibleSystems(offset: offset), id: \.self) { index in
+                SystemLineView(page: page, state: page.lineState(index, frame: frame))
+                    .equatable()
+                    .frame(width: page.size.width, height: page.systemHeight)
+                    .offset(y: page.top(ofSystem: index) - offset)
+            }
+        }
+        .frame(width: page.size.width, height: page.size.height, alignment: .topLeading)
+        .clipped()
+    }
+}
+
+/// One line of music, redrawn only when its state changes.
+private struct SystemLineView: View, Equatable {
+    let page: PageGeometry
+    let state: LineState
+
+    var body: some View {
+        Canvas { context, _ in
+            page.renderer.drawSystem(page.layout.systems[state.index], isFirst: state.index == 0, in: &context, frame: state.frame)
+        }
+    }
+
+    nonisolated static func == (lhs: SystemLineView, rhs: SystemLineView) -> Bool { lhs.state == rhs.state }
 }
 #endif
