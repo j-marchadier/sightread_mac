@@ -18,9 +18,16 @@ struct MyPianoApp: App {
                 .task { model.start() }
         }
         .defaultSize(width: 520, height: 680)
+
+        Window("Lecteur de test", id: WindowID.practiceTest) {
+            PracticeTestView()
+                .environment(model)
+        }
+        .defaultSize(width: 540, height: 760)
     }
 }
 
 enum WindowID {
     static let keyboardDiagnostics = "keyboard-diagnostics"
+    static let practiceTest = "practice-test"
 }

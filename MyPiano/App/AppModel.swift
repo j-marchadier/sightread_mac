@@ -18,6 +18,8 @@ final class AppModel {
     let midi = MIDIService()
     let audio = PianoAudioEngine()
     @ObservationIgnored let latency = LatencyMonitor()
+    /// Delivers keyboard events to the practice session currently open.
+    @ObservationIgnored let practiceInput = PracticeInputRouter()
 
     private(set) var recentEvents: [KeyboardEventRecord] = []
     private(set) var pressedPitches: Set<UInt8> = []
@@ -33,12 +35,14 @@ final class AppModel {
 
         let audio = self.audio
         let latency = self.latency
+        let practiceInput = self.practiceInput
         midi.setEventHandler { [weak self] event in
-            // On CoreMIDI's thread: sound first, bookkeeping after.
+            // On CoreMIDI's thread: sound first, then judging, bookkeeping last.
             audio.playerPiano.handle(event)
             if case .noteOn = event.kind {
                 latency.record(HostTime.now - event.time)
             }
+            practiceInput.handle(event)
             let model = self
             Task { @MainActor in model?.record(event) }
         }

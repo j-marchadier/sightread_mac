@@ -24,7 +24,10 @@ struct ContentView: View {
                 }
             }
         } actions: {
-            Button("Tester le clavier et le son…") { openWindow(id: WindowID.keyboardDiagnostics) }
+            HStack {
+                Button("Tester le clavier et le son…") { openWindow(id: WindowID.keyboardDiagnostics) }
+                Button("Lecteur de test…") { openWindow(id: WindowID.practiceTest) }
+            }
         }
         .frame(minWidth: 600, minHeight: 400)
         .task { songCount = Self.loadBuiltinSongCount() }
