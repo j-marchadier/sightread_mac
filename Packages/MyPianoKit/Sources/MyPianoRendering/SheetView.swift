@@ -23,6 +23,8 @@ public struct SheetScene: Sendable {
     public var noteNames: NoteNamingStyle?
     /// Horizontal speed, in points per second of song time.
     public var pointsPerSecond: Double
+    /// Finger of each note (index = note id), or `nil` to hide fingers.
+    public var fingers: [Finger?]?
 
     public init(
         style: Style, song: Song, noteHands: [Hand?], activeHands: Set<Hand>, keys: [KeySignatureChange],
@@ -406,6 +408,14 @@ struct SheetRenderer {
             if let accidental = note.accidental { drawAccidental(accidental, rightEdge: left - space * 0.2, baseline: baseline, color: color, in: &context) }
             if let naming = scene.noteNames { drawName(naming.name(of: note.pitch), x: left + headWidth / 2, step: note.step, clef: note.clef, color: color, in: &context) }
         }
+        if scene.fingers != nil {
+            // Fingers of notes starting together are stacked above (right hand) or below (left hand).
+            let visible = score.heads.filter { (startingOnly ? $0.start >= from - 0.0001 : $0.end >= from) && $0.start <= to }
+            for group in Dictionary(grouping: visible, by: { "\($0.clef.rawValue)-\(Int(($0.start * 1000).rounded()))" }).values {
+                guard let first = group.first else { continue }
+                drawFingers(group.map { ($0.noteID, $0.step) }, centerX: x(first.start) + headWidth / 2, clef: first.clef, in: &context)
+            }
+        }
     }
 
     // MARK: Rhythmic
@@ -460,6 +470,7 @@ struct SheetRenderer {
                     drawTie(from: event, head: note, startX: headX + width, score: score, x: x, in: &context, color: headColor)
                 }
             }
+            drawFingers(ordered.map { ($0.noteID, $0.step) }, centerX: center, clef: event.clef, in: &context)
             guard event.value > .whole else { continue }
             let lowest = y(ordered.first!.step, event.clef)
             let highest = y(ordered.last!.step, event.clef)
@@ -605,6 +616,34 @@ struct SheetRenderer {
     }
 
     // MARK: Shared pieces
+
+    /// Finger numbers of notes sounding together, stacked above the staff for the right hand and
+    /// below it for the left hand. Suggested fingers are lighter and in italics.
+    private func drawFingers(_ heads: [(noteID: Int?, step: Int)], centerX: CGFloat, clef: Clef, in context: inout GraphicsContext) {
+        guard let fingers = scene.fingers else { return }
+        let numbered = heads.compactMap { head -> (step: Int, finger: Finger, hand: Hand?)? in
+            guard let id = head.noteID, fingers.indices.contains(id), let finger = fingers[id] else { return nil }
+            return (head.step, finger, scene.noteHands.indices.contains(id) ? scene.noteHands[id] : nil)
+        }
+        guard !numbered.isEmpty else { return }
+        let above = (numbered.first?.hand).map { $0 == .right } ?? (clef == .treble)
+        let extra: CGFloat = scene.noteNames == nil ? 0 : space * 1.3
+        let lineHeight = space * 1.15
+        let ordered = numbered.sorted { above ? $0.step > $1.step : $0.step < $1.step } // nearest the staff first
+        var edge: CGFloat
+        if above {
+            edge = min(y(numbered.map(\.step).min()!, clef), top(clef)) - space * 0.9 - extra
+        } else {
+            edge = max(y(numbered.map(\.step).max()!, clef), top(clef) + space * 4) + space * 0.9 + extra
+        }
+        for item in ordered {
+            var text = Text(verbatim: String(item.finger.number)).font(.system(size: space * 1.05, weight: item.finger.isWritten ? .semibold : .regular))
+            if !item.finger.isWritten { text = text.italic() }
+            context.draw(text.foregroundStyle(item.finger.isWritten ? palette.ink : palette.faded),
+                         at: CGPoint(x: centerX, y: edge), anchor: above ? .bottom : .top)
+            edge += above ? -lineHeight : lineHeight
+        }
+    }
 
     private func drawLedgerLines(for step: Int, clef: Clef, centerX: CGFloat, headWidth: CGFloat, in context: inout GraphicsContext) {
         let ledgers = StaffGeometry.ledgerLineSteps(for: step)

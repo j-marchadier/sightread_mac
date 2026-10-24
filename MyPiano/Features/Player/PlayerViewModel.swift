@@ -14,8 +14,18 @@ enum Visualization: String, CaseIterable {
     var showsRhythms: Bool { self == .rhythmicSheet || self == .pageSheet }
 }
 
+/// Which fingers are shown on the notes.
+enum FingeringDisplay: String, CaseIterable {
+    case off
+    /// Only the fingers written in the score.
+    case written
+    /// Written fingers, completed with MyPiano's suggestions.
+    case all
+}
+
 /// How the song is displayed (independent of how it is practised).
 struct DisplayOptions: Equatable {
+    var fingering: FingeringDisplay = .all
     var visualization: Visualization = .fallingNotes
     var coloredNotes = false
     var fullKeyboard = true
@@ -237,8 +247,37 @@ final class PlayerViewModel {
 
     // MARK: Scenes
 
+    /// Fingers for the current hands and transposition, computed only when they change.
+    @ObservationIgnored private var fingerCache: (key: FingerKey, fingers: [Finger?])?
+
+    private struct FingerKey: Equatable {
+        var hands: HandAssignment
+        var transpose: Int
+    }
+
+    private func fingers(hands: [Hand?]) -> [Finger?]? {
+        switch display.fingering {
+        case .off:
+            return nil
+        case .written:
+            return song.notes.map { note in
+                guard let finger = note.finger, hands.indices.contains(note.id), hands[note.id] != nil else { return nil }
+                return Finger(finger, isWritten: true)
+            }
+        case .all:
+            let key = FingerKey(hands: settings.handAssignment, transpose: settings.transpose)
+            if let fingerCache, fingerCache.key == key { return fingerCache.fingers }
+            let fingers = FingeringSuggester.fingers(for: song, hands: hands, transpose: settings.transpose)
+            fingerCache = (key, fingers)
+            return fingers
+        }
+    }
+
     private func rebuildScenes() {
         scene = Self.makeScene(song: song, settings: settings, display: display)
+        let noteHands = song.notes.map { settings.handAssignment.hand(for: $0) }
+        let fingers = fingers(hands: noteHands)
+        scene.fingers = fingers
         rhythmicFallback = false
         guard display.visualization != .fallingNotes else {
             sheetScene = nil
@@ -265,6 +304,7 @@ final class PlayerViewModel {
             noteNames: display.showsNoteNames ? display.naming : nil,
             pointsPerSecond: display.pointsPerSecond * 0.75
         )
+        sheetScene?.fingers = fingers
     }
 
     private static func makeScene(song: Song, settings: PracticeSettings, display: DisplayOptions) -> FallingNotesScene {

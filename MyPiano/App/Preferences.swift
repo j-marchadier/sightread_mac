@@ -9,6 +9,7 @@ enum PreferenceKey {
     static let showsNoteNames = "display.showsNoteNames"
     static let coloredNotes = "display.coloredNotes"
     static let fallingSpeed = "display.fallingSpeed"
+    static let fingering = "display.fingering"
     static let defaultMode = "practice.defaultMode"
     static let waitTolerance = "practice.waitTolerance"
     static let countdown = "practice.countdown"
@@ -38,6 +39,7 @@ enum Preferences {
         options.naming = noteNaming
         let speed = defaults.double(forKey: PreferenceKey.fallingSpeed)
         options.pointsPerSecond = speed > 0 ? speed : 220
+        options.fingering = FingeringDisplay(rawValue: defaults.string(forKey: PreferenceKey.fingering) ?? "") ?? .all
         return options
     }
 
@@ -48,6 +50,7 @@ enum Preferences {
         defaults.set(display.coloredNotes, forKey: PreferenceKey.coloredNotes)
         defaults.set(display.naming.rawValue, forKey: PreferenceKey.noteNaming)
         defaults.set(display.pointsPerSecond, forKey: PreferenceKey.fallingSpeed)
+        defaults.set(display.fingering.rawValue, forKey: PreferenceKey.fingering)
     }
 
     /// Settings for a song practised for the first time.

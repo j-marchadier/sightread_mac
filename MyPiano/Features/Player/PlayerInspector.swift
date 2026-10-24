@@ -77,6 +77,11 @@ struct PlayerInspector: View {
                     Text("Do Ré Mi").tag(NoteNamingStyle.solfege)
                     Text("C D E").tag(NoteNamingStyle.letters)
                 }
+                Picker("Doigtés", selection: display(\.fingering)) {
+                    Text("Masqués").tag(FingeringDisplay.off)
+                    Text("Écrits seulement").tag(FingeringDisplay.written)
+                    Text("Écrits et suggérés").tag(FingeringDisplay.all)
+                }
                 Toggle("Couleurs par note", isOn: display(\.coloredNotes))
                 if player.display.visualization == .fallingNotes {
                     Toggle("Clavier complet", isOn: display(\.fullKeyboard))

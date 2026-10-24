@@ -10,6 +10,8 @@ public struct FallingNotesScene: Sendable {
     public var activeHands: Set<Hand>
     /// Name drawn on each note, or `nil` to hide names.
     public var labels: [String]?
+    /// Finger drawn on each note (index = note id), or `nil` to hide fingers.
+    public var fingers: [Finger?]?
     /// Naming used for the C keys of the keyboard, or `nil` to hide them.
     public var keyNames: NoteNamingStyle?
     public var transpose: Int
@@ -242,10 +244,22 @@ struct FallingNotesRenderer {
             if frame.hitNotes.contains(note.id) {
                 context.stroke(path, with: .color(.white.opacity(0.9)), lineWidth: 1.5)
             }
+            var labelTop = shape.maxY - 3
             if let labels = scene.labels, labels.indices.contains(note.id), rect.width >= 9, rect.height >= 14 {
                 let fontSize = min(12, max(7, rect.width * 0.5))
                 let label = Text(verbatim: labels[note.id]).font(.system(size: fontSize, weight: .semibold)).foregroundStyle(palette.noteText)
                 context.draw(label, at: CGPoint(x: shape.midX, y: shape.maxY - 3), anchor: .bottom)
+                labelTop -= fontSize + 3
+            }
+            if let fingers = scene.fingers, fingers.indices.contains(note.id), let finger = fingers[note.id],
+               rect.width >= 9, labelTop - shape.minY >= 13 {
+                let size = min(15, max(11, rect.width * 0.8))
+                let disc = CGRect(x: shape.midX - size / 2, y: labelTop - size, width: size, height: size)
+                context.fill(Path(ellipseIn: disc), with: .color(.white.opacity(finger.isWritten ? 0.95 : 0.7)))
+                let digit = Text(verbatim: String(finger.number))
+                    .font(.system(size: size * 0.72, weight: .bold, design: .rounded))
+                    .foregroundStyle(color.opacity(1))
+                context.draw(digit, at: CGPoint(x: disc.midX, y: disc.midY))
             }
         }
     }

@@ -108,6 +108,12 @@ struct MyPianoCommands: Commands {
             Toggle("Noms des notes", isOn: displayBinding(\.showsNoteNames, default: false))
                 .keyboardShortcut("k", modifiers: [.command, .option])
                 .disabled(player == nil)
+            Picker("Doigtés", selection: displayBinding(\.fingering, default: .all)) {
+                Text("Masqués").tag(FingeringDisplay.off)
+                Text("Écrits seulement").tag(FingeringDisplay.written)
+                Text("Écrits et suggérés").tag(FingeringDisplay.all)
+            }
+            .disabled(player == nil)
             Toggle("Clavier complet", isOn: displayBinding(\.fullKeyboard, default: true))
                 .disabled(player == nil)
             Toggle("Réglages du morceau", isOn: showsInspector ?? .constant(false))

@@ -27,6 +27,7 @@ private struct DisplaySettingsView: View {
     @AppStorage(PreferenceKey.coloredNotes) private var coloredNotes = false
     @AppStorage(PreferenceKey.fullKeyboard) private var fullKeyboard = true
     @AppStorage(PreferenceKey.fallingSpeed) private var fallingSpeed = 220.0
+    @AppStorage(PreferenceKey.fingering) private var fingering = FingeringDisplay.all
 
     var body: some View {
         Form {
@@ -34,6 +35,11 @@ private struct DisplaySettingsView: View {
                 Picker("Noms des notes", selection: $naming) {
                     Text("Do Ré Mi Fa Sol La Si").tag(NoteNamingStyle.solfege)
                     Text("C D E F G A B").tag(NoteNamingStyle.letters)
+                }
+                Picker("Doigtés", selection: $fingering) {
+                    Text("Masqués").tag(FingeringDisplay.off)
+                    Text("Écrits seulement").tag(FingeringDisplay.written)
+                    Text("Écrits et suggérés").tag(FingeringDisplay.all)
                 }
                 Picker("Visualisation par défaut", selection: $visualization) {
                     Text("Notes qui tombent").tag(Visualization.fallingNotes)
