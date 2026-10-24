@@ -110,3 +110,21 @@ struct LayoutTests {
         #expect(keys.current.isEmpty)
     }
 }
+
+@Suite("Live notes")
+struct LiveNoteRecorderTests {
+    @Test func recordsHeldAndReleasedNotesThenForgetsThem() {
+        let recorder = LiveNoteRecorder(memory: 5)
+        recorder.apply(InputEvent(kind: .noteOn(pitch: 60, velocity: 80), time: 10))
+        recorder.apply(InputEvent(kind: .noteOn(pitch: 64, velocity: 80), time: 11))
+        recorder.apply(InputEvent(kind: .noteOff(pitch: 60), time: 12))
+        recorder.apply(InputEvent(kind: .noteOff(pitch: 70), time: 12)) // never pressed: ignored
+        let notes = recorder.notes(at: 12)
+        #expect(notes == [LiveNote(pitch: 60, start: 10, end: 12), LiveNote(pitch: 64, start: 11, end: nil)])
+        #expect(recorder.notes(at: 20).map(\.pitch) == [64]) // the held note stays
+        recorder.apply(InputEvent(kind: .noteOn(pitch: 72, velocity: 80), time: 30))
+        #expect(recorder.notes(at: 30).map(\.pitch) == [64, 72])
+        recorder.clear()
+        #expect(recorder.notes(at: 30).isEmpty)
+    }
+}

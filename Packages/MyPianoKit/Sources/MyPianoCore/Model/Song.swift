@@ -38,6 +38,12 @@ public struct Song: Sendable, Equatable {
         self.notation = notation
     }
 
+    /// A song without notes, e.g. for free play.
+    public static let empty = Song(
+        tracks: [], notes: [], measures: [], tempoMap: TempoMap(ticksPerQuarter: 480, bpm: 120),
+        timeSignatures: [], keySignatures: []
+    )
+
     public var ticksPerQuarter: Int { tempoMap.ticksPerQuarter }
 
     /// End of the last note, in seconds. Trailing silence is ignored.

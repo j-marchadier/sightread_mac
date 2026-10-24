@@ -70,7 +70,7 @@ struct ExerciseSongBuilder {
 }
 
 /// "Note reading": single notes to name on the keyboard, one per beat, in the chosen key.
-public struct NoteReadingExercise: Sendable, Equatable, Codable {
+public struct NoteReadingExercise: Sendable, Hashable, Codable {
     public var staff: ExerciseStaff = .treble
     public var key: KeySignature = .cMajor
     public var noteCount = 20
@@ -107,7 +107,7 @@ public struct NoteReadingExercise: Sendable, Equatable, Codable {
 }
 
 /// "Phrases": short pieces on a chord progression, with rhythms that grow harder with the level.
-public struct PhraseExercise: Sendable, Equatable, Codable {
+public struct PhraseExercise: Sendable, Hashable, Codable {
     public var staff: ExerciseStaff = .grand
     /// 0 (long notes) to 3 (eighths, dotted rhythms and broken chords).
     public var level = 0

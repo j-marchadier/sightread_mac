@@ -41,13 +41,22 @@ public struct FallingNotesFrame: Sendable {
     public var missedNotes: Set<Int>
     public var pressedKeys: Set<UInt8>
     public var loop: ClosedRange<TimeInterval>?
+    /// Free play: notes played live, drawn rising from the keyboard (times in host seconds).
+    public var liveNotes: [LiveNote]
+    /// Host time of the frame, for `liveNotes`.
+    public var hostTime: TimeInterval
 
-    public init(time: TimeInterval, hitNotes: Set<Int> = [], missedNotes: Set<Int> = [], pressedKeys: Set<UInt8> = [], loop: ClosedRange<TimeInterval>? = nil) {
+    public init(
+        time: TimeInterval, hitNotes: Set<Int> = [], missedNotes: Set<Int> = [], pressedKeys: Set<UInt8> = [],
+        loop: ClosedRange<TimeInterval>? = nil, liveNotes: [LiveNote] = [], hostTime: TimeInterval = 0
+    ) {
         self.time = time
         self.hitNotes = hitNotes
         self.missedNotes = missedNotes
         self.pressedKeys = pressedKeys
         self.loop = loop
+        self.liveNotes = liveNotes
+        self.hostTime = hostTime
     }
 }
 
@@ -177,6 +186,7 @@ struct FallingNotesRenderer {
         drawLoop(in: &notesArea, frame: frame)
         drawMeasures(in: &notesArea, frame: frame)
         drawNotes(in: &notesArea, frame: frame, indices: visible)
+        drawLiveNotes(in: &notesArea, frame: frame)
         drawHitLine(in: &context)
         drawKeyboard(in: &context, frame: frame, indices: visible)
     }
@@ -237,6 +247,21 @@ struct FallingNotesRenderer {
                 let label = Text(verbatim: labels[note.id]).font(.system(size: fontSize, weight: .semibold)).foregroundStyle(palette.noteText)
                 context.draw(label, at: CGPoint(x: shape.midX, y: shape.maxY - 3), anchor: .bottom)
             }
+        }
+    }
+
+    /// Notes played live rise from the keyboard and keep growing while held.
+    private func drawLiveNotes(in context: inout GraphicsContext, frame: FallingNotesFrame) {
+        for note in frame.liveNotes {
+            guard let key = keyboard.key(for: note.pitch) else { continue }
+            let end = note.end ?? frame.hostTime
+            let bottom = hitLineY - CGFloat(frame.hostTime - end) * scene.pointsPerSecond
+            let height = max(4, CGFloat(end - note.start) * scene.pointsPerSecond)
+            guard bottom > 0 else { continue }
+            let inset = key.isBlack ? 0.5 : max(1, key.width * 0.08)
+            let rect = CGRect(x: key.x + inset, y: bottom - height, width: max(1, key.width - 2 * inset), height: height)
+            let path = Path(roundedRect: rect, cornerRadius: min(5, rect.width / 3, rect.height / 2))
+            context.fill(path, with: .color(palette.color(for: .right, onBlackKey: key.isBlack)))
         }
     }
 
