@@ -21,12 +21,122 @@
         }
       }
     },
+    "%@ s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ s"
+          }
+        }
+      }
+    },
+    "%@%@ majeur%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@%2$@ major%3$@"
+          }
+        }
+      }
+    },
+    "%@%lld demi-tons": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@%2$lld semitones"
+          }
+        }
+      }
+    },
+    "%lld %%": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld %%"
+          }
+        }
+      }
+    },
+    "%lld morceau(x) ajouté(s).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld song(s) added."
+          }
+        }
+      }
+    },
     "%lld morceaux intégrés prêts à être joués.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%lld built-in songs ready to play."
+          }
+        }
+      }
+    },
+    "0 s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "0 s"
+          }
+        }
+      }
+    },
+    "1 s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 s"
+          }
+        }
+      }
+    },
+    "1 · Rondes et blanches": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 · Whole and half notes"
+          }
+        }
+      }
+    },
+    "2 · Noires": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 · Quarter notes"
+          }
+        }
+      }
+    },
+    "3 · Croches": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 · Eighth notes"
+          }
+        }
+      }
+    },
+    "4 · Rythmes pointés": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 · Dotted rhythms"
           }
         }
       }
@@ -41,12 +151,142 @@
         }
       }
     },
+    "Accentuer le premier temps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accent the first beat"
+          }
+        }
+      }
+    },
+    "Accompagnement": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accompaniment"
+          }
+        }
+      }
+    },
+    "Activer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable"
+          }
+        }
+      }
+    },
+    "Affichage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Display"
+          }
+        }
+      }
+    },
+    "Afficher les 88 touches": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show all 88 keys"
+          }
+        }
+      }
+    },
+    "Afficher les noms des notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show note names"
+          }
+        }
+      }
+    },
+    "Afficher ou masquer les réglages": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show or hide settings"
+          }
+        }
+      }
+    },
+    "Ajouter aux favoris": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to Favorites"
+          }
+        }
+      }
+    },
+    "Ajoutez un morceau aux favoris depuis sa fiche ou son menu contextuel.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a song to your favorites from its details or its context menu."
+          }
+        }
+      }
+    },
+    "Apprendre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Learn"
+          }
+        }
+      }
+    },
+    "Apprenez à votre rythme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Learn at your own pace"
+          }
+        }
+      }
+    },
     "Arrêté": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Stopped"
+          }
+        }
+      }
+    },
+    "Attendre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait"
+          }
+        }
+      }
+    },
+    "Aucun clavier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No keyboard"
           }
         }
       }
@@ -71,6 +311,66 @@
         }
       }
     },
+    "Aucun clavier détecté": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No keyboard detected"
+          }
+        }
+      }
+    },
+    "Aucun favori": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Favorites"
+          }
+        }
+      }
+    },
+    "Aucun morceau importé": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Imported Songs"
+          }
+        }
+      }
+    },
+    "Aucun morceau joué": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Songs Played"
+          }
+        }
+      }
+    },
+    "Aucun morceau sélectionné": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Song Selected"
+          }
+        }
+      }
+    },
+    "Aucune": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        }
+      }
+    },
     "Aucune banque de sons de piano n'a été trouvée.": {
       "localizations": {
         "en": {
@@ -81,12 +381,162 @@
         }
       }
     },
+    "Audio": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio"
+          }
+        }
+      }
+    },
+    "Battements": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clicks"
+          }
+        }
+      }
+    },
+    "Bibliothèque": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Library"
+          }
+        }
+      }
+    },
+    "Bibliothèque vide": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empty Library"
+          }
+        }
+      }
+    },
+    "Bien joué !": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Well played!"
+          }
+        }
+      }
+    },
+    "Bienvenue": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome"
+          }
+        }
+      }
+    },
+    "Bienvenue dans MyPiano": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to MyPiano"
+          }
+        }
+      }
+    },
+    "Bonnes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good"
+          }
+        }
+      }
+    },
+    "Boucle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loop"
+          }
+        }
+      }
+    },
+    "Boucler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loop"
+          }
+        }
+      }
+    },
+    "Boucler des mesures": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loop measures"
+          }
+        }
+      }
+    },
     "Branchez un clavier MIDI : il sera détecté automatiquement.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Plug in a MIDI keyboard: it will be detected automatically."
+          }
+        }
+      }
+    },
+    "Branchez votre clavier MIDI": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect your MIDI keyboard"
+          }
+        }
+      }
+    },
+    "C D E": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "C D E"
+          }
+        }
+      }
+    },
+    "C D E F G A B": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "C D E F G A B"
+          }
+        }
+      }
+    },
+    "Ces réglages s'appliquent aux morceaux que vous ouvrez pour la première fois. Chaque morceau garde ensuite ses propres réglages.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "These settings apply to songs you open for the first time. Each song then keeps its own settings."
           }
         }
       }
@@ -111,12 +561,52 @@
         }
       }
     },
+    "Choisissez un morceau": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a song"
+          }
+        }
+      }
+    },
+    "Choisissez un morceau pour voir vos progrès.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a song to see your progress."
+          }
+        }
+      }
+    },
     "Clavier MIDI": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "MIDI Keyboard"
+          }
+        }
+      }
+    },
+    "Clavier complet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full Keyboard"
+          }
+        }
+      }
+    },
+    "Clavier complet (88 touches)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full keyboard (88 keys)"
           }
         }
       }
@@ -151,12 +641,252 @@
         }
       }
     },
+    "Clé de fa": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bass clef"
+          }
+        }
+      }
+    },
+    "Clé de sol": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Treble clef"
+          }
+        }
+      }
+    },
+    "Commencer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
+    "Compositeur": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Composer"
+          }
+        }
+      }
+    },
+    "Continuez, ça vient !": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep going, you're getting there!"
+          }
+        }
+      }
+    },
+    "Couleurs par note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color per note"
+          }
+        }
+      }
+    },
+    "Couper ma partie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mute my part"
+          }
+        }
+      }
+    },
+    "De courtes pièces générées sur une suite d'accords, avec des rythmes de plus en plus riches.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short pieces generated over a chord progression, with increasingly rich rhythms."
+          }
+        }
+      }
+    },
+    "Dernière mesure": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last measure"
+          }
+        }
+      }
+    },
     "Dernières notes": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Recent Notes"
+          }
+        }
+      }
+    },
+    "Des notes isolées s'affichent sur la portée : jouez-les sur le clavier. La lecture attend chaque note.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Single notes appear on the staff: play them on the keyboard. Playback waits for each note."
+          }
+        }
+      }
+    },
+    "Deux mains": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Both hands"
+          }
+        }
+      }
+    },
+    "Deux par temps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Two per beat"
+          }
+        }
+      }
+    },
+    "Difficulté": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Difficulty"
+          }
+        }
+      }
+    },
+    "Difficulté %lld sur 5": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Difficulty %lld of 5"
+          }
+        }
+      }
+    },
+    "Do Ré Mi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Do Re Mi"
+          }
+        }
+      }
+    },
+    "Do Ré Mi Fa Sol La Si": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Do Re Mi Fa Sol La Si"
+          }
+        }
+      }
+    },
+    "Durée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duration"
+          }
+        }
+      }
+    },
+    "Début de la boucle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loop start"
+          }
+        }
+      }
+    },
+    "Décompte avant de jouer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count in before playing"
+          }
+        }
+      }
+    },
+    "Défilement": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scrolling"
+          }
+        }
+      }
+    },
+    "Déjà dans la bibliothèque : %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already in the library: %@"
+          }
+        }
+      }
+    },
+    "Effacer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear"
+          }
+        }
+      }
+    },
+    "Effacer les notes jouées": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear played notes"
+          }
+        }
+      }
+    },
+    "En attente de la bonne note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for the right note"
           }
         }
       }
@@ -171,6 +901,16 @@
         }
       }
     },
+    "Entendre cette piste": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hear this track"
+          }
+        }
+      }
+    },
     "Erreur": {
       "localizations": {
         "en": {
@@ -181,12 +921,232 @@
         }
       }
     },
+    "Excellent !": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excellent!"
+          }
+        }
+      }
+    },
+    "Exercices": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exercises"
+          }
+        }
+      }
+    },
+    "Fausses": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrong"
+          }
+        }
+      }
+    },
+    "Favori": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favorite"
+          }
+        }
+      }
+    },
+    "Favoris": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favorites"
+          }
+        }
+      }
+    },
+    "Fermer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        }
+      }
+    },
+    "Fin de la boucle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loop end"
+          }
+        }
+      }
+    },
+    "Générer de nouvelles notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generate new notes"
+          }
+        }
+      }
+    },
+    "Historique": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "History"
+          }
+        }
+      }
+    },
+    "Il est détecté automatiquement. Vérifiez-le dans Réglages › Clavier MIDI.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It is detected automatically. Check it in Settings › MIDI Keyboard."
+          }
+        }
+      }
+    },
+    "Importation": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import"
+          }
+        }
+      }
+    },
+    "Importer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import"
+          }
+        }
+      }
+    },
+    "Importer des fichiers MIDI ou MusicXML": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import MIDI or MusicXML files"
+          }
+        }
+      }
+    },
+    "Importer…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import…"
+          }
+        }
+      }
+    },
+    "Importez vos fichiers MIDI ou MusicXML.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import your MIDI or MusicXML files."
+          }
+        }
+      }
+    },
+    "Importés": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imported"
+          }
+        }
+      }
+    },
+    "Impossible d'ouvrir le morceau": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can't Open the Song"
+          }
+        }
+      }
+    },
+    "Jamais": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Never"
+          }
+        }
+      }
+    },
+    "Jeu libre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free Play"
+          }
+        }
+      }
+    },
+    "Jouer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play"
+          }
+        }
+      }
+    },
+    "Jouer avec le clavier du Mac": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play with the Mac keyboard"
+          }
+        }
+      }
+    },
     "Jouer un Do": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Play a C"
+          }
+        }
+      }
+    },
+    "Jouez librement : les notes s'affichent au fur et à mesure.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play freely: notes appear as you play them."
           }
         }
       }
@@ -211,12 +1171,302 @@
         }
       }
     },
+    "Joué": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Played"
+          }
+        }
+      }
+    },
     "Latence": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Latency"
+          }
+        }
+      }
+    },
+    "Le fichier et l'historique de pratique seront supprimés.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file and its practice history will be deleted."
+          }
+        }
+      }
+    },
+    "Le mode Attendre patiente sur chaque note, une main à la fois, à la vitesse de votre choix.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait mode pauses on each note, one hand at a time, at the speed you choose."
+          }
+        }
+      }
+    },
+    "Le mode Écouter ne compte pas les notes.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listen mode doesn't score notes."
+          }
+        }
+      }
+    },
+    "Lecture": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play"
+          }
+        }
+      }
+    },
+    "Lecture de notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note Reading"
+          }
+        }
+      }
+    },
+    "Les deux": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Both"
+          }
+        }
+      }
+    },
+    "Les morceaux que vous travaillez apparaîtront ici.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Songs you practice will appear here."
+          }
+        }
+      }
+    },
+    "Lignes supplémentaires": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ledger lines"
+          }
+        }
+      }
+    },
+    "Lisez la musique": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read music"
+          }
+        }
+      }
+    },
+    "Main droite": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right Hand"
+          }
+        }
+      }
+    },
+    "Main droite seule": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right hand only"
+          }
+        }
+      }
+    },
+    "Main gauche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left Hand"
+          }
+        }
+      }
+    },
+    "Main gauche seule": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left hand only"
+          }
+        }
+      }
+    },
+    "Mains à travailler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hands to practice"
+          }
+        }
+      }
+    },
+    "Manquées": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missed"
+          }
+        }
+      }
+    },
+    "Meilleure précision": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best accuracy"
+          }
+        }
+      }
+    },
+    "Meilleure série": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best streak"
+          }
+        }
+      }
+    },
+    "Mesure %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measure %lld"
+          }
+        }
+      }
+    },
+    "Mesure %lld sur %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measure %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "Mesure %lld/%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measure %1$lld/%2$lld"
+          }
+        }
+      }
+    },
+    "Mesure précédente": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous Measure"
+          }
+        }
+      }
+    },
+    "Mesure suivante": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next Measure"
+          }
+        }
+      }
+    },
+    "Mesures": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measures"
+          }
+        }
+      }
+    },
+    "Mode": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode"
+          }
+        }
+      }
+    },
+    "Mode de pratique": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practice mode"
+          }
+        }
+      }
+    },
+    "Mode par défaut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default mode"
+          }
+        }
+      }
+    },
+    "Mon piano": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My piano"
+          }
+        }
+      }
+    },
+    "Morceaux": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Songs"
           }
         }
       }
@@ -233,6 +1483,296 @@
     },
     "MyPiano": {
       "shouldTranslate": false
+    },
+    "Métronome": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metronome"
+          }
+        }
+      }
+    },
+    "N'entendre que ce que vous jouez pour les mains travaillées": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only hear what you play for the hands you practice"
+          }
+        }
+      }
+    },
+    "Niveau": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level"
+          }
+        }
+      }
+    },
+    "Niveau %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level %lld"
+          }
+        }
+      }
+    },
+    "Nombre de notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Number of notes"
+          }
+        }
+      }
+    },
+    "Nommer les notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note names"
+          }
+        }
+      }
+    },
+    "Noms des notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note Names"
+          }
+        }
+      }
+    },
+    "Noms des notes sur les touches": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note names on the keys"
+          }
+        }
+      }
+    },
+    "Notes qui tombent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falling Notes"
+          }
+        }
+      }
+    },
+    "Nouvelle série": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Series"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Ouvrir le jeu libre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Free Play"
+          }
+        }
+      }
+    },
+    "Parfaites": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfect"
+          }
+        }
+      }
+    },
+    "Partition rythmique": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rhythmic Score"
+          }
+        }
+      }
+    },
+    "Partition simplifiée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simplified Score"
+          }
+        }
+      }
+    },
+    "Passez des notes qui tombent à la partition, et entraînez-vous avec les exercices de lecture.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch from falling notes to the score, and practice with the reading exercises."
+          }
+        }
+      }
+    },
+    "Pause": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "Phrase": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phrase"
+          }
+        }
+      }
+    },
+    "Phrases": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phrases"
+          }
+        }
+      }
+    },
+    "Piano": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Piano"
+          }
+        }
+      }
+    },
+    "Piste %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track %lld"
+          }
+        }
+      }
+    },
+    "Pistes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracks"
+          }
+        }
+      }
+    },
+    "Plus lent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slower"
+          }
+        }
+      }
+    },
+    "Plus rapide": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faster"
+          }
+        }
+      }
+    },
+    "Portée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Staff"
+          }
+        }
+      }
+    },
+    "Position dans le morceau": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Position in the song"
+          }
+        }
+      }
+    },
+    "Pratique": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practice"
+          }
+        }
+      }
+    },
+    "Première mesure": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First measure"
+          }
+        }
+      }
+    },
+    "Précision": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accuracy"
+          }
+        }
+      }
     },
     "Pédale de sustain": {
       "localizations": {
@@ -264,12 +1804,122 @@
         }
       }
     },
+    "Rangée du bas : Do3 à Si3 (touches noires sur la rangée du milieu). Rangée du haut : Do4 à Si4. Les flèches ↑ et ↓ changent d'octave (actuellement %@%lld).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bottom row: C3 to B3 (black keys on the middle row). Top row: C4 to B4. The ↑ and ↓ arrows change octave (currently %1$@%2$lld)."
+          }
+        }
+      }
+    },
+    "Recommencer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play Again"
+          }
+        }
+      }
+    },
     "Redémarrer l'audio": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Restart Audio"
+          }
+        }
+      }
+    },
+    "Retirer des favoris": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from Favorites"
+          }
+        }
+      }
+    },
+    "Revenir au début": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to Start"
+          }
+        }
+      }
+    },
+    "Rythmes trop irréguliers : partition simplifiée affichée.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rhythms too irregular: showing the simplified score."
+          }
+        }
+      }
+    },
+    "Récents": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent"
+          }
+        }
+      }
+    },
+    "Réglages": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "Réglages du clavier MIDI": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MIDI keyboard settings"
+          }
+        }
+      }
+    },
+    "Réglages du morceau": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Song Settings"
+          }
+        }
+      }
+    },
+    "Rôle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Role"
+          }
+        }
+      }
+    },
+    "Score": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Score"
           }
         }
       }
@@ -284,6 +1934,16 @@
         }
       }
     },
+    "Son des fausses notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrong note sound"
+          }
+        }
+      }
+    },
     "Sortie audio (estimée)": {
       "localizations": {
         "en": {
@@ -294,12 +1954,152 @@
         }
       }
     },
+    "Statistiques": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Statistics"
+          }
+        }
+      }
+    },
+    "Supprimer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
+    "Supprimer de la bibliothèque…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete from Library…"
+          }
+        }
+      }
+    },
+    "Supprimer « %@ » ?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete “%@”?"
+          }
+        }
+      }
+    },
+    "Séances": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessions"
+          }
+        }
+      }
+    },
+    "Série": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Streak"
+          }
+        }
+      }
+    },
+    "Temps de pratique": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practice time"
+          }
+        }
+      }
+    },
+    "Temps de pratique : %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practice time: %@"
+          }
+        }
+      }
+    },
+    "Temps pendant lequel le morceau continue avant d'attendre la note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How long the song keeps going before waiting for the note"
+          }
+        }
+      }
+    },
     "Tester le clavier et le son…": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Test Keyboard & Sound…"
+          }
+        }
+      }
+    },
+    "Titre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title"
+          }
+        }
+      }
+    },
+    "Titre ou compositeur": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title or composer"
+          }
+        }
+      }
+    },
+    "Tolérance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tolerance"
+          }
+        }
+      }
+    },
+    "Tolérance du mode Attendre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait mode tolerance"
+          }
+        }
+      }
+    },
+    "Tonalité": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key"
           }
         }
       }
@@ -334,6 +2134,116 @@
         }
       }
     },
+    "Transposition": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transpose"
+          }
+        }
+      }
+    },
+    "Un par temps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One per beat"
+          }
+        }
+      }
+    },
+    "Une bibliothèque de pièces libres de droits est incluse ; importez vos fichiers MIDI ou MusicXML avec ⌘O.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A library of public-domain pieces is included; import your MIDI or MusicXML files with ⌘O."
+          }
+        }
+      }
+    },
+    "Une couleur par note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One color per note"
+          }
+        }
+      }
+    },
+    "Visualisation": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visualization"
+          }
+        }
+      }
+    },
+    "Visualisation par défaut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default visualization"
+          }
+        }
+      }
+    },
+    "Vitesse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speed"
+          }
+        }
+      }
+    },
+    "Vitesse de défilement": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scrolling speed"
+          }
+        }
+      }
+    },
+    "Vitesse normale": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normal Speed"
+          }
+        }
+      }
+    },
+    "Volume": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volume"
+          }
+        }
+      }
+    },
+    "Volume du métronome": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metronome volume"
+          }
+        }
+      }
+    },
     "Volume du piano": {
       "localizations": {
         "en": {
@@ -360,6 +2270,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "up"
+          }
+        }
+      }
+    },
+    "Écoute terminée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening finished"
+          }
+        }
+      }
+    },
+    "Écouter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listen"
           }
         }
       }

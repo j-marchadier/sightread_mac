@@ -5,29 +5,47 @@ struct MyPianoApp: App {
     @State private var model = AppModel()
 
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        Window("MyPiano", id: WindowID.main) {
+            MainWindow()
                 .environment(model)
                 .task { model.start() }
         }
         .defaultSize(width: 1100, height: 720)
+        .commands { MyPianoCommands(model: model) }
 
-        Window("Clavier et son", id: WindowID.keyboardDiagnostics) {
-            KeyboardDiagnosticsView()
+        WindowGroup("Lecture", id: WindowID.player, for: PlayerTarget.self) { $target in
+            if let target {
+                PlayerWindow(target: target)
+                    .environment(model)
+            }
+        }
+        .defaultSize(width: 1240, height: 800)
+
+        Window("Jeu libre", id: WindowID.freePlay) {
+            FreePlayView()
                 .environment(model)
                 .task { model.start() }
         }
-        .defaultSize(width: 520, height: 680)
+        .defaultSize(width: 1100, height: 600)
 
-        Window("Lecteur de test", id: WindowID.practiceTest) {
-            PracticeTestView()
+        Window("Bienvenue", id: WindowID.welcome) {
+            OnboardingView()
                 .environment(model)
         }
-        .defaultSize(width: 1240, height: 800)
+        .windowResizability(.contentSize)
+        .windowStyle(.hiddenTitleBar)
+
+        Settings {
+            SettingsView()
+                .environment(model)
+                .task { model.start() }
+        }
     }
 }
 
 enum WindowID {
-    static let keyboardDiagnostics = "keyboard-diagnostics"
-    static let practiceTest = "practice-test"
+    static let main = "main"
+    static let player = "player"
+    static let freePlay = "free-play"
+    static let welcome = "welcome"
 }

@@ -3,22 +3,30 @@ import MyPianoCore
 import MyPianoMIDI
 import SwiftUI
 
-/// Checks the MIDI keyboard and the sound before the practice screens exist:
-/// connection state, chosen inputs, live events, test sounds and measured latency.
+/// The MIDI keyboard and sound settings: connection state, chosen inputs, live events,
+/// volumes, test sounds and measured latency.
 struct KeyboardDiagnosticsView: View {
+    enum Part { case keyboard, audio }
+
     @Environment(AppModel.self) private var model
-    @State private var playerVolume: Float = 1
+    let part: Part
+    @AppStorage(PreferenceKey.playerVolume) private var playerVolume = 1.0
+    @AppStorage(PreferenceKey.songVolume) private var songVolume = 1.0
+    @AppStorage(PreferenceKey.computerKeyboardPiano) private var computerKeyboardPiano = false
 
     var body: some View {
         Form {
-            connectionSection
-            eventsSection
-            soundSection
-            latencySection
+            switch part {
+            case .keyboard:
+                connectionSection
+                computerKeyboardSection
+                eventsSection
+            case .audio:
+                soundSection
+                latencySection
+            }
         }
         .formStyle(.grouped)
-        .frame(minWidth: 460, idealWidth: 520, minHeight: 560)
-        .onAppear { playerVolume = model.audio.playerPiano.volume }
     }
 
     // MARK: Sections
@@ -85,9 +93,13 @@ struct KeyboardDiagnosticsView: View {
                 }
             }
             Slider(value: $playerVolume, in: 0...1) {
-                Text("Volume du piano")
+                Text("Mon piano")
             }
-            .onChange(of: playerVolume) { _, value in model.audio.playerPiano.volume = value }
+            .onChange(of: playerVolume) { _, value in model.audio.playerPiano.volume = Float(value) }
+            Slider(value: $songVolume, in: 0...1) {
+                Text("Accompagnement")
+            }
+            .onChange(of: songVolume) { _, value in model.audio.songPiano.volume = Float(value) }
             HStack {
                 Button("Jouer un Do") { playMiddleC() }
                 Button("Clic") { model.audio.playClick(.beat) }
@@ -96,6 +108,15 @@ struct KeyboardDiagnosticsView: View {
                 Spacer()
                 Button("Redémarrer l'audio") { model.restartAudio() }
             }
+        }
+    }
+
+    private var computerKeyboardSection: some View {
+        Section {
+            Toggle("Jouer avec le clavier du Mac", isOn: $computerKeyboardPiano)
+        } footer: {
+            Text("Rangée du bas : Do3 à Si3 (touches noires sur la rangée du milieu). Rangée du haut : Do4 à Si4. Les flèches ↑ et ↓ changent d'octave (actuellement \(model.computerKeyboardOctave > 0 ? "+" : "")\(model.computerKeyboardOctave)).")
+                .foregroundStyle(.secondary)
         }
     }
 
@@ -152,7 +173,7 @@ struct KeyboardDiagnosticsView: View {
     }
 
     private func noteName(_ pitch: UInt8) -> String {
-        NoteNamingStyle.solfege.name(of: Speller.spell(Int(pitch), in: nil), includeOctave: true)
+        Preferences.noteNaming.name(of: Speller.spell(Int(pitch), in: nil), includeOctave: true)
     }
 
     private func milliseconds(_ seconds: TimeInterval) -> String {
