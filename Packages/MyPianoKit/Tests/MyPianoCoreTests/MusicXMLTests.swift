@@ -52,6 +52,15 @@ struct MusicXMLTests {
         }
     }
 
+    @Test("Title, composer and written fingers")
+    func fingering() throws {
+        let song = try load("fingering.musicxml")
+        #expect(song.title == "Petite étude")
+        #expect(song.composer == "J. Exemple")
+        #expect(song.notes.map(\.pitch) == [60, 62, 64])
+        #expect(song.notes.map(\.finger) == [1, nil, 3]) // the tied E keeps its first finger
+    }
+
     @Test("Repeats and voltas are unrolled")
     func repeats() throws {
         let song = try load("repeats.musicxml")

@@ -17,6 +17,9 @@ public struct Song: Sendable, Equatable {
     public var sustainChanges: [SustainChange]
     /// Notation details that only score formats carry (MusicXML). `nil` for MIDI files.
     public var notation: NotationHints?
+    /// Title and composer given by the file, if any.
+    public var title: String?
+    public var composer: String?
 
     public init(
         tracks: [Track],
@@ -109,11 +112,14 @@ public struct Note: Sendable, Equatable, Identifiable {
     public var measureIndex: Int
     /// Staff given by the score file (1 = upper). `nil` for MIDI files.
     public var staff: Int?
+    /// Finger written in the score (1 = thumb … 5 = little finger), if any.
+    public var finger: UInt8?
 
     public init(
         id: Int, pitch: UInt8, velocity: UInt8, track: Int, startTick: Int, durationTicks: Int,
-        start: TimeInterval, duration: TimeInterval, measureIndex: Int, staff: Int? = nil
+        start: TimeInterval, duration: TimeInterval, measureIndex: Int, staff: Int? = nil, finger: UInt8? = nil
     ) {
+        self.finger = finger
         self.id = id
         self.pitch = pitch
         self.velocity = velocity

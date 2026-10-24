@@ -60,8 +60,12 @@ public enum MusicXMLImporter {
         default: throw .notMusicXML
         }
         let builder = ScoreBuilder(score: score)
-        let song = builder.build()
+        var song = builder.build()
         guard !song.notes.isEmpty else { throw .noNotes }
+        let title = score.child("work")?.text(of: "work-title") ?? score.text(of: "movement-title")
+        song.title = title?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
+        song.composer = score.child("identification")?.children("creator")
+            .first { $0.attributes["type"] == "composer" }?.trimmedText.nilIfEmpty
         return song
     }
 
@@ -104,6 +108,7 @@ private struct ParsedNote {
     var velocity: UInt8
     var tieStart: Bool
     var tieStop: Bool
+    var finger: UInt8?
 
     var endTick: Int { startTick + durationTicks }
 }
@@ -246,7 +251,7 @@ private final class ScoreBuilder {
                 track: trackIndex[TrackKey(part: note.part, staff: note.staff)]!,
                 startTick: note.startTick, durationTicks: note.durationTicks,
                 start: start, duration: tempoMap.seconds(atTick: note.endTick) - start,
-                measureIndex: song.measureIndex(atTick: note.startTick), staff: note.staff
+                measureIndex: song.measureIndex(atTick: note.startTick), staff: note.staff, finger: note.finger
             )
         }
         song.keySignatures = keySignatureChanges(keyChanges)
@@ -398,7 +403,8 @@ private final class ScoreBuilder {
                             uid: nextUID, part: partIndex, staff: staff, voice: voice, pitch: spelling.midiPitch,
                             spelling: spelling, startTick: start, durationTicks: duration,
                             velocity: UInt8(clamping: Int(((dynamics ?? 88.9) * 0.9).rounded())),
-                            tieStart: ties.contains("start"), tieStop: ties.contains("stop")
+                            tieStart: ties.contains("start"), tieStop: ties.contains("stop"),
+                            finger: Self.finger(of: element)
                         )
                         nextUID += 1
                         measure.notes.append(note)
@@ -464,6 +470,20 @@ private final class ScoreBuilder {
 
     // MARK: Unrolling helpers
 
+    /// The first finger written on a note (`<technical><fingering>`), ignoring substitutions such as "3-1".
+    private static func finger(of note: XMLElementNode) -> UInt8? {
+        for notations in note.children("notations") {
+            for technical in notations.children("technical") {
+                for fingering in technical.children("fingering") {
+                    if let digit = fingering.trimmedText.first?.wholeNumberValue, (1...5).contains(digit) {
+                        return UInt8(digit)
+                    }
+                }
+            }
+        }
+        return nil
+    }
+
     private func mergeTies(_ notes: [ParsedNote]) -> ([ParsedNote], [Int: Int]) {
         var result: [ParsedNote] = []
         var owner: [Int: Int] = [:] // uid → uid of the chain head
@@ -519,3 +539,7 @@ private struct TieKey: Hashable {
 
 private func gcd(_ a: Int, _ b: Int) -> Int { b == 0 ? abs(a) : gcd(b, a % b) }
 private func lcm(_ a: Int, _ b: Int) -> Int { a / gcd(a, b) * b }
+
+private extension String {
+    var nilIfEmpty: String? { isEmpty ? nil : self }
+}

@@ -25,6 +25,8 @@ public struct LibrarySong: Sendable, Codable, Identifiable, Equatable {
     /// SHA-256 of the file, to avoid importing the same file twice.
     public var contentHash: String?
     public var license: String?
+    /// For songs found in the watched folder: where the original file is.
+    public var sourcePath: String?
 
     public init(
         id: String, title: String, composer: String? = nil, source: SongSource, fileName: String,
