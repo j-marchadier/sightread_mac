@@ -1,19 +1,379 @@
 {
-  "sourceLanguage" : "fr",
-  "strings" : {
-    "%lld morceaux intégrés prêts à être joués." : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld built-in songs ready to play." } }
+  "sourceLanguage": "fr",
+  "strings": {
+    "%@ enfoncée (vélocité %lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ pressed (velocity %2$lld)"
+          }
+        }
       }
     },
-    "Chargement de la bibliothèque…" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Loading the library…" } }
+    "%@ relâchée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ released"
+          }
+        }
       }
     },
-    "MyPiano" : {
-      "shouldTranslate" : false
+    "%lld morceaux intégrés prêts à être joués.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld built-in songs ready to play."
+          }
+        }
+      }
+    },
+    "Accent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accent"
+          }
+        }
+      }
+    },
+    "Arrêté": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopped"
+          }
+        }
+      }
+    },
+    "Aucun clavier MIDI connecté.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No MIDI keyboard connected."
+          }
+        }
+      }
+    },
+    "Aucun clavier connecté": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No keyboard connected"
+          }
+        }
+      }
+    },
+    "Aucune banque de sons de piano n'a été trouvée.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No piano sound bank was found."
+          }
+        }
+      }
+    },
+    "Branchez un clavier MIDI : il sera détecté automatiquement.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plug in a MIDI keyboard: it will be detected automatically."
+          }
+        }
+      }
+    },
+    "Chargement de la bibliothèque…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading the library…"
+          }
+        }
+      }
+    },
+    "Choisir l'entrée automatiquement": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose input automatically"
+          }
+        }
+      }
+    },
+    "Clavier MIDI": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MIDI Keyboard"
+          }
+        }
+      }
+    },
+    "Clavier connecté : %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard connected: %@"
+          }
+        }
+      }
+    },
+    "Clavier et son": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard & Sound"
+          }
+        }
+      }
+    },
+    "Clic": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click"
+          }
+        }
+      }
+    },
+    "Dernières notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent Notes"
+          }
+        }
+      }
+    },
+    "En marche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running"
+          }
+        }
+      }
+    },
+    "Erreur": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error"
+          }
+        }
+      }
+    },
+    "Jouer un Do": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play a C"
+          }
+        }
+      }
+    },
+    "Jouez quelques notes sur votre clavier.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play a few notes on your keyboard."
+          }
+        }
+      }
+    },
+    "Jouez une note pour mesurer la latence.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play a note to measure latency."
+          }
+        }
+      }
+    },
+    "Latence": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latency"
+          }
+        }
+      }
+    },
+    "Moteur audio": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio engine"
+          }
+        }
+      }
+    },
+    "MyPiano": {
+      "shouldTranslate": false
+    },
+    "Pédale de sustain": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sustain pedal"
+          }
+        }
+      }
+    },
+    "Pédale enfoncée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pedal down"
+          }
+        }
+      }
+    },
+    "Pédale relâchée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pedal up"
+          }
+        }
+      }
+    },
+    "Redémarrer l'audio": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restart Audio"
+          }
+        }
+      }
+    },
+    "Son": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound"
+          }
+        }
+      }
+    },
+    "Sortie audio (estimée)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio output (estimated)"
+          }
+        }
+      }
+    },
+    "Tester le clavier et le son…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test Keyboard & Sound…"
+          }
+        }
+      }
+    },
+    "Total estimé": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimated total"
+          }
+        }
+      }
+    },
+    "Traitement d'une note (maximum)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note processing (maximum)"
+          }
+        }
+      }
+    },
+    "Traitement d'une note (moyenne)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note processing (average)"
+          }
+        }
+      }
+    },
+    "Volume du piano": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Piano volume"
+          }
+        }
+      }
+    },
+    "enfoncée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "down"
+          }
+        }
+      }
+    },
+    "relâchée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "up"
+          }
+        }
+      }
+    },
+    "État": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status"
+          }
+        }
+      }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

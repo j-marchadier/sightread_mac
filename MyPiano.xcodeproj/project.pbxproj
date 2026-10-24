@@ -11,11 +11,13 @@
 		1160364A37260E2D765E152D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1035518C43CFE2AC1191355 /* Assets.xcassets */; };
 		16956973068018C31A0A6A14 /* MyPianoLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 4FB14D30318400502FE96DF9 /* MyPianoLibrary */; };
 		1A43F6DFF7C09FA54F9C8EE7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896208CC2AE10F163A694D3 /* ContentView.swift */; };
+		41E22986669CE652938F0EEF /* KeyboardDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9EC4BF683064278C120C97 /* KeyboardDiagnosticsView.swift */; };
 		4BA58A10AA8E74571FD97F61 /* MyPianoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389C5A973807A99336A23409 /* MyPianoApp.swift */; };
 		6C52DBDFBD876CB436D5CB2C /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BCBD4182D016515FBBADCE5E /* Fonts */; };
 		6E26AAF44678F2CD102CE605 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3C58EEC69FC872782FDBFB7D /* Localizable.xcstrings */; };
 		9BE1950DC9DF60530E347531 /* MyPianoCore in Frameworks */ = {isa = PBXBuildFile; productRef = 11A26D8A143B7E13524621A8 /* MyPianoCore */; };
 		AF16A893FE8F765A633FF454 /* MyPianoMIDI in Frameworks */ = {isa = PBXBuildFile; productRef = 72482C0D4B8B566823B3CA87 /* MyPianoMIDI */; };
+		B14BBCD4C424A0916D88377E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB8818E3EE629384664F36 /* AppModel.swift */; };
 		C2807581D2D4EE3242672FF5 /* MyPianoAudio in Frameworks */ = {isa = PBXBuildFile; productRef = 08C5595DBF698F7CD815318B /* MyPianoAudio */; };
 		EBF00EE1F0977CCC37147D25 /* BuiltinSongs in Resources */ = {isa = PBXBuildFile; fileRef = F163C893E4B4EB3B27CB39E8 /* BuiltinSongs */; };
 /* End PBXBuildFile section */
@@ -25,8 +27,10 @@
 		389C5A973807A99336A23409 /* MyPianoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPianoApp.swift; sourceTree = "<group>"; };
 		3C58EEC69FC872782FDBFB7D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		42A1CB2CF8F8F8AE62E16D1E /* MyPiano.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPiano.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		82BB8818E3EE629384664F36 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		BCBD4182D016515FBBADCE5E /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = MyPiano/Resources/Fonts; sourceTree = SOURCE_ROOT; };
 		C1035518C43CFE2AC1191355 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC9EC4BF683064278C120C97 /* KeyboardDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDiagnosticsView.swift; sourceTree = "<group>"; };
 		F163C893E4B4EB3B27CB39E8 /* BuiltinSongs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinSongs; path = MyPiano/Resources/BuiltinSongs; sourceTree = SOURCE_ROOT; };
 		FE0FC5931252B88984371D8F /* MyPianoKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MyPianoKit; path = Packages/MyPianoKit; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -47,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F48F1512DDA4F9D364625EC /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				CF1C87D27C7575B9919D7FAA /* Settings */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
 		5B7D51540A22508B297F2212 = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				D82BC8C200BD70544AC97D4E /* App */,
+				1F48F1512DDA4F9D364625EC /* Features */,
 				9046FEACFEDA344E02586730 /* Resources */,
 			);
 			path = MyPiano;
@@ -92,9 +105,18 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		CF1C87D27C7575B9919D7FAA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DC9EC4BF683064278C120C97 /* KeyboardDiagnosticsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		D82BC8C200BD70544AC97D4E /* App */ = {
 			isa = PBXGroup;
 			children = (
+				82BB8818E3EE629384664F36 /* AppModel.swift */,
 				3896208CC2AE10F163A694D3 /* ContentView.swift */,
 				389C5A973807A99336A23409 /* MyPianoApp.swift */,
 			);
@@ -184,7 +206,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B14BBCD4C424A0916D88377E /* AppModel.swift in Sources */,
 				1A43F6DFF7C09FA54F9C8EE7 /* ContentView.swift in Sources */,
+				41E22986669CE652938F0EEF /* KeyboardDiagnosticsView.swift in Sources */,
 				4BA58A10AA8E74571FD97F61 /* MyPianoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
