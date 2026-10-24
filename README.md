@@ -48,6 +48,14 @@ série, score) et historique de progression par morceau.
 - **Trouver des partitions…** (menu Aide) : sources libres (Mutopia, piano-midi.de, OpenScore) ouvertes dans le
   navigateur.
 
+### Partitions en PDF
+
+- **Fichier › Exporter la partition en PDF… (⇧⌘E)** : la partition du morceau ouvert (lecteur ou fiche du
+  morceau) en notation rythmique, sur pages A4, avec titre, compositeur, numéros de page, doigtés et noms des notes
+  selon vos options d'affichage, et la transposition et les mains du morceau.
+- **Fichier › Imprimer la partition… (⌘P)** : fenêtre d'impression du système, qui propose aussi « Enregistrer
+  au format PDF ».
+
 ### Exercices et jeu libre
 
 - **Lecture de notes** : des notes isolées s'affichent sur la portée (clé de sol, clé de fa ou les deux) ; la
@@ -80,6 +88,8 @@ série, score) et historique de progression par morceau.
 | Réglages du morceau (inspecteur) | ⌥⌘I |
 | Nouvelle série (exercices) | ⌥⌘N |
 | Importer | ⌘O |
+| Exporter la partition en PDF | ⇧⌘E |
+| Imprimer la partition | ⌘P |
 | Jeu libre | ⇧⌘J |
 | Réglages | ⌘, |
 

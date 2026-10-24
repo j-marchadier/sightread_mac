@@ -96,6 +96,7 @@ MyPiano/                          Cible App (SwiftUI)
     Settings/                     Scène Réglages (MIDI, Audio, Affichage, Pratique)
     Onboarding/                   Bienvenue au premier lancement
     About/                        À propos de MyPiano, Mentions (ACKNOWLEDGEMENTS.md embarqué)
+    Export/                       Export PDF et impression de la partition
   Resources/
     Assets.xcassets               Icône (générée par scripts/render-app-icon.swift), couleur d'accent
     Localizable.xcstrings         FR + EN
@@ -121,7 +122,7 @@ Packages/MyPianoKit/
       Platform/                   Horloge, verrou, abstractions des sorties (ports)
     MyPianoMIDI/                  CoreMIDI : sources, connexion, décodage, horodatage
     MyPianoAudio/                 AVAudioEngine : samplers, métronome, latence
-    MyPianoRendering/             Canvas : notes qui tombent, clavier, partitions, glyphes SMuFL
+    MyPianoRendering/             Canvas : notes qui tombent, clavier, partitions, glyphes SMuFL, pages PDF
     MyPianoLibrary/               SwiftData, import, dossiers surveillés, bookmarks
   Tests/
     MyPianoCoreTests/             + Fixtures/ (17 MIDI, MusicXML de test, attendus)
@@ -315,7 +316,8 @@ l'affichage.
 
 ## 11. Sécurité, confidentialité, distribution
 
-- App Sandbox : `app-sandbox`, `files.user-selected.read-only`, `files.bookmarks.app-scope`. **Aucun entitlement
+- App Sandbox : `app-sandbox`, `files.user-selected.read-write` (lecture des fichiers importés, écriture des PDF
+  exportés là où l'utilisateur le choisit), `files.bookmarks.app-scope`, `print` (impression des partitions). **Aucun entitlement
   réseau** : l'app est techniquement incapable d'appeler un service externe.
 - Hardened Runtime activé ; signature Developer ID, notarisation et agrafage par toi (procédure dans `docs/RELEASE.md`).
 - Seules URL présentes dans le binaire : les trois sources de partitions de `ScoreSourcesView.swift`, ouvertes dans le

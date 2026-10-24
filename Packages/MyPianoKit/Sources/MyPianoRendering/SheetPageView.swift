@@ -63,9 +63,10 @@ struct PageGeometry {
     let systemHeight: CGFloat
     let topMargin: CGFloat
 
-    init(scene: SheetScene, size: CGSize, palette: SheetPalette) {
+    /// `staffSpace` defaults to a size readable on screen for the given width.
+    init(scene: SheetScene, size: CGSize, palette: SheetPalette, staffSpace: CGFloat? = nil) {
         self.size = size
-        space = max(7, min(12, size.width / 110))
+        space = staffSpace ?? max(7, min(12, size.width / 110))
         systemHeight = space * 23
         topMargin = space
         renderer = SheetRenderer(scene: scene, palette: palette, size: CGSize(width: size.width, height: systemHeight),

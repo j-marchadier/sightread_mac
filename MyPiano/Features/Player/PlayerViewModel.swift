@@ -256,7 +256,19 @@ final class PlayerViewModel {
     }
 
     private func fingers(hands: [Hand?]) -> [Finger?]? {
-        switch display.fingering {
+        guard display.fingering == .all else {
+            return Self.fingers(for: song, hands: hands, transpose: settings.transpose, display: display.fingering)
+        }
+        let key = FingerKey(hands: settings.handAssignment, transpose: settings.transpose)
+        if let fingerCache, fingerCache.key == key { return fingerCache.fingers }
+        let fingers = FingeringSuggester.fingers(for: song, hands: hands, transpose: settings.transpose)
+        fingerCache = (key, fingers)
+        return fingers
+    }
+
+    /// The fingers to show on each note (index = note id), or `nil` when fingers are hidden.
+    static func fingers(for song: Song, hands: [Hand?], transpose: Int, display: FingeringDisplay) -> [Finger?]? {
+        switch display {
         case .off:
             return nil
         case .written:
@@ -265,12 +277,18 @@ final class PlayerViewModel {
                 return Finger(finger, isWritten: true)
             }
         case .all:
-            let key = FingerKey(hands: settings.handAssignment, transpose: settings.transpose)
-            if let fingerCache, fingerCache.key == key { return fingerCache.fingers }
-            let fingers = FingeringSuggester.fingers(for: song, hands: hands, transpose: settings.transpose)
-            fingerCache = (key, fingers)
-            return fingers
+            return FingeringSuggester.fingers(for: song, hands: hands, transpose: transpose)
         }
+    }
+
+    /// The score of `song` in the given style; rhythms too irregular to quantize fall back to the simplified score.
+    static func sheetStyle(for song: Song, hands: [Hand?], transpose: Int, rhythmic: Bool) -> (style: SheetScene.Style, isFallback: Bool) {
+        guard rhythmic else { return (.simplified(SimplifiedScore(song: song, hands: hands, transpose: transpose)), false) }
+        let score = RhythmicScore(song: song, hands: hands, transpose: transpose)
+        if score.source == .quantized && score.quality < 0.6 {
+            return (.simplified(SimplifiedScore(song: song, hands: hands, transpose: transpose)), true)
+        }
+        return (.rhythmic(score), false)
     }
 
     private func rebuildScenes() {
@@ -284,18 +302,9 @@ final class PlayerViewModel {
             return
         }
         let hands = song.notes.map { settings.handAssignment.hand(for: $0) }
-        let style: SheetScene.Style
-        if display.visualization.showsRhythms {
-            let rhythmic = RhythmicScore(song: song, hands: hands, transpose: settings.transpose)
-            if rhythmic.source == .quantized && rhythmic.quality < 0.6 {
-                rhythmicFallback = true
-                style = .simplified(SimplifiedScore(song: song, hands: hands, transpose: settings.transpose))
-            } else {
-                style = .rhythmic(rhythmic)
-            }
-        } else {
-            style = .simplified(SimplifiedScore(song: song, hands: hands, transpose: settings.transpose))
-        }
+        let (style, isFallback) = Self.sheetStyle(for: song, hands: hands, transpose: settings.transpose,
+                                                  rhythmic: display.visualization.showsRhythms)
+        rhythmicFallback = isFallback
         let keys = song.keySignatures.map { KeySignatureChange(tick: $0.tick, key: $0.key.transposed(by: settings.transpose)) }
         sheetScene = SheetScene(
             style: style, song: song, noteHands: hands,

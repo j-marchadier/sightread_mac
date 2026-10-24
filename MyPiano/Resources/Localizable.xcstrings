@@ -31,6 +31,16 @@
         }
       }
     },
+    "%@ · page %lld sur %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · page %2$lld of %3$lld"
+          }
+        }
+      }
+    },
     "%@%@ majeur%@": {
       "localizations": {
         "en": {
@@ -51,6 +61,7 @@
         }
       }
     },
+    "%lld": {},
     "%lld %%": {
       "localizations": {
         "en": {
@@ -72,6 +83,7 @@
       }
     },
     "%lld morceaux intégrés prêts à être joués.": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -352,6 +364,7 @@
       }
     },
     "Aucun clavier MIDI connecté.": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -432,6 +445,7 @@
       }
     },
     "Aucune banque de sons de piano n'a été trouvée.": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -662,6 +676,7 @@
       }
     },
     "Chargement de la bibliothèque…": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -742,6 +757,7 @@
       }
     },
     "Clavier connecté : %@": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -752,6 +768,7 @@
       }
     },
     "Clavier et son": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1171,6 +1188,36 @@
         }
       }
     },
+    "Exporter en PDF…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export as PDF…"
+          }
+        }
+      }
+    },
+    "Exporter la partition en PDF…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export Score as PDF…"
+          }
+        }
+      }
+    },
+    "Exporter ou imprimer la partition": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export or print the score"
+          }
+        }
+      }
+    },
     "Fausses": {
       "localizations": {
         "en": {
@@ -1321,6 +1368,36 @@
         }
       }
     },
+    "Impossible de créer la partition": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't Create the Score"
+          }
+        }
+      }
+    },
+    "Imprimer la partition…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Print Score…"
+          }
+        }
+      }
+    },
+    "Imprimer…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Print…"
+          }
+        }
+      }
+    },
     "Jamais": {
       "localizations": {
         "en": {
@@ -1421,6 +1498,7 @@
         }
       }
     },
+    "La bibliothèque n'a pas pu être lue : %@": {},
     "La partition MusicXML est invalide.": {
       "localizations": {
         "en": {
@@ -1732,6 +1810,7 @@
       }
     },
     "Mesure %lld": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2040,6 +2119,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Perfect"
+          }
+        }
+      }
+    },
+    "Partition": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Score"
           }
         }
       }
@@ -2495,6 +2584,7 @@
       }
     },
     "Tester le clavier et le son…": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2735,6 +2825,7 @@
       }
     },
     "Volume du piano": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2833,7 +2924,9 @@
           }
         }
       }
-    }
+    },
+    "–": {},
+    "•": {}
   },
   "version": "1.0"
 }

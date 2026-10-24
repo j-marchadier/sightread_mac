@@ -34,6 +34,7 @@ struct MyPianoCommands: Commands {
     @FocusedValue(\.player) private var player
     @FocusedValue(\.showsInspector) private var showsInspector
     @FocusedValue(\.newExercise) private var newExercise
+    @FocusedValue(\.scoreExport) private var scoreExport
     @Environment(\.openWindow) private var openWindow
 
     var body: some Commands {
@@ -50,6 +51,18 @@ struct MyPianoCommands: Commands {
             Button("Trouver des partitions…") { openWindow(id: WindowID.scoreSources) }
             Button("Jeu libre") { openWindow(id: WindowID.freePlay) }
                 .keyboardShortcut("j", modifiers: [.command, .shift])
+        }
+
+        CommandGroup(replacing: .importExport) {
+            Button("Exporter la partition en PDF…") { scoreExport?.perform(.pdf) }
+                .keyboardShortcut("e", modifiers: [.command, .shift])
+                .disabled(scoreExport == nil)
+        }
+
+        CommandGroup(replacing: .printItem) {
+            Button("Imprimer la partition…") { scoreExport?.perform(.print) }
+                .keyboardShortcut("p")
+                .disabled(scoreExport == nil)
         }
 
         CommandMenu("Lecture") {

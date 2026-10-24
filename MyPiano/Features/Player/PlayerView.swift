@@ -9,6 +9,7 @@ struct PlayerView: View {
     let isExercise: Bool
     let onNewExercise: () -> Void
     @State private var showsInspector = false
+    @State private var scoreRequest: ScoreExportRequest?
 
     var body: some View {
         visualization
@@ -36,6 +37,10 @@ struct PlayerView: View {
                     }
                 }
             }
+        }
+        .scoreExport(request: $scoreRequest) {
+            PrintableScore(song: player.song, title: player.title, composer: player.subtitle,
+                        settings: player.settings, display: player.display)
         }
         .focusedSceneValue(\.player, player)
         .focusedSceneValue(\.showsInspector, $showsInspector)
@@ -122,6 +127,10 @@ struct PlayerView: View {
             }
             .pickerStyle(.menu)
             .help("Visualisation")
+        }
+        ToolbarSpacer(.fixed)
+        ToolbarItem {
+            ScoreExportMenu(request: $scoreRequest)
         }
         ToolbarSpacer(.fixed)
         ToolbarItem {

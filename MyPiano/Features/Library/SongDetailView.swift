@@ -7,6 +7,7 @@ struct SongDetailView: View {
     @Environment(\.openWindow) private var openWindow
     let song: LibrarySong
     @State private var isEditing = false
+    @State private var scoreRequest: ScoreExportRequest?
 
     var body: some View {
         let progress = model.library.database.progress(for: song.id)
@@ -44,6 +45,9 @@ struct SongDetailView: View {
         .ignoresSafeArea(edges: .top)
         .navigationTitle(song.title)
         .sheet(isPresented: $isEditing) { SongEditorView(songID: song.id) }
+        .scoreExport(request: $scoreRequest) { [library = model.library, id = song.id] in
+            try library.printableScore(for: id)
+        }
         .toolbar {
             ToolbarItem {
                 Button { isEditing = true } label: { Label("Modifier", systemImage: "pencil") }
@@ -56,6 +60,10 @@ struct SongDetailView: View {
                           systemImage: song.isFavorite ? "star.fill" : "star")
                 }
                 .help(song.isFavorite ? LocalizedStringKey("Retirer des favoris") : "Ajouter aux favoris")
+            }
+            ToolbarSpacer(.fixed)
+            ToolbarItem {
+                ScoreExportMenu(request: $scoreRequest)
             }
         }
     }
