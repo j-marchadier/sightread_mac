@@ -876,6 +876,18 @@ Légende : **Garder** (réimplémenter tel quel), **Adapter** (garder l'intentio
 6. **Clavier du Mac comme piano** : à garder ?
 7. **Langue des noms de notes par défaut** : Do-Ré-Mi en français, C-D-E en anglais ?
 
+### 6.4 Décisions validées (après la Phase 0)
+
+| Question | Décision |
+|---|---|
+| Instruments | **Piano seul.** Clavier de l'utilisateur : Arturia branché en MIDI. |
+| Export audio | **Non** (pas d'export MP3/M4A). |
+| Partition | **Les deux** : partition rythmique (vraie notation) **et** mode simplifié amélioré. |
+| Score combiné | **Conservé** tel quel (parfait×100 + bien×50 − erreur×25 + durée tenue). |
+| Exercices | **Lecture de notes** + **phrases générées** uniquement. |
+| Clavier du Mac comme piano | **Conservé, en option.** |
+| Noms de notes | **Do, Ré, Mi, Fa, Sol, La, Si** par défaut. |
+
 ---
 
 ## 7. Annexes
