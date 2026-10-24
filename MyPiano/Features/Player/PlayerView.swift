@@ -110,6 +110,7 @@ struct PlayerView: View {
                 Label("Boucle", systemImage: "repeat")
             }
             .help("Boucler des mesures")
+            VolumeButton(metronome: settingBinding(\.metronome.volume))
             Toggle(isOn: settingBinding(\.metronome.isEnabled)) {
                 Label("Métronome", systemImage: "metronome")
             }

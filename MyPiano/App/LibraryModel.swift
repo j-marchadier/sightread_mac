@@ -16,6 +16,7 @@ final class LibraryModel {
     @ObservationIgnored let songsFolder: URL
     @ObservationIgnored private let builtinFolder: URL?
     @ObservationIgnored private var cache: [String: Song] = [:]
+    @ObservationIgnored private var pendingSave: Task<Void, Never>?
 
     init() {
         let support = (try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true))
@@ -96,7 +97,13 @@ final class LibraryModel {
 
     func saveSettings(_ settings: PracticeSettings, for id: String) {
         database.update(id) { $0.settings = settings }
-        save()
+        // Sliders change settings many times a second: write once they settle.
+        pendingSave?.cancel()
+        pendingSave = Task { [weak self] in
+            try? await Task.sleep(for: .milliseconds(500))
+            guard !Task.isCancelled else { return }
+            self?.save()
+        }
     }
 
     func record(_ summary: SessionSummary, for id: String) {

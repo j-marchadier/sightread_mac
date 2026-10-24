@@ -15,6 +15,7 @@ enum PreferenceKey {
     static let wrongNoteSound = "practice.wrongNoteSound"
     static let metronomeVolume = "practice.metronomeVolume"
     static let computerKeyboardPiano = "input.computerKeyboardPiano"
+    static let masterVolume = "audio.masterVolume"
     static let playerVolume = "audio.playerVolume"
     static let songVolume = "audio.songVolume"
     static let onboardingDone = "onboarding.done"
@@ -68,5 +69,9 @@ enum Preferences {
 
     static func volume(_ key: String) -> Float {
         defaults.object(forKey: key) == nil ? 1 : Float(defaults.double(forKey: key))
+    }
+
+    static func setVolume(_ volume: Float, _ key: String) {
+        defaults.set(Double(volume), forKey: key)
     }
 }

@@ -10,8 +10,6 @@ struct KeyboardDiagnosticsView: View {
 
     @Environment(AppModel.self) private var model
     let part: Part
-    @AppStorage(PreferenceKey.playerVolume) private var playerVolume = 1.0
-    @AppStorage(PreferenceKey.songVolume) private var songVolume = 1.0
     @AppStorage(PreferenceKey.computerKeyboardPiano) private var computerKeyboardPiano = false
 
     var body: some View {
@@ -92,14 +90,7 @@ struct KeyboardDiagnosticsView: View {
                 case let .failed(message): Text(message).foregroundStyle(.red)
                 }
             }
-            Slider(value: $playerVolume, in: 0...1) {
-                Text("Mon piano")
-            }
-            .onChange(of: playerVolume) { _, value in model.audio.playerPiano.volume = Float(value) }
-            Slider(value: $songVolume, in: 0...1) {
-                Text("Accompagnement")
-            }
-            .onChange(of: songVolume) { _, value in model.audio.songPiano.volume = Float(value) }
+            VolumeControls()
             HStack {
                 Button("Jouer un Do") { playMiddleC() }
                 Button("Clic") { model.audio.playClick(.beat) }

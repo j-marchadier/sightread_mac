@@ -30,6 +30,18 @@ final class AppModel {
     private(set) var recentEvents: [KeyboardEventRecord] = []
     private(set) var isSustainDown = false
     private(set) var audioState: PianoAudioEngine.State = .stopped
+    /// Volume of everything the app plays.
+    var masterVolume = Preferences.volume(PreferenceKey.masterVolume) {
+        didSet { audio.masterVolume = masterVolume; Preferences.setVolume(masterVolume, PreferenceKey.masterVolume) }
+    }
+    /// Volume of the notes played on the keyboard.
+    var playerVolume = Preferences.volume(PreferenceKey.playerVolume) {
+        didSet { audio.playerPiano.volume = playerVolume; Preferences.setVolume(playerVolume, PreferenceKey.playerVolume) }
+    }
+    /// Volume of the song (accompaniment and, in Learn and Listen modes, the practised part).
+    var songVolume = Preferences.volume(PreferenceKey.songVolume) {
+        didSet { audio.songPiano.volume = songVolume; Preferences.setVolume(songVolume, PreferenceKey.songVolume) }
+    }
     /// Octave shift of the computer keyboard when it is used as a piano.
     private(set) var computerKeyboardOctave = 0
     @ObservationIgnored private var isStarted = false
@@ -39,9 +51,10 @@ final class AppModel {
     func start() {
         guard !isStarted else { return }
         isStarted = true
-        audio.playerPiano.volume = Preferences.volume(PreferenceKey.playerVolume)
-        audio.songPiano.volume = Preferences.volume(PreferenceKey.songVolume)
+        audio.playerPiano.volume = playerVolume
+        audio.songPiano.volume = songVolume
         audio.start()
+        audio.masterVolume = masterVolume
         audioState = audio.state
 
         let audio = self.audio
@@ -68,6 +81,7 @@ final class AppModel {
     func restartAudio() {
         audio.stop()
         audio.start()
+        audio.masterVolume = masterVolume
         audioState = audio.state
     }
 

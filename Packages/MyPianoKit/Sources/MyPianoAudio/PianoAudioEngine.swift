@@ -76,6 +76,12 @@ public final class PianoAudioEngine: @unchecked Sendable {
         clicks.trigger(sound, gain: gain)
     }
 
+    /// Volume of everything the app plays, on top of each instrument's own volume.
+    public var masterVolume: Float {
+        get { engine.mainMixerNode.outputVolume }
+        set { engine.mainMixerNode.outputVolume = max(0, min(1, newValue)) }
+    }
+
     public var clickVolume: Float {
         get { clickNode?.volume ?? 1 }
         set { clickNode?.volume = max(0, min(1, newValue)) }
