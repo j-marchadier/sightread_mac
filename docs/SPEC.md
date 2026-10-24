@@ -892,6 +892,7 @@ Légende : **Garder** (réimplémenter tel quel), **Adapter** (garder l'intentio
 | Volume | Volume général de l'app + piano de l'utilisateur, morceau et métronome, réglables depuis le lecteur. |
 | Doigtés | **Oui** : lire les doigtés présents dans les MusicXML, puis suggestions automatiques (calcul hors ligne, désactivable). |
 | Banques de partitions | **Liens vers des sources libres** (Mutopia, piano-midi.de, OpenScore) ouverts dans le navigateur, puis import ; pas d'accès réseau dans l'app. |
+| Système et design (après la Phase 9) | **macOS 26 Tahoe minimum**, interface **Liquid Glass** (barre de lecture flottante, barres d'outils en verre, icône en verre). |
 
 ---
 

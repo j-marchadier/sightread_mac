@@ -5,7 +5,7 @@ Branchez votre clavier, choisissez un morceau, et jouez en suivant les notes qui
 MyPiano écoute ce que vous jouez, vous attend si vous le souhaitez et mesure vos progrès. Tout fonctionne
 **hors ligne** : aucune connexion réseau, aucune collecte de données.
 
-Écrite en Swift 6 et SwiftUI pour macOS 14 Sonoma et plus récent.
+Écrite en Swift 6 et SwiftUI pour macOS 26 Tahoe et plus récent, avec le design **Liquid Glass**.
 
 ## Fonctionnalités
 
@@ -61,7 +61,9 @@ série, score) et historique de progression par morceau.
 - **Volumes** séparés : général, votre piano, le morceau et le métronome, réglables depuis le lecteur.
 - Détection automatique du clavier MIDI (branchement à chaud) et diagnostic de l'entrée ; le **clavier du Mac**
   peut servir de piano en option.
-- Interface macOS native : barre latérale, inspecteur, plein écran, mode clair/sombre, VoiceOver, français et anglais.
+- Interface macOS native en **Liquid Glass** : barre latérale et barres d'outils en verre, barre de lecture flottante
+  (transport, frise des mesures, position), décompte en bulle de verre, fiches de morceau à bandeau dégradé, inspecteur,
+  plein écran, mode clair/sombre, VoiceOver, français et anglais.
 
 ### Raccourcis
 
@@ -83,12 +85,12 @@ série, score) et historique de progression par morceau.
 
 ## Configuration requise
 
-- macOS 14 Sonoma ou plus récent.
+- macOS 26 Tahoe ou plus récent.
 - Un clavier MIDI USB (testé avec un Arturia KeyLab Essential 61). Le clavier du Mac peut servir de piano en option.
 
 ## Compilation et tests
 
-Prérequis : Xcode 16 ou plus récent, [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`).
+Prérequis : Xcode 26 ou plus récent, [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`).
 
 ```sh
 scripts/generate-project.sh                               # (re)génère MyPiano.xcodeproj à partir de project.yml

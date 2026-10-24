@@ -9,7 +9,7 @@
 
 | Besoin | Choix retenu | Écart vs proposition |
 |---|---|---|
-| Langage / UI | Swift 6 (mode de langage 6, concurrence stricte), **SwiftUI**, AppKit ponctuellement (ouverture de fichiers par le Dock, curseur, assertions de veille) ; cible **macOS 14+** | = |
+| Langage / UI | Swift 6 (mode de langage 6, concurrence stricte), **SwiftUI**, AppKit ponctuellement (ouverture de fichiers par le Dock, curseur, assertions de veille) ; cible **macOS 26+**, design **Liquid Glass** (`glassEffect`, `GlassEffectContainer`, boutons `.glass`/`.glassProminent`, `ToolbarSpacer`, `backgroundExtensionEffect`) | cible relevée de 14 à 26 (décision après la Phase 9) |
 | Organisation | **Un** paquet Swift local `MyPianoKit` exposant 5 bibliothèques (`MyPianoCore`, `MyPianoMIDI`, `MyPianoAudio`, `MyPianoRendering`, `MyPianoLibrary`) + cible App. MVVM avec `@Observable` | 1 paquet multi-cibles au lieu de 4 paquets ; ajout de `MyPianoLibrary` (persistance/import) |
 | Projet Xcode | `project.yml` (**XcodeGen**) versionné ; `MyPiano.xcodeproj` généré **et** versionné | ajout |
 | Entrée MIDI | **CoreMIDI** (API UMP/MIDI 1.0, notifications de branchement), horodatage des paquets conservé | = |
@@ -64,6 +64,24 @@ constante, les deux modes partagent la même géométrie et la même synchronisa
 serrés → réglage de zoom horizontal et espacement minimal entre têtes de notes.
 
 ---
+
+## 2 bis. Interface Liquid Glass (macOS 26)
+
+Le verre est réservé à la couche de navigation et de contrôle ; le contenu (notes qui tombent, partitions, tableaux,
+formulaires) reste opaque.
+
+- **Fenêtres principales** : `NavigationSplitView`, barres d'outils, recherche, inspecteur, feuilles et popovers
+  adoptent le verre automatiquement ; aucun fond de barre personnalisé.
+- **Lecteur** : la barre d'outils est découpée en groupes de verre par `ToolbarSpacer` (mode, mains, vitesse ·
+  boucle, métronome, volume · visualisation · réglages). Le transport, la frise des mesures et la position forment
+  une barre flottante (`PlayerControlBar`) dans un `GlassEffectContainer`, posée en `safeAreaInset` sous la
+  visualisation pour ne jamais masquer le clavier. Le décompte s'affiche dans une bulle de verre circulaire.
+- **Fiche d'un morceau** : bandeau dégradé (couleurs `HeroStart`/`HeroEnd`) qui passe sous la barre d'outils avec
+  `backgroundExtensionEffect()`.
+- **Boutons** : action principale en `.glassProminent`, actions secondaires en `.glass` avec `.tint(.clear)`
+  (recommandation macOS). Couleur d'accent indigo, assortie à l'icône.
+- **Icône** : touches de verre dépoli et fumé sur dégradé indigo → violet, bord lumineux
+  (`scripts/render-app-icon.swift`).
 
 ## 3. Arborescence du dépôt (état livré, Phase 9)
 
