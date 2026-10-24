@@ -1,67 +1,72 @@
 # Inventaire des éléments retirés du produit
 
-Tout ce qui suit appartient à l'application web d'origine, désormais rangée en lecture seule dans `reference/web/`
-(supprimée en Phase 9). Aucun de ces éléments n'est repris dans MyPiano. Le script
-`scripts/check-legacy-traces.sh` vérifie automatiquement qu'aucune trace ne réapparaît hors des fichiers autorisés.
+Tout ce qui suit appartenait à l'application web d'origine, qui n'a servi que de spécification fonctionnelle.
+Son code a été rangé en lecture seule dans `reference/web/` pendant la réécriture, puis **supprimé du dépôt en
+Phase 9**. Aucun de ces éléments n'est repris dans MyPiano.
+
+Deux scripts servent de garde-fou avant chaque publication :
+
+- `scripts/check-legacy-traces.sh` vérifie qu'aucun nom, domaine ou identifiant de suivi de l'ancien produit
+  n'apparaît dans le dépôt, hors `ACKNOWLEDGEMENTS.md` (qui crédite l'inspiration GPL-3.0) ;
+- `scripts/check-offline.sh` vérifie l'absence d'entitlement réseau, d'API réseau dans les sources et d'URL
+  inattendue dans le binaire (voir `docs/RELEASE.md`).
+
+Le nom, le domaine et la société de l'ancien produit ne sont cités que dans `ACKNOWLEDGEMENTS.md`.
 
 ## 1. Tracking et appels réseau à des services tiers
 
-| Élément | Emplacement (sous `reference/web/`) |
+| Élément retiré | Remplacement dans MyPiano |
 |---|---|
-| Google Analytics (gtag.js, `googletagmanager.com`), fonctions `pageview`/`event` | `src/features/analytics/index.ts`, `src/pages/root.tsx`, `src/ambient-types.d.ts` |
-| Variable d'environnement `VITE_PUBLIC_GA_ID` | `src/features/analytics/index.ts`, ancien workflow CI |
-| Téléchargement des soundfonts depuis `github.com/sightread/soundfonts` | `scripts/download-soundfonts.ts`, `package.json` (`predev`, `prebuild`) |
-| Chargement réseau des instruments (`/soundfonts/…`) | `src/features/synth/loadInstrument.ts` |
-| Chargement réseau des morceaux, images et sons | `src/features/data/index.tsx`, `src/features/theory/procedural.ts`, `src/features/SongVisualization/images.ts`, `src/pages/training/sound-effects.ts` |
-
-MyPiano n'a **aucun** entitlement réseau : tout est embarqué.
+| Google Analytics (script de suivi, mesure d'audience des pages et événements) | Aucun : aucune télémétrie |
+| Variable d'environnement de l'identifiant de suivi | Aucune |
+| Téléchargement des soundfonts depuis un dépôt GitHub au moment du build | Échantillons de piano embarqués dans le bundle |
+| Chargement réseau des instruments, morceaux, images et effets sonores | Tout est embarqué ; aucun entitlement réseau |
 
 ## 2. Identité de l'ancien produit
 
-| Élément | Emplacement |
+| Élément retiré | Remplacement dans MyPiano |
 |---|---|
-| Nom « Sightread » / « SIGHTREAD », titre, auteur | `src/pages/root.tsx`, `src/components/AppBar.tsx`, `package.json`, `src/styles/global.css` (variable CSS) |
-| Logo | `src/icons/Logo.tsx`, `public/images/logo.png` |
-| Favicon et icônes PWA | `public/favicon.ico`, `public/icon-192.png`, `public/icon-512.png` |
-| Manifest PWA | `src/pages/manifest.json` |
-| Domaine `sightread.dev` | `src/pages/root.tsx`, `public/robots.txt`, `public/sitemap.txt` |
-| Balises Open Graph / Twitter, captures marketing | `src/pages/root.tsx`, `public/images/mode_falling_notes_screenshot.png`, `mode_sheet_hero_*.png` |
-| `robots.txt`, `sitemap.txt` | `public/` |
-| Liens GitHub, YouTube, e-mail de contact | `src/components/AppBar.tsx`, `src/pages/about/page.tsx`, `README.md`, `CONTRIBUTING.md` |
-| Copyright « Sightread Studio, LLC » | `src/components/MarketingFooter.tsx` |
-| Config Vercel (`.vercelignore`) | **supprimée** (Phase 2) |
-| Workflow GitHub `validate.yml` | **supprimé** (Phase 2) |
-| Renovate (`renovate.json`) | **supprimé** (Phase 2) |
-| Prettier, Vite, PostCSS, Tailwind, TypeScript, Bun (`bun.lockb`, `package.json`) | déplacés dans `reference/web/` |
+| Nom, titre, auteur, variables CSS au nom du produit | « MyPiano », © Julien Marchadier |
+| Logo, favicon, icônes PWA, manifest PWA | Icône macOS dédiée (`Assets.xcassets/AppIcon`) |
+| Domaine web, `robots.txt`, `sitemap.txt`, balises Open Graph et Twitter, captures marketing | Aucun |
+| Liens GitHub, YouTube, e-mail de contact, copyright de l'ancienne société | Fenêtres « À propos » et « Mentions » de l'app |
+| Config d'hébergement, workflow CI, robot de mises à jour de dépendances | Supprimés (Phase 2) |
+| Outillage web : Bun (`bun.lockb`), `package.json`, Vite, PostCSS, Tailwind, Prettier, TypeScript, React Router | Supprimés avec `reference/web/` (Phase 9) ; build Xcode + SwiftPM |
 
 ## 3. Discours marketing
 
-| Élément | Emplacement |
-|---|---|
-| Page d'accueil (accroches, « Why Sightread », aperçu) | `src/pages/home/` |
-| Pied de page marketing | `src/components/MarketingFooter.tsx` |
-| Page À propos (présentation, « free and open-source », compatibilité navigateurs, roadmap, feedback, liens affiliés Amazon) | `src/pages/about/` |
-| README : « private development phase », « free forever », politique de contributions | `README.md`, `CONTRIBUTING.md` |
+| Élément retiré |
+|---|
+| Page d'accueil (accroches, « pourquoi ce produit », aperçu) |
+| Pied de page marketing |
+| Page À propos (présentation, « free and open-source », compatibilité navigateurs, roadmap, liens affiliés Amazon) |
+| README et guide de contribution d'origine (« private development phase », « free forever », politique de contributions) |
 
 ## 4. Fonctionnalités purement web
 
-| Élément | Emplacement | Remplacement dans MyPiano |
-|---|---|---|
-| Wake lock navigateur | `src/features/wakelock/`, `src/hooks/useWakeLock.tsx` | Assertion système pendant la lecture |
-| File System Access API, IndexedDB, permissions | `src/features/persist/persistence.ts`, `src/pages/songs/components/AddFolderForm.tsx` | Dossier surveillé (bookmark security-scoped) |
-| Partage par URL base64 | `src/pages/freeplay/components/RecordingModal.tsx`, `src/features/data/index.tsx` | Aucun |
-| Enregistrement du jeu, export MIDI/MP3 (encodeur WASM) | `src/features/midi/index.tsx`, `src/features/audio/render-midi.ts`, `RecordingModal.tsx` | **Aucun (décision : pas d'enregistrement)** |
-| Tactile mobile, détection iOS/Android, correctif AudioContext iOS, menu responsive | `src/components/Canvas.tsx`, `src/utils/index.tsx`, `src/features/synth/utils.ts`, `src/components/AppBar.tsx` | Trackpad/souris |
-| 127 instruments General MIDI | `src/features/synth/instruments.ts`, `src/features/controls/PickInstrument.tsx` | **Piano seul (décision)** |
-| Sortie MIDI matérielle | `src/features/midi/index.tsx` | Aucune |
+| Élément | Remplacement dans MyPiano |
+|---|---|
+| Wake lock navigateur | Assertion système pendant la lecture |
+| File System Access API, IndexedDB, permissions | Dossier surveillé (bookmark security-scoped) |
+| Partage par URL base64 | Aucun |
+| Enregistrement du jeu, export MIDI/MP3 (encodeur WASM) | **Aucun (décision : pas d'enregistrement)** |
+| Tactile mobile, détection iOS/Android, correctif AudioContext iOS, menu responsive | Trackpad/souris |
+| 127 instruments General MIDI | **Piano seul (décision)** |
+| Sortie MIDI matérielle | Aucune |
 
 ## 5. Assets écartés
 
 | Asset | Raison |
 |---|---|
-| `public/music/irish/` (70 MIDI + 11 MP3) | Licence inconnue ; phrases remplacées par un générateur procédural |
-| `public/effects/wrong-sound-effect.mp3` | Licence inconnue ; son synthétisé par l'app |
-| `public/images/black-key-*.png` | Graphismes de l'ancien projet ; rendu vectoriel |
-| `public/music/songs/swan-lake.mid` | Provenance non vérifiable (URL source identique à celle du *Minuet in G*) — retiré (décision) |
+| Phrases irlandaises (70 MIDI + 11 MP3) | Licence inconnue ; phrases remplacées par un générateur procédural |
+| Effet sonore « mauvaise note » (MP3) | Licence inconnue ; son synthétisé par l'app |
+| Images des touches noires (PNG) | Graphismes de l'ancien projet ; rendu vectoriel |
+| *Swan Lake* (MIDI) | Provenance non vérifiable (URL source identique à celle du *Minuet in G*) — retiré (décision) |
 | Polices Bravura et Gootville | Inutilisées (seule Leland est reprise) |
-| Fixtures `tests/mscore-meta/` | Remplacées par nos propres attendus |
+| Fiches de référence MuseScore des tests | Remplacées par nos propres attendus (`Packages/MyPianoKit/Tests`) |
+
+## 6. Vérification (Phase 9)
+
+- `reference/web/` supprimé ; plus aucun fichier Bun, Node, Vite, PostCSS ou Tailwind dans le dépôt.
+- `scripts/check-legacy-traces.sh` : vert, seul `ACKNOWLEDGEMENTS.md` est autorisé.
+- `scripts/check-offline.sh` : vert.

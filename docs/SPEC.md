@@ -769,17 +769,17 @@ Un morceau peut être passé directement en base64 dans l'URL (`source=base64`) 
 ## 5. Ce qui relève de l'ancien produit et doit disparaître
 
 ### 5.1 Identité et présence web
-- Nom « Sightread »/« SIGHTREAD », logo (`src/icons/Logo.tsx`, `public/images/logo.png`), favicon, icônes PWA (`icon-192/512.png`), `src/pages/manifest.json` (manifest PWA), titre et balises meta auteur.
-- Domaine et URLs : `sightread.dev`, `github.com/sightread/sightread`, `github.com/sightread/soundfonts` (téléchargement des soundfonts), chaîne YouTube, e-mail de contact, mentions « Sightread Studio, LLC ».
+- Nom et marque de l'original, logo (`src/icons/Logo.tsx`, `public/images/logo.png`), favicon, icônes PWA (`icon-192/512.png`), `src/pages/manifest.json` (manifest PWA), titre et balises meta auteur.
+- Domaine web et URLs de l'original (site, dépôt GitHub, dépôt de soundfonts téléchargées au build), chaîne YouTube, e-mail de contact, copyright de la société éditrice.
 - Balises **Open Graph / Twitter**, captures marketing (`public/images/mode_*.png`).
-- `public/robots.txt`, `public/sitemap.txt`, `.vercelignore` (config Vercel), `renovate.json`, `.github/workflows/validate.yml`, `CONTRIBUTING.md`, `README.md` actuel.
+- `public/robots.txt`, `public/sitemap.txt`, config d'hébergement, config du robot de mises à jour de dépendances, `.github/workflows/validate.yml`, `CONTRIBUTING.md`, `README.md` actuel.
 
 ### 5.2 Tracking et réseau
-- **Google Analytics / gtag** (`src/features/analytics`, script injecté dans `root.tsx`, variable `VITE_PUBLIC_GA_ID`).
+- **Google Analytics** (`src/features/analytics`, script injecté dans `root.tsx`, variable d'environnement de l'identifiant de suivi).
 - Téléchargements réseau : soundfonts (script `download-soundfonts.ts`, chargement à la demande des instruments), polices et fichiers servis par le web. **→ MyPiano :** tout embarqué dans le bundle, zéro appel réseau.
 
 ### 5.3 Discours marketing
-- Page d'accueil (accroches, cartes « Why Sightread »), `MarketingFooter`, page **About** (roadmap, compatibilité navigateurs, feedback GitHub, liens **affiliés Amazon**, mentions « free and open-source »).
+- Page d'accueil (accroches, cartes « pourquoi ce produit »), `MarketingFooter`, page **About** (roadmap, compatibilité navigateurs, feedback GitHub, liens **affiliés Amazon**, mentions « free and open-source »).
 - README : annonces de « private development phase », « free forever », politique de contributions.
 
 ### 5.4 Fonctionnalités purement web
