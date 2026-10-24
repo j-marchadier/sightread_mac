@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "songs": [
+    {
+      "id": "builtin.arabesques",
+      "file": "arabesques.mid",
+      "title": {
+        "fr": "Arabesques",
+        "en": "Arabesques"
+      },
+      "composer": "Claude Debussy",
+      "license": "CC BY 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://musescore.com/user/37070508/scores/6607208"
+    },
+    {
+      "id": "builtin.canon-in-d",
+      "file": "canon-in-d.mid",
+      "title": {
+        "fr": "Canon en ré",
+        "en": "Canon in D"
+      },
+      "composer": "Johann Pachelbel",
+      "license": "Public Domain Mark 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceURL": "https://musescore.com/user/3349846/scores/1376056"
+    },
+    {
+      "id": "builtin.clair-de-lune",
+      "file": "clair-de-lune.mid",
+      "title": {
+        "fr": "Clair de lune",
+        "en": "Clair de Lune"
+      },
+      "composer": "Claude Debussy",
+      "license": "CC BY 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://musescore.com/user/36583375/scores/6502523"
+    },
+    {
+      "id": "builtin.fur-elise",
+      "file": "fur-elise.mid",
+      "title": {
+        "fr": "Für Elise",
+        "en": "Für Elise"
+      },
+      "composer": "Ludwig van Beethoven",
+      "license": "CC BY 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://musescore.com/user/94627/scores/111107"
+    },
+    {
+      "id": "builtin.greensleeves",
+      "file": "greensleeves.mid",
+      "title": {
+        "fr": "Greensleeves",
+        "en": "Greensleeves"
+      },
+      "composer": null,
+      "license": "Public Domain Mark 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceURL": "https://musescore.com/lonli_girl/scores/1951286"
+    },
+    {
+      "id": "builtin.gymnopedie-no1",
+      "file": "gymnopedie-no1.mid",
+      "title": {
+        "fr": "Gymnopédie n° 1",
+        "en": "Gymnopédie No. 1"
+      },
+      "composer": "Erik Satie",
+      "license": "CC BY 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://musescore.com/user/110059/scores/980686"
+    },
+    {
+      "id": "builtin.in-the-hall-of-the-mountain-king",
+      "file": "in-the-hall-of-the-mountain-king.mid",
+      "title": {
+        "fr": "Dans l'antre du roi de la montagne",
+        "en": "In the Hall of the Mountain King"
+      },
+      "composer": "Edvard Grieg",
+      "license": "CC BY 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://musescore.com/fortepiano11/scores/5009055"
+    },
+    {
+      "id": "builtin.la-cucaracha",
+      "file": "la-cucaracha.mid",
+      "title": {
+        "fr": "La Cucaracha",
+        "en": "La Cucaracha"
+      },
+      "composer": null,
+      "license": "Public Domain Mark 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceURL": "https://musescore.com/user/20144407/scores/4546239"
+    },
+    {
+      "id": "builtin.march-in-d-major",
+      "file": "march-in-d-major.mid",
+      "title": {
+        "fr": "Marche en ré majeur",
+        "en": "March in D Major"
+      },
+      "composer": "Johann Sebastian Bach",
+      "license": "Public Domain Mark 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceURL": "https://musescore.com/user/9292486/scores/2086206"
+    },
+    {
+      "id": "builtin.minuet-in-g-major",
+      "file": "minuet-in-g-major.mid",
+      "title": {
+        "fr": "Menuet en sol majeur",
+        "en": "Minuet in G Major"
+      },
+      "composer": "Christian Petzold",
+      "license": "Public Domain Mark 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceURL": "https://musescore.com/user/9292486/scores/2086106"
+    },
+    {
+      "id": "builtin.moonlight-sonata",
+      "file": "moonlight-sonata.mid",
+      "title": {
+        "fr": "Sonate « Clair de lune »",
+        "en": "Moonlight Sonata"
+      },
+      "composer": "Ludwig van Beethoven",
+      "license": "CC BY 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://musescore.com/user/32106469/scores/5924566"
+    },
+    {
+      "id": "builtin.ode-to-joy",
+      "file": "ode-to-joy.mid",
+      "title": {
+        "fr": "Ode à la joie",
+        "en": "Ode to Joy"
+      },
+      "composer": "Ludwig van Beethoven",
+      "license": "Public Domain Mark 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceURL": "https://musescore.com/user/20805137/scores/4603207"
+    },
+    {
+      "id": "builtin.sonata-no-11",
+      "file": "sonata-no-11.mid",
+      "title": {
+        "fr": "Sonate pour piano n° 11",
+        "en": "Piano Sonata No. 11"
+      },
+      "composer": "Wolfgang Amadeus Mozart",
+      "license": "Public Domain Mark 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceURL": "https://musescore.com/user/452226/scores/445346"
+    },
+    {
+      "id": "builtin.rondo-alla-turca",
+      "file": "rondo-alla-turca.mid",
+      "title": {
+        "fr": "Rondo alla turca",
+        "en": "Rondo alla Turca"
+      },
+      "composer": "Wolfgang Amadeus Mozart",
+      "license": "Public Domain Mark 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceURL": "https://musescore.com/user/938326/scores/1050521"
+    },
+    {
+      "id": "builtin.the-entertainer",
+      "file": "the-entertainer.mid",
+      "title": {
+        "fr": "The Entertainer",
+        "en": "The Entertainer"
+      },
+      "composer": "Scott Joplin",
+      "license": "Public Domain Mark 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceURL": "https://musescore.com/arw-music/scores/98457"
+    },
+    {
+      "id": "builtin.twinkle-twinkle-little-star",
+      "file": "twinkle-twinkle-little-star.mid",
+      "title": {
+        "fr": "Ah ! vous dirai-je, maman",
+        "en": "Twinkle Twinkle Little Star"
+      },
+      "composer": null,
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourceURL": "https://musescore.com/user/29786779/scores/5246287"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "sourceLanguage" : "fr",
+  "strings" : {
+    "%lld morceaux intégrés prêts à être joués." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld built-in songs ready to play." } }
+      }
+    },
+    "Chargement de la bibliothèque…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Loading the library…" } }
+      }
+    },
+    "MyPiano" : {
+      "shouldTranslate" : false
+    }
+  },
+  "version" : "1.0"
+}

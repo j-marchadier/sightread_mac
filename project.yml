@@ -1,0 +1,125 @@
+# XcodeGen specification of MyPiano.xcodeproj.
+# Regenerate the project with scripts/generate-project.sh after editing this file.
+name: MyPiano
+options:
+  bundleIdPrefix: fr.jmarchadier
+  deploymentTarget:
+    macOS: "14.0"
+  developmentLanguage: fr
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+    DEAD_CODE_STRIPPING: YES
+
+packages:
+  MyPianoKit:
+    path: Packages/MyPianoKit
+
+targets:
+  MyPiano:
+    type: application
+    platform: macOS
+    sources:
+      - path: MyPiano
+        excludes:
+          - Resources/BuiltinSongs
+          - Resources/Fonts
+          - Info.plist
+          - MyPiano.entitlements
+      - path: MyPiano/Resources/BuiltinSongs
+        type: folder
+        buildPhase: resources
+      - path: MyPiano/Resources/Fonts
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - package: MyPianoKit
+        product: MyPianoCore
+      - package: MyPianoKit
+        product: MyPianoMIDI
+      - package: MyPianoKit
+        product: MyPianoAudio
+      - package: MyPianoKit
+        product: MyPianoRendering
+      - package: MyPianoKit
+        product: MyPianoLibrary
+    info:
+      path: MyPiano/Info.plist
+      properties:
+        CFBundleDisplayName: MyPiano
+        CFBundleName: MyPiano
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: fr
+        CFBundleLocalizations: [fr, en]
+        LSApplicationCategoryType: public.app-category.music
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        NSHumanReadableCopyright: "© 2026 Julien Marchadier. Tous droits réservés."
+        ATSApplicationFontsPath: Fonts
+        CFBundleDocumentTypes:
+          - CFBundleTypeName: MIDI File
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Alternate
+            LSItemContentTypes: [public.midi-audio]
+          - CFBundleTypeName: MusicXML Score
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Alternate
+            LSItemContentTypes: [org.musicxml.musicxml, com.recordare.musicxml.compressed]
+          - CFBundleTypeName: XML Document
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: None
+            LSItemContentTypes: [public.xml]
+        UTImportedTypeDeclarations:
+          - UTTypeIdentifier: org.musicxml.musicxml
+            UTTypeDescription: MusicXML Score
+            UTTypeConformsTo: [public.xml]
+            UTTypeTagSpecification:
+              public.filename-extension: [musicxml]
+              public.mime-type: [application/vnd.recordare.musicxml+xml]
+          - UTTypeIdentifier: com.recordare.musicxml.compressed
+            UTTypeDescription: Compressed MusicXML Score
+            UTTypeConformsTo: [public.data, public.archive]
+            UTTypeTagSpecification:
+              public.filename-extension: [mxl]
+              public.mime-type: [application/vnd.recordare.musicxml]
+    entitlements:
+      path: MyPiano/MyPiano.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.files.user-selected.read-only: true
+        com.apple.security.files.bookmarks.app-scope: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: fr.jmarchadier.MyPiano
+        PRODUCT_NAME: MyPiano
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "-"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        COMBINE_HIDPI_IMAGES: YES
+        ENABLE_USER_SCRIPT_SANDBOXING: YES
+
+schemes:
+  MyPiano:
+    build:
+      targets:
+        MyPiano: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - package: MyPianoKit/MyPianoCoreTests
+    archive:
+      config: Release
