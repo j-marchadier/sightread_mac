@@ -180,6 +180,7 @@ struct FallingNotesRenderer {
     }
 
     func draw(in context: inout GraphicsContext, frame: FallingNotesFrame) {
+        RenderingDiagnostics.onDraw?()
         context.fill(Path(CGRect(origin: .zero, size: size)), with: .color(palette.background))
         let visible = layout.visibleNoteIndices(in: scene.song, now: frame.time, maxNoteDuration: scene.longestNote)
         var notesArea = context

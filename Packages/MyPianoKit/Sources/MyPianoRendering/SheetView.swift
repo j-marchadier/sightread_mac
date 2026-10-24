@@ -193,6 +193,7 @@ struct SheetRenderer {
     // MARK: Frame
 
     func draw(in context: inout GraphicsContext, frame: FallingNotesFrame) {
+        RenderingDiagnostics.onDraw?()
         context.fill(Path(CGRect(origin: .zero, size: size)), with: .color(palette.background))
         let tick = scene.song.tempoMap.tick(atSeconds: frame.time)
         let key = scene.key(atTick: tick)

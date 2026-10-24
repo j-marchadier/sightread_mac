@@ -103,6 +103,7 @@ struct PageGeometry {
     }
 
     func draw(in context: inout GraphicsContext, frame: FallingNotesFrame) {
+        RenderingDiagnostics.onDraw?()
         context.fill(Path(CGRect(origin: .zero, size: size)), with: .color(renderer.palette.background))
         let offset = scrollOffset(at: frame.time)
         for (index, system) in layout.systems.enumerated() {

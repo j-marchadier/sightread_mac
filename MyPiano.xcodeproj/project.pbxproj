@@ -20,6 +20,7 @@
 		30CAA51B364C816D8007887E /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C661772EFAF9BD0A14CDC7 /* AboutView.swift */; };
 		3127FD3EE0BC626985F55359 /* LibrarySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6419F3EC8FDA2BECEE426 /* LibrarySettingsView.swift */; };
 		33ACE75A6B2C4AB721EEA943 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E7B24E64B2C5EBED98E74B /* OnboardingView.swift */; };
+		3451BF1CFCBA6B0189A909AE /* PerformanceProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222FEA133809BD96FDFFF849 /* PerformanceProbe.swift */; };
 		41E22986669CE652938F0EEF /* KeyboardDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9EC4BF683064278C120C97 /* KeyboardDiagnosticsView.swift */; };
 		4BA58A10AA8E74571FD97F61 /* MyPianoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389C5A973807A99336A23409 /* MyPianoApp.swift */; };
 		62D8F0986E9051A7F7B3013B /* WatchedFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972613E22810CB83BAA6311D /* WatchedFolder.swift */; };
@@ -54,6 +55,7 @@
 		1759283C08E8BED7E98AA636 /* SongArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongArtwork.swift; sourceTree = "<group>"; };
 		17F6FBAE371CC4A3CDAE71A2 /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
 		21E7B24E64B2C5EBED98E74B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		222FEA133809BD96FDFFF849 /* PerformanceProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceProbe.swift; sourceTree = "<group>"; };
 		28C7B80554D7070359260FCE /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
 		32C661772EFAF9BD0A14CDC7 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		340B6E85A322123EB714C291 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				40ADC6EB9A9DF6EC6CBB7303 /* Commands.swift */,
 				3871069E2B3BA1C5035701A9 /* LibraryModel.swift */,
 				389C5A973807A99336A23409 /* MyPianoApp.swift */,
+				222FEA133809BD96FDFFF849 /* PerformanceProbe.swift */,
 				441B1592E55DEA12F4D8A01D /* Preferences.swift */,
 				972613E22810CB83BAA6311D /* WatchedFolder.swift */,
 			);
@@ -362,6 +365,7 @@
 				B89339EC39FCD03398B95288 /* MeasureTimelineView.swift in Sources */,
 				4BA58A10AA8E74571FD97F61 /* MyPianoApp.swift in Sources */,
 				33ACE75A6B2C4AB721EEA943 /* OnboardingView.swift in Sources */,
+				3451BF1CFCBA6B0189A909AE /* PerformanceProbe.swift in Sources */,
 				F62F73340DE9B450852DBF92 /* PlayerInspector.swift in Sources */,
 				FD0D7DFD891FF4D789259F64 /* PlayerTarget.swift in Sources */,
 				889D9AC186DE5F02167AA4C2 /* PlayerView.swift in Sources */,

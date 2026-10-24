@@ -82,6 +82,9 @@ struct PlayerWindow: View {
             }
             self.player = player
             loadError = nil
+            #if DEBUG || PERF_PROBE
+            PerformanceProbe.shared?.configure(player)
+            #endif
         } catch let error as SongLoadingError {
             loadError = LibraryModel.describe(error)
         } catch {

@@ -80,6 +80,12 @@ struct MainWindow: View {
         }
         .onAppear {
             model.openWindowAction = openWindow
+            #if DEBUG || PERF_PROBE
+            if let probe = PerformanceProbe.shared {
+                if probe.shouldOpenPlayer() { openWindow(id: WindowID.player, value: PlayerTarget.song(id: probe.songID)) }
+                return
+            }
+            #endif
             if !onboardingDone { openWindow(id: WindowID.welcome) }
         }
     }

@@ -12,6 +12,9 @@ struct PlayerView: View {
     @State private var scoreRequest: ScoreExportRequest?
 
     var body: some View {
+        #if DEBUG || PERF_PROBE
+        let _ = PerformanceProbe.shared?.bodyEvaluated()
+        #endif
         visualization
             .overlay { CountdownBadge(remaining: player.snapshot.countdown?.remaining) }
             .safeAreaInset(edge: .bottom, spacing: 0) {
