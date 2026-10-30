@@ -143,6 +143,7 @@ struct SongBrowserView: View {
             Button("Jouer") { play(id) }
             Button(song.isFavorite ? LocalizedStringKey("Retirer des favoris") : "Ajouter aux favoris") { model.library.toggleFavorite(id) }
             Button("Modifier…") { songToEdit = id }
+            Button("Modifier les notes…") { openWindow(id: WindowID.scoreEditor, value: id) }
             if song.source != .builtin {
                 Divider()
                 Button("Supprimer de la bibliothèque…", role: .destructive) { songToRemove = song }

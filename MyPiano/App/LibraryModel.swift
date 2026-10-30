@@ -16,6 +16,9 @@ final class LibraryModel {
     @ObservationIgnored let songsFolder: URL
     /// Covers chosen by the user.
     let artwork: ArtworkStore
+    /// Bumped when a song's notes are edited or restored, so views showing whether a song is edited refresh.
+    private(set) var editsRevision = 0
+    @ObservationIgnored private let editsFolder: URL
     @ObservationIgnored private let builtinFolder: URL?
     @ObservationIgnored private var cache: [String: Song] = [:]
     @ObservationIgnored private var pendingSave: Task<Void, Never>?
@@ -27,6 +30,7 @@ final class LibraryModel {
         store = LibraryFileStore(url: folder.appendingPathComponent("Library.json"))
         songsFolder = folder.appendingPathComponent("Songs", isDirectory: true)
         artwork = ArtworkStore(folder: folder.appendingPathComponent("Artwork", isDirectory: true))
+        editsFolder = folder.appendingPathComponent("Edits", isDirectory: true)
         builtinFolder = Bundle.main.url(forResource: "BuiltinSongs", withExtension: nil)
         load()
     }
@@ -87,12 +91,60 @@ final class LibraryModel {
         }
     }
 
+    /// The song as practised: the file's notes, or the user's edited notes when there are some.
     func song(for id: String) throws -> Song {
         if let cached = cache[id] { return cached }
-        guard let entry = database.song(id), let url = fileURL(for: entry) else { throw CocoaError(.fileNoSuchFile) }
-        let song = try SongLoader.load(contentsOf: url)
+        var song = try originalSong(for: id)
+        if let edit = savedEdit(for: id) { song = song.replacingNotes(edit.notes) }
         cache[id] = song
         return song
+    }
+
+    /// The song as its file has it, ignoring edits.
+    func originalSong(for id: String) throws -> Song {
+        guard let entry = database.song(id), let url = fileURL(for: entry) else { throw CocoaError(.fileNoSuchFile) }
+        return try SongLoader.load(contentsOf: url)
+    }
+
+    // MARK: Edited notes
+
+    func hasEdits(_ id: String) -> Bool {
+        _ = editsRevision
+        return FileManager.default.fileExists(atPath: editURL(for: id).path)
+    }
+
+    /// Saves the notes changed in the score editor. The song's file is left untouched.
+    func saveEdits(_ notes: [EditedNote], for id: String) throws {
+        let edit = SongEdit(notes: notes)
+        try FileManager.default.createDirectory(at: editsFolder, withIntermediateDirectories: true)
+        try edit.encoded().write(to: editURL(for: id), options: .atomic)
+        editsChanged(for: id)
+    }
+
+    /// Goes back to the notes of the song's file.
+    func removeEdits(for id: String) {
+        try? FileManager.default.removeItem(at: editURL(for: id))
+        editsChanged(for: id)
+    }
+
+    private func savedEdit(for id: String) -> SongEdit? {
+        guard let data = try? Data(contentsOf: editURL(for: id)) else { return nil }
+        return try? SongEdit.decode(data)
+    }
+
+    private func editsChanged(for id: String) {
+        cache[id] = nil
+        editsRevision += 1
+        if let song = try? song(for: id) {
+            database.update(id) { $0.duration = song.duration }
+            save()
+        }
+    }
+
+    /// Song ids may contain any character: the file is named after their hash.
+    private func editURL(for id: String) -> URL {
+        let hash = SHA256.hash(data: Data(id.utf8)).map { String(format: "%02x", $0) }.joined()
+        return editsFolder.appendingPathComponent(hash).appendingPathExtension("json")
     }
 
     func songs(in category: LibraryCategory, matching search: String) -> [LibrarySong] {
@@ -141,6 +193,7 @@ final class LibraryModel {
         database.remove(id)
         cache[id] = nil
         artwork.removeImage(for: id)
+        try? FileManager.default.removeItem(at: editURL(for: id))
         save()
     }
 

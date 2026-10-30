@@ -50,6 +50,12 @@ struct SongDetailView: View {
         }
         .toolbar {
             ToolbarItem {
+                Button { openWindow(id: WindowID.scoreEditor, value: song.id) } label: {
+                    Label("Modifier les notes", systemImage: "music.note.list")
+                }
+                .help("Modifier les notes sur la partition")
+            }
+            ToolbarItem {
                 Button { isEditing = true } label: { Label("Modifier", systemImage: "pencil") }
                     .help("Modifier le titre, la difficulté et les mains")
                     .keyboardShortcut("e")
@@ -80,6 +86,15 @@ struct SongDetailView: View {
                     Text(composer).font(.title3).foregroundStyle(.white.opacity(0.8))
                 }
                 DifficultyView(level: song.difficulty, filled: .white, empty: .white.opacity(0.3)).padding(.top, 4)
+                if model.library.hasEdits(song.id) {
+                    Label("Notes modifiées", systemImage: "music.note.list")
+                        .font(.caption.weight(.medium))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(.white.opacity(0.2), in: .capsule)
+                        .padding(.top, 4)
+                        .help("Les notes de ce morceau ont été modifiées. « Modifier les notes » permet de rétablir l'original.")
+                }
             }
             .foregroundStyle(.white)
             .shadow(color: .black.opacity(0.2), radius: 4)

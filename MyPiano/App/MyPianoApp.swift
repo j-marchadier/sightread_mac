@@ -45,6 +45,16 @@ struct MyPianoApp: App {
         }
         .windowResizability(.contentSize)
 
+        WindowGroup("Modifier la partition", id: WindowID.scoreEditor, for: String.self) { $songID in
+            if let songID {
+                ScoreEditorWindow(songID: songID)
+                    .environment(model)
+                    .task { model.start() }
+            }
+        }
+        .defaultSize(width: 1180, height: 780)
+        .handlesExternalEvents(matching: [])
+
         Window("À propos de MyPiano", id: WindowID.about) {
             AboutView()
         }
@@ -71,5 +81,6 @@ enum WindowID {
     static let welcome = "welcome"
     static let scoreSources = "score-sources"
     static let about = "about"
+    static let scoreEditor = "score-editor"
     static let acknowledgements = "acknowledgements"
 }

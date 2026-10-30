@@ -26,6 +26,8 @@ final class AppModel {
     /// Delivers keyboard events to the practice session currently open.
     @ObservationIgnored let practiceInput = PracticeInputRouter()
     /// Keys held right now, read by the renderers every frame.
+    /// Called on the main actor with each key played (MIDI, mouse or computer keyboard): the score editor's input.
+    @ObservationIgnored var noteObserver: ((UInt8) -> Void)?
     @ObservationIgnored let pressedKeys = PressedKeys()
     /// Notes played recently, for free play.
     @ObservationIgnored let liveNotes = LiveNoteRecorder()
@@ -117,8 +119,18 @@ final class AppModel {
         record(event)
     }
 
+    /// Hears a note (the score editor's feedback) without it counting as played.
+    func previewNote(_ pitch: UInt8) {
+        audio.playerPiano.handle(InputEvent(kind: .noteOn(pitch: pitch, velocity: 70), time: HostTime.now))
+        Task { [audio] in
+            try? await Task.sleep(for: .milliseconds(350))
+            audio.playerPiano.handle(InputEvent(kind: .noteOff(pitch: pitch), time: HostTime.now))
+        }
+    }
+
     private func record(_ event: InputEvent) {
         if case let .sustain(isDown) = event.kind { isSustainDown = isDown }
+        if case let .noteOn(pitch, _) = event.kind { noteObserver?(pitch) }
         recentEvents.insert(KeyboardEventRecord(event: event), at: 0)
         if recentEvents.count > 12 { recentEvents.removeLast(recentEvents.count - 12) }
     }

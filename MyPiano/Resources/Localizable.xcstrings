@@ -103,6 +103,16 @@
         }
       }
     },
+    "%lld notes sélectionnées": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld notes selected"
+          }
+        }
+      }
+    },
     "0 s": {
       "localizations": {
         "en": {
@@ -273,12 +283,32 @@
         }
       }
     },
+    "Ajouter une note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Note"
+          }
+        }
+      }
+    },
     "Ajoutez un morceau aux favoris depuis sa fiche ou son menu contextuel.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Add a song to your favorites from its details or its context menu."
+          }
+        }
+      }
+    },
+    "Altération": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accidental"
           }
         }
       }
@@ -475,6 +505,16 @@
         }
       }
     },
+    "Baisser d'un demi-ton": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lower a semitone"
+          }
+        }
+      }
+    },
     "Battements": {
       "localizations": {
         "en": {
@@ -535,6 +575,16 @@
         }
       }
     },
+    "Blanche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Half Note"
+          }
+        }
+      }
+    },
     "Bonnes": {
       "localizations": {
         "en": {
@@ -591,6 +641,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Connect your MIDI keyboard"
+          }
+        }
+      }
+    },
+    "Bécarre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Natural"
           }
         }
       }
@@ -691,6 +751,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Change Folder…"
+          }
+        }
+      }
+    },
+    "Changer de main": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change Hand"
+          }
+        }
+      }
+    },
+    "Changer la durée": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change Duration"
           }
         }
       }
@@ -898,6 +978,16 @@
         }
       }
     },
+    "Croche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eighth Note"
+          }
+        }
+      }
+    },
     "De courtes pièces générées sur une suite d'accords, avec des rythmes de plus en plus riches.": {
       "localizations": {
         "en": {
@@ -1008,6 +1098,26 @@
         }
       }
     },
+    "Doigt %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finger %lld"
+          }
+        }
+      }
+    },
+    "Doigté": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fingering"
+          }
+        }
+      }
+    },
     "Doigtés": {
       "localizations": {
         "en": {
@@ -1034,6 +1144,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Watched folder"
+          }
+        }
+      }
+    },
+    "Double croche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sixteenth Note"
           }
         }
       }
@@ -1098,6 +1218,16 @@
         }
       }
     },
+    "Déplacer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move"
+          }
+        }
+      }
+    },
     "Détecter automatiquement": {
       "localizations": {
         "en": {
@@ -1144,6 +1274,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Running"
+          }
+        }
+      }
+    },
+    "Enregistrement impossible": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't Save"
           }
         }
       }
@@ -1689,12 +1829,32 @@
         }
       }
     },
+    "Les modifications n'ont pas pu être enregistrées : %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The changes couldn't be saved: %@"
+          }
+        }
+      }
+    },
     "Les morceaux que vous travaillez apparaîtront ici.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Songs you practice will appear here."
+          }
+        }
+      }
+    },
+    "Les notes de ce morceau ont été modifiées. « Modifier les notes » permet de rétablir l'original.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This song's notes have been edited. Edit Notes lets you restore the original."
           }
         }
       }
@@ -1749,6 +1909,16 @@
         }
       }
     },
+    "Main droite (R)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right hand (R)"
+          }
+        }
+      }
+    },
     "Main droite seule": {
       "localizations": {
         "en": {
@@ -1775,6 +1945,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Left Hand"
+          }
+        }
+      }
+    },
+    "Main gauche (L)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left hand (L)"
           }
         }
       }
@@ -1980,12 +2160,62 @@
         }
       }
     },
+    "Modifier la partition": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Score"
+          }
+        }
+      }
+    },
     "Modifier le titre, la difficulté et les mains": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Edit the title, difficulty and hands"
+          }
+        }
+      }
+    },
+    "Modifier les notes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Notes"
+          }
+        }
+      }
+    },
+    "Modifier les notes sur la partition": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit the notes on the score"
+          }
+        }
+      }
+    },
+    "Modifier les notes…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Notes…"
+          }
+        }
+      }
+    },
+    "Modifier « %@ »": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit “%@”"
           }
         }
       }
@@ -2000,12 +2230,32 @@
         }
       }
     },
+    "Modifié · enregistré automatiquement": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edited · saved automatically"
+          }
+        }
+      }
+    },
     "Mon piano": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "My piano"
+          }
+        }
+      }
+    },
+    "Monter d'un demi-ton": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raise a semitone"
           }
         }
       }
@@ -2093,6 +2343,16 @@
         }
       }
     },
+    "Noire": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quarter Note"
+          }
+        }
+      }
+    },
     "Nombre de notes": {
       "localizations": {
         "en": {
@@ -2129,6 +2389,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Note names on the keys"
+          }
+        }
+      }
+    },
+    "Notes d'origine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original notes"
+          }
+        }
+      }
+    },
+    "Notes modifiées": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes Edited"
           }
         }
       }
@@ -2179,6 +2459,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Open Free Play"
+          }
+        }
+      }
+    },
+    "Ouvrir le morceau dans le lecteur": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the song in the player"
           }
         }
       }
@@ -2343,6 +2633,16 @@
         }
       }
     },
+    "Pointée (.)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dotted (.)"
+          }
+        }
+      }
+    },
     "Portée": {
       "localizations": {
         "en": {
@@ -2483,6 +2783,26 @@
         }
       }
     },
+    "Revenir aux notes d'origine du morceau": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go back to the song's original notes"
+          }
+        }
+      }
+    },
+    "Ronde": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whole Note"
+          }
+        }
+      }
+    },
     "Rythmes trop irréguliers : partition simplifiée affichée.": {
       "localizations": {
         "en": {
@@ -2533,12 +2853,72 @@
         }
       }
     },
+    "Rétablir l'original": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore Original"
+          }
+        }
+      }
+    },
+    "Rétablir les notes d'origine ?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore the original notes?"
+          }
+        }
+      }
+    },
     "Rôle": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Role"
+          }
+        }
+      }
+    },
+    "Saisie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Input"
+          }
+        }
+      }
+    },
+    "Saisie : cliquez sur la portée, tapez A à G ou jouez au clavier MIDI": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Input: click on the staff, type A to G or play your MIDI keyboard"
+          }
+        }
+      }
+    },
+    "Saisir des notes : clic sur la portée, lettres A à G ou clavier MIDI (N)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter notes: click on the staff, letters A to G or MIDI keyboard (N)"
+          }
+        }
+      }
+    },
+    "Sans doigté (0)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No finger (0)"
           }
         }
       }
@@ -2609,6 +2989,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Delete from Library…"
+          }
+        }
+      }
+    },
+    "Supprimer les notes sélectionnées (⌫)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete the selected notes (⌫)"
           }
         }
       }
@@ -2744,6 +3134,16 @@
         }
       }
     },
+    "Toutes vos modifications de ce morceau seront retirées. Vous pourrez encore annuler avec ⌘Z tant que cette fenêtre est ouverte.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All your changes to this song will be removed. You can still undo with ⌘Z while this window is open."
+          }
+        }
+      }
+    },
     "Traitement d'une note (maximum)": {
       "localizations": {
         "en": {
@@ -2760,6 +3160,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Note processing (average)"
+          }
+        }
+      }
+    },
+    "Transposer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transpose"
           }
         }
       }
@@ -2800,6 +3210,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sort By"
+          }
+        }
+      }
+    },
+    "Triple croche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thirty-Second Note"
           }
         }
       }
@@ -2975,12 +3395,52 @@
         }
       }
     },
+    "doigt %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "finger %lld"
+          }
+        }
+      }
+    },
     "enfoncée": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "down"
+          }
+        }
+      }
+    },
+    "main droite": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "right hand"
+          }
+        }
+      }
+    },
+    "main gauche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "left hand"
+          }
+        }
+      }
+    },
+    "mesure %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "measure %lld"
           }
         }
       }
