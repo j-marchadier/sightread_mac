@@ -101,6 +101,7 @@ MyPiano/                          Cible App (SwiftUI)
     Onboarding/                   Bienvenue au premier lancement
     About/                        À propos de MyPiano, Mentions (ACKNOWLEDGEMENTS.md embarqué)
     Export/                       Export PDF et impression de la partition
+    Editor/                       Édition des notes sur la portée (modèle, fenêtre, palette)
   Resources/
     Assets.xcassets               Icône (générée par scripts/render-app-icon.swift), couleur d'accent
     Localizable.xcstrings         FR + EN
@@ -292,6 +293,23 @@ MIDI ─▶ Mains/portées ─▶ Quantification ─▶ Voix & accords ─▶ Me
 ```
 La quantification n'altère pas le jugement (il se fait toujours sur les temps réels des notes) : elle ne sert qu'à
 l'affichage.
+
+## 8 bis. Édition des notes
+
+- **Principe** : la partition reste *déduite* des notes. L'éditeur ne manipule que des notes (hauteur, début et
+  durée en ticks, piste, doigté) ; silences, ligatures, altérations et voix sont recalculés par la quantification
+  (`RhythmicScore`) après chaque modification, comme pour un fichier MIDI.
+- **Core** : `EditedNote` et `SongEdit` (JSON), `Song.replacingNotes` (tri, renumérotation, temps recalculés depuis
+  la carte des tempos, mesures ajoutées au besoin ; la notation écrite d'un MusicXML est abandonnée dès que ses notes
+  changent), `StaffGeometry.pitch(atStep:clef:key:)`, `NoteValue.ticks(ticksPerQuarter:dots:)`.
+- **Rendu** : `ScoreEditorView` affiche toute la partition en lignes (une vue par ligne, redessinée seulement si sa
+  sélection, le curseur qu'elle porte ou la version de la partition changent) et traduit les clics en `ScorePoint`
+  (temps, portée, degré, note sous le pointeur).
+- **App** : `ScoreEditorModel` garde des notes étiquetées (l'étiquette survit aux changements d'identifiant),
+  la sélection, le curseur d'insertion et la valeur de note ; chaque action passe par l'`UndoManager` de la fenêtre.
+  Les modifications sont enregistrées automatiquement dans `Application Support/MyPiano/Edits/<hash>.json` ;
+  `LibraryModel.song(for:)` les applique au fichier d'origine, jamais modifié. La saisie au clavier MIDI passe par
+  `AppModel.noteObserver`.
 
 ## 9. Bibliothèque et persistance (`MyPianoLibrary`)
 

@@ -52,6 +52,21 @@ série, score) et historique de progression par morceau.
 - **Trouver des partitions…** (menu Aide) : sources libres (Mutopia, piano-midi.de, OpenScore) ouvertes dans le
   navigateur.
 
+### Modifier les notes sur la partition
+
+Tous les morceaux, intégrés comme importés, se corrigent directement sur la portée (**Modifier les notes…**, depuis la
+fiche du morceau ou le menu contextuel) :
+
+- **Sélection** : clic sur une tête de note (⇧ ou ⌘ pour en ajouter), ⌘A pour tout sélectionner ; glisser une note
+  la déplace dans le temps et sur la portée.
+- **Saisie** (N) : choisissez une valeur (ronde à triple croche, pointée) dans la palette, puis cliquez sur la portée,
+  tapez une lettre A à G ou jouez au clavier MIDI (les touches jouées ensemble forment un accord). Un double-clic
+  ajoute aussi une note.
+- **Modifier** : ↑ ↓ demi-ton, ⌥↑ ⌥↓ degré de la gamme, ⌘↑ ⌘↓ octave, ← → déplacer d'une valeur, ♭ ♮ ♯, durée,
+  main (L, R), doigté (1 à 5, 0 pour l'effacer), ⌫ supprimer ; silences, ligatures et altérations se recalculent.
+- **Annuler** (⌘Z) et **rétablir** (⇧⌘Z) ; les modifications sont enregistrées automatiquement, à côté du fichier
+  d'origine qui reste intact : **Rétablir l'original** revient aux notes du morceau.
+
 ### Partitions en PDF
 
 - **Fichier › Exporter la partition en PDF… (⇧⌘E)** : la partition du morceau ouvert (lecteur ou fiche du
@@ -94,6 +109,9 @@ série, score) et historique de progression par morceau.
 | Importer | ⌘O |
 | Exporter la partition en PDF | ⇧⌘E |
 | Imprimer la partition | ⌘P |
+| Éditeur : mode saisie, valeur pointée | N, . |
+| Éditeur : transposer (demi-ton, degré, octave) | ↑ ↓, ⌥↑ ⌥↓, ⌘↑ ⌘↓ |
+| Éditeur : doigté, main, supprimer | 1–5 (0), L R, ⌫ |
 | Jeu libre | ⇧⌘J |
 | Réglages | ⌘, |
 
