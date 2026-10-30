@@ -100,6 +100,15 @@ struct PageGeometry {
 
     func top(ofSystem index: Int) -> CGFloat { topMargin + CGFloat(index) * systemHeight }
 
+    /// What lies under `point`, in the coordinates of the whole page (lines stacked from `topMargin`).
+    func scorePoint(at point: CGPoint) -> ScorePoint? {
+        guard !layout.systems.isEmpty else { return nil }
+        let index = min(layout.systems.count - 1, max(0, Int(floor((point.y - topMargin) / systemHeight))))
+        let local = CGPoint(x: point.x, y: point.y - top(ofSystem: index))
+        let hit = renderer.hit(local, in: layout.systems[index], isFirst: index == 0)
+        return ScorePoint(time: hit.time, clef: hit.clef, step: hit.step, noteID: hit.noteID)
+    }
+
     /// Lines at least partly visible when the page is scrolled by `offset`.
     func visibleSystems(offset: CGFloat) -> Range<Int> {
         guard !layout.systems.isEmpty else { return 0..<0 }

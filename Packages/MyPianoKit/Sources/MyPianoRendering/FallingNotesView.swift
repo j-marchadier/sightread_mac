@@ -47,6 +47,10 @@ public struct FallingNotesFrame: Sendable {
     public var liveNotes: [LiveNote]
     /// Host time of the frame, for `liveNotes`.
     public var hostTime: TimeInterval
+    /// Notes drawn in the accent colour (the score editor's selection).
+    public var highlightedNotes: Set<Int> = []
+    /// Whether notes before `time` are drawn lighter, as already played (not in the score editor).
+    public var fadesPlayedNotes = true
 
     public init(
         time: TimeInterval, hitNotes: Set<Int> = [], missedNotes: Set<Int> = [], pressedKeys: Set<UInt8> = [],

@@ -294,6 +294,39 @@ struct SheetRenderer {
         }
     }
 
+    /// What lies under `point` (in the line's coordinates): the time, the staff and step, and the note
+    /// head there if any. Positions follow ``drawSystem(_:isFirst:in:frame:)``.
+    func hit(_ point: CGPoint, in system: PageLayout.System, isFirst: Bool) -> (time: TimeInterval, clef: Clef, step: Int, noteID: Int?) {
+        let (_, _, header) = systemHeader(system, isFirst: isFirst)
+        let width = max(1, size.width - space - header - space)
+        func x(_ seconds: TimeInterval) -> CGFloat { header + space + CGFloat(system.position(of: seconds)) * width }
+        let time = system.time(at: Double(max(0, point.x - header - space) / width))
+        // The staff whose lines are nearest: the boundary is halfway between the two staves.
+        let clef: Clef = point.y < (trebleTop + space * 4 + bassTop) / 2 ? .treble : .bass
+        let step = Int(((point.y - top(clef)) / (space / 2)).rounded())
+
+        var best: (noteID: Int, distance: CGFloat)?
+        func consider(_ noteID: Int?, headX: CGFloat, headStep: Int, headClef: Clef) {
+            guard let noteID, headClef == clef, abs(headStep - step) <= 1 else { return }
+            let distance = abs(point.x - headX) + abs(CGFloat(headStep - step)) * space / 2
+            guard abs(point.x - headX) <= space * 1.3, distance < (best?.distance ?? .infinity) else { return }
+            best = (noteID, distance)
+        }
+        let from = system.start - 0.0001
+        let to = system.end - 0.0001
+        switch scene.style {
+        case let .rhythmic(score):
+            for event in score.events where !event.isRest && event.start >= from && event.start <= to {
+                for head in event.heads { consider(head.noteID, headX: x(event.start) + space, headStep: head.step, headClef: event.clef) }
+            }
+        case let .simplified(score):
+            for head in score.heads where head.start >= from && head.start <= to {
+                consider(head.noteID, headX: x(head.start) + space * 0.6, headStep: head.step, headClef: head.clef)
+            }
+        }
+        return (time, clef, step, best?.noteID)
+    }
+
     private func drawStaffLines(in context: inout GraphicsContext, from startX: CGFloat) {
         var lines = Path()
         for top in [trebleTop, bassTop] {
@@ -380,6 +413,7 @@ struct SheetRenderer {
     // MARK: Colours
 
     private func noteColor(noteIDs: [Int], pitch: SpelledPitch?, start: TimeInterval, frame: FallingNotesFrame) -> Color {
+        if noteIDs.contains(where: frame.highlightedNotes.contains) { return palette.playLine }
         if let id = noteIDs.first(where: { frame.missedNotes.contains($0) }), id >= 0 { return palette.missed }
         if !noteIDs.isEmpty, noteIDs.allSatisfy({ frame.hitNotes.contains($0) }) { return palette.hit }
         let hands = noteIDs.compactMap { scene.noteHands.indices.contains($0) ? scene.noteHands[$0] : nil }
@@ -387,7 +421,7 @@ struct SheetRenderer {
         var base = palette.ink
         if scene.coloredNotes, let pitch { base = SheetPalette.stepColors[pitch.step.rawValue] }
         if !hands.isEmpty && !active { return base.opacity(0.4) }
-        return start < frame.time - 0.02 ? base.opacity(0.75) : base
+        return frame.fadesPlayedNotes && start < frame.time - 0.02 ? base.opacity(0.75) : base
     }
 
     // MARK: Simplified
