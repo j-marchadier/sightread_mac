@@ -55,7 +55,7 @@ final class PerformanceProbe {
             player.togglePlayback()
             try? await Task.sleep(for: .seconds(1))
             startedAt = CACurrentMediaTime()
-            RenderingDiagnostics.onDraw = { [weak self] in self?.frameDrawn() }
+            RenderingDiagnostics.onDraw = { PerformanceProbe.shared?.frameDrawn() }
             try? await Task.sleep(for: .seconds(duration))
             report()
         }
