@@ -31,4 +31,22 @@ struct BuiltinCatalogTests {
         #expect(ode.title(preferredLanguages: ["de"]) == "Ode à la joie")
         #expect(ode.composer == "Ludwig van Beethoven")
     }
+
+    @Test func refreshingKeepsWhatTheUserChanged() throws {
+        let catalog = try BuiltinCatalog.load(from: Fixtures.builtinSong("catalog.json"))
+        let entry = try #require(catalog.songs.first { $0.id == "builtin.ode-to-joy" })
+        var installed = LibrarySong(id: entry.id, title: entry.title(preferredLanguages: ["fr"]), composer: entry.composer,
+                                    source: .builtin, fileName: entry.file, duration: 30, difficulty: 1, license: entry.license)
+        installed.isFavorite = true
+        installed.difficulty = 3
+        // Same language: nothing to do.
+        #expect(entry.refreshing(installed, preferredLanguages: ["fr"]) == nil)
+        // Another language: the untouched title follows, the rest is kept.
+        let english = try #require(entry.refreshing(installed, preferredLanguages: ["en"]))
+        #expect(english.title == entry.title(preferredLanguages: ["en"]))
+        #expect(english.isFavorite && english.difficulty == 3)
+        // A renamed song keeps its name.
+        installed.title = "Mon Ode"
+        #expect(entry.refreshing(installed, preferredLanguages: ["en"]) == nil)
+    }
 }

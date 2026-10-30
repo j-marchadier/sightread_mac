@@ -21,6 +21,18 @@ public struct BuiltinCatalog: Sendable, Decodable, Equatable {
             }
             return title["fr"] ?? title.values.first ?? file
         }
+
+        /// The library entry of an already installed song, updated for this catalog: the title follows the
+        /// language unless the user renamed the song, and the licence follows the catalog. Everything else
+        /// the user changed or built up (title, composer, difficulty, favourite, settings, history dates)
+        /// is kept. `nil` when nothing changes.
+        public func refreshing(_ existing: LibrarySong, preferredLanguages: [String]) -> LibrarySong? {
+            var song = existing
+            let localized = title(preferredLanguages: preferredLanguages)
+            if Set(title.values).contains(existing.title) { song.title = localized }
+            song.license = license
+            return song == existing ? nil : song
+        }
     }
 
     public let version: Int

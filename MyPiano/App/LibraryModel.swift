@@ -50,8 +50,14 @@ final class LibraryModel {
         let languages = Locale.preferredLanguages
         var changed = false
         for entry in catalog.songs {
-            let existing = database.song(entry.id)
-            if let existing, existing.title == entry.title(preferredLanguages: languages) { continue }
+            if let existing = database.song(entry.id) {
+                // Keep what the user changed: only the language of an untouched title and the licence follow the catalog.
+                if let refreshed = entry.refreshing(existing, preferredLanguages: languages) {
+                    database.upsert(refreshed)
+                    changed = true
+                }
+                continue
+            }
             guard let song = try? SongLoader.load(contentsOf: builtinFolder.appendingPathComponent(entry.file)) else { continue }
             database.upsert(LibrarySong(
                 id: entry.id, title: entry.title(preferredLanguages: languages), composer: entry.composer,
