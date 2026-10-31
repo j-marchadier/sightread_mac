@@ -1,9 +1,9 @@
-# MyPiano — Spécification fonctionnelle
+# Pianissimac — Spécification fonctionnelle
 
 > Document de référence pour la réécriture native macOS.
 > Il décrit **ce que fait** l'application web existante (dossiers `src/` et `public/`), sans dépendre de son code.
 > Les comportements sont décrits tels qu'ils sont observés dans le code, **bugs compris** : chaque écart volontaire
-> à prévoir dans MyPiano est signalé par **→ MyPiano :** ou regroupé en §6.
+> à prévoir dans Pianissimac est signalé par **→ Pianissimac :** ou regroupé en §6.
 >
 > Conventions :
 > - « temps morceau » = secondes dans la partition à vitesse 100 %. « temps réel » = secondes vécues par l'utilisateur.
@@ -54,7 +54,7 @@ Page vitrine :
 - Trois cartes argumentaires (« Your Own Music », « Learn at Your Own Pace », « Multiple Modes »).
 - Pied de page de copyright de l'ancien éditeur.
 
-**→ MyPiano :** supprimé (marketing). La fenêtre principale s'ouvre directement sur la bibliothèque (cf. §6).
+**→ Pianissimac :** supprimé (marketing). La fenêtre principale s'ouvre directement sur la bibliothèque (cf. §6).
 
 ### 1.2 Bibliothèque (`/songs`)
 
@@ -223,7 +223,7 @@ Génère procéduralement de courtes partitions à lire en mode **partition** av
 
 Page marketing : présentation, conseils de démarrage, sélection musicale, compatibilité navigateurs, **roadmap**, contact/feedback (GitHub, e-mail), **recommandations de claviers avec liens affiliés**, **attributions** des morceaux (lien source + licence pour chacun).
 
-**→ MyPiano :** supprimée ; les attributions vont dans `ACKNOWLEDGEMENTS.md` et dans une fenêtre « Mentions » accessible depuis le menu Aide.
+**→ Pianissimac :** supprimée ; les attributions vont dans `ACKNOWLEDGEMENTS.md` et dans une fenêtre « Mentions » accessible depuis le menu Aide.
 
 ---
 
@@ -256,7 +256,7 @@ Page marketing : présentation, conseils de démarrage, sélection musicale, com
 | `velocity` | 0–127, optionnel | Vélocité. |
 | `measure` | entier ≥ 1 | Numéro de la mesure contenant le début de la note. |
 
-L'identité d'une note est l'objet lui-même (les ensembles « réussies »/« manquées » contiennent des références). **→ MyPiano :** donner un identifiant stable (index dans `notes`).
+L'identité d'une note est l'objet lui-même (les ensembles « réussies »/« manquées » contiennent des références). **→ Pianissimac :** donner un identifiant stable (index dans `notes`).
 
 ### 2.3 Mesure
 
@@ -309,7 +309,7 @@ Fusion au chargement : réglages persistés appliqués par-dessus les défauts (
 
 ### 2.8 Progression
 
-**Inexistante** dans l'original : aucune historique, aucun score sauvegardé, aucun favori, aucun « récent ». **→ MyPiano :** nouveau modèle à concevoir en Phase 1 (proposition : par morceau, liste de sessions `{ date, durée jouée, vitesse, mains, mode attente, précision, parfait/bien/manqué/erreur, meilleure série, plage jouée }` + agrégats « meilleure précision », « dernière ouverture », « favori »).
+**Inexistante** dans l'original : aucune historique, aucun score sauvegardé, aucun favori, aucun « récent ». **→ Pianissimac :** nouveau modèle à concevoir en Phase 1 (proposition : par morceau, liste de sessions `{ date, durée jouée, vitesse, mains, mode attente, précision, parfait/bien/manqué/erreur, meilleure série, plage jouée }` + agrégats « meilleure précision », « dernière ouverture », « favori »).
 
 ### 2.9 Stockage
 
@@ -393,7 +393,7 @@ mesurePrécédente(t) : si t est exactement le début d'une mesure n>1 → débu
 mesureSuivante(t)   : début de la mesure suivante, ou fin du morceau pour la dernière
 ```
 
-**→ MyPiano :** horloge dérivée de l'horloge audio (temps d'échantillon de l'engine) ; même sémantique.
+**→ Pianissimac :** horloge dérivée de l'horloge audio (temps d'échantillon de l'engine) ; même sémantique.
 
 ### 3.2 Mode attente
 
@@ -478,7 +478,7 @@ Attribution des réglages de piste par défaut : `hand` = left/right/none selon 
 
 Main active (moteur) : `les deux` | `gauche` | `droite`. Une note est « active » si sa piste est la piste gauche ou droite **et** que la main correspondante est sélectionnée. Si plusieurs pistes portent la même main, seule la **dernière** (par id) compte pour le moteur, alors que le rendu les affiche toutes.
 
-**→ MyPiano :** (1) séparer automatiquement une piste unique en deux mains par point de partage (cf. §6) ; (2) permettre plusieurs pistes par main ; (3) MusicXML : main par portée (staff 1 = MD, staff 2 = MG).
+**→ Pianissimac :** (1) séparer automatiquement une piste unique en deux mains par point de partage (cf. §6) ; (2) permettre plusieurs pistes par main ; (3) MusicXML : main par portée (staff 1 = MD, staff 2 = MG).
 
 ### 3.5 Décompte
 
@@ -663,7 +663,7 @@ déplacement : seek(temps + vitesseY_pointeur / 225) ; accélération ← vitess
 relâchement : inertie à chaque image : seek(temps + accélération/225) ; accélération × 0,96
               jusqu'à |accélération/225| ≤ vitesse/60, puis reprise de la lecture si on jouait
 ```
-**→ MyPiano :** défilement au trackpad / molette (+ glisser), avec la même inertie native.
+**→ Pianissimac :** défilement au trackpad / molette (+ glisser), avec la même inertie native.
 
 ### 3.12 Graduations de la frise
 
@@ -748,15 +748,15 @@ Un parser `.xml` existe (non utilisé par l'application, dépend du DOM du navig
 - Chiffrage : `<beats>`/`<beat-type>` (le dernier rencontré devient le chiffrage principal).
 - **Non supporté** : `.mxl` compressé, notes d'agrément, ornements, nuances, multi-parties correctes, portées autres que Sol/Fa, divisions variables, doubles altérations via `<accidental>`.
 
-**→ MyPiano :** parser MusicXML complet à réécrire (`.musicxml`, `.xml`, `.mxl`), avec mains par `<staff>`, reprises/voltas, et conservation des informations de notation utiles à la partition (figures, ligatures, silences).
+**→ Pianissimac :** parser MusicXML complet à réécrire (`.musicxml`, `.xml`, `.mxl`), avec mains par `<staff>`, reprises/voltas, et conservation des informations de notation utiles à la partition (figures, ligatures, silences).
 
 ### 4.3 Sérialisation MIDI (tests uniquement)
 
-Un sérialiseur reconstruit un SMF à partir d'un morceau (tempos, chiffrages, armure, une piste par piste, vélocités, canal 10 pour percussion). Utilisé seulement dans des tests d'aller-retour. **→ MyPiano :** utile pour l'export des enregistrements.
+Un sérialiseur reconstruit un SMF à partir d'un morceau (tempos, chiffrages, armure, une piste par piste, vélocités, canal 10 pour percussion). Utilisé seulement dans des tests d'aller-retour. **→ Pianissimac :** utile pour l'export des enregistrements.
 
 ### 4.4 Base64
 
-Un morceau peut être passé directement en base64 dans l'URL (`source=base64`) : sert au partage des enregistrements. **→ MyPiano :** supprimé (fichiers à la place).
+Un morceau peut être passé directement en base64 dans l'URL (`source=base64`) : sert au partage des enregistrements. **→ Pianissimac :** supprimé (fichiers à la place).
 
 ### 4.5 Jeux de test existants
 
@@ -776,7 +776,7 @@ Un morceau peut être passé directement en base64 dans l'URL (`source=base64`) 
 
 ### 5.2 Tracking et réseau
 - **Google Analytics** (`src/features/analytics`, script injecté dans `root.tsx`, variable d'environnement de l'identifiant de suivi).
-- Téléchargements réseau : soundfonts (script `download-soundfonts.ts`, chargement à la demande des instruments), polices et fichiers servis par le web. **→ MyPiano :** tout embarqué dans le bundle, zéro appel réseau.
+- Téléchargements réseau : soundfonts (script `download-soundfonts.ts`, chargement à la demande des instruments), polices et fichiers servis par le web. **→ Pianissimac :** tout embarqué dans le bundle, zéro appel réseau.
 
 ### 5.3 Discours marketing
 - Page d'accueil (accroches, cartes « pourquoi ce produit »), `MarketingFooter`, page **About** (roadmap, compatibilité navigateurs, feedback GitHub, liens **affiliés Amazon**, mentions « free and open-source »).
@@ -791,10 +791,10 @@ Un morceau peut être passé directement en base64 dans l'URL (`source=base64`) 
 
 ### 5.5 Inventaire des assets et licences (à valider avant réutilisation)
 
-| Asset | Usage | Licence connue | Statut pour MyPiano |
+| Asset | Usage | Licence connue | Statut pour Pianissimac |
 |---|---|---|---|
 | 17 MIDI `public/music/songs/` | Bibliothèque intégrée | Par morceau, d'après le manifeste : **CC BY 4.0** (Arabesques, Clair de Lune, Für Elise, Gymnopédie, Hall of the Mountain King, Moonlight Sonata), **Public Domain Mark** (Canon, Greensleeves, La Cucaracha, March in D, Minuet in G, Ode to Joy, Sonata 11, Rondo, Swan Lake, Entertainer), **CC BY-SA 4.0** (Twinkle) | Réutilisables commercialement avec attribution (BY) ; BY-SA impose de redistribuer ce fichier sous BY-SA. ⚠️ *Swan Lake* a la **même URL source que *Minuet in G*** (erreur du manifeste) → provenance non vérifiée. ⚠️ « Ode to Joy - Christian Petzold » : attribution erronée (Beethoven). |
-| 70 MIDI `public/music/irish/` (phrases) | Entraînement phrases | **Inconnue** (aucune mention ; probablement créées pour l'ancien projet ⇒ GPL-3.0 par défaut) | ⚠️ À remplacer par des motifs créés pour MyPiano. |
+| 70 MIDI `public/music/irish/` (phrases) | Entraînement phrases | **Inconnue** (aucune mention ; probablement créées pour l'ancien projet ⇒ GPL-3.0 par défaut) | ⚠️ À remplacer par des motifs créés pour Pianissimac. |
 | 11 MP3 `public/music/irish/Backing Tracks/` | **Aucun** (non référencés) | **Inconnue** (« DB ») | À supprimer. |
 | `public/effects/wrong-sound-effect.mp3` | Son d'erreur | **Inconnue** | ⚠️ À remplacer (son synthétisé ou créé). |
 | `public/images/black-key-*.png` | Rendu des touches noires | Ancien projet (GPL-3.0) | À remplacer par un rendu vectoriel. |
@@ -815,7 +815,7 @@ Légende : **Garder** (réimplémenter tel quel), **Adapter** (garder l'intentio
 | # | Sujet | Constat | Reco |
 |---|---|---|---|
 | 1 | Accueil vitrine | Marketing pur. | **Supprimer** ; ouverture sur la bibliothèque, écran de bienvenue au 1er lancement (Phase 7). |
-| 2 | Page About | Marketing, roadmap, liens affiliés. | **Supprimer** ; « À propos de MyPiano » standard + fenêtre « Mentions » (attributions). |
+| 2 | Page About | Marketing, roadmap, liens affiliés. | **Supprimer** ; « À propos de Pianissimac » standard + fenêtre « Mentions » (attributions). |
 | 3 | Aperçu de morceau (modale) | Utile (écoute, nb pistes/notes). | **Adapter** en panneau détail de la `NavigationSplitView` (aperçu animé, métadonnées, progression, bouton Jouer). |
 | 4 | Entraînement de vitesse | Inaccessible (bug de route), minimal, avance même sur erreur, réglages inaccessibles. | **Adapter** en exercice « Lecture de notes » : séries de N notes, clé Sol/Fa/les deux, armure, tessiture, mode « attendre la bonne note », chrono et notes/min ; historique. |
 | 5 | Phrases (folk irlandais) | Non lié dans la nav, assets de licence inconnue, noms E/D inversés, niveau 0 = niveau 3 en aléatoire, recalage sur la 1re note au lieu du début de mesure. | **Adapter** : générateur procédural réécrit (progressions d'accords + motifs rythmiques générés), assets propres. |
@@ -915,7 +915,7 @@ Légende : **Garder** (réimplémenter tel quel), **Adapter** (garder l'intentio
 | Bb, Eb, Ab, Db | C | D♭ | D | E♭ | E | F | G♭ | G | A♭ | A | B♭ | B |
 | Gb, Cb | C♭ | D♭ | D | E♭ | E | F | G♭ | G | A♭ | A | B♭ | B |
 
-Lecture : la convention est d'écrire **sans altération** une note déjà altérée par l'armure, et avec bécarre la note naturelle correspondante. Ex. en Sol, la touche noire « F#/Gb » s'écrit `F` (le dièse est porté par l'armure) et la touche blanche Fa s'écrit `F♮`. Seules les lignes C, tonalités à dièses et F suivent cette convention ; les lignes Bb à Cb écrivent les bémols explicitement (`B♭`, `E♭`…) et Gb/Cb nomment `C♭` la touche Do au lieu de la touche Si. **→ MyPiano :** recalculer proprement l'orthographe à partir de l'armure (degrés + altérations), sans table figée.
+Lecture : la convention est d'écrire **sans altération** une note déjà altérée par l'armure, et avec bécarre la note naturelle correspondante. Ex. en Sol, la touche noire « F#/Gb » s'écrit `F` (le dièse est porté par l'armure) et la touche blanche Fa s'écrit `F♮`. Seules les lignes C, tonalités à dièses et F suivent cette convention ; les lignes Bb à Cb écrivent les bémols explicitement (`B♭`, `E♭`…) et Gb/Cb nomment `C♭` la touche Do au lieu de la touche Si. **→ Pianissimac :** recalculer proprement l'orthographe à partir de l'armure (degrés + altérations), sans table figée.
 
 Armures (altérations dans l'ordre) : dièses F C G D A E B (G=1 … C#=7) ; bémols B E A D G C F (F=1 … Cb=7). Correspondance « quintes » MIDI : −7 Cb … 0 C … +7 C#.
 
@@ -935,7 +935,7 @@ Transposition d'armure : décaler la classe de hauteur de la tonique, garder la 
 | Notes colorées | C `251,113,133` · D `251,146,60` · E `250,204,21` · F `74,222,128` · G `56,189,248` · A `99,102,241` · B `168,85,247` |
 | Partition : note atteinte / réussie / manquée | `121,74,227` / `185,154,244` / `100,100,100` |
 
-**→ MyPiano :** nouvelle palette propre (identité, contraste, mode clair/sombre, daltonisme) ; ces valeurs ne servent qu'à comprendre les rôles.
+**→ Pianissimac :** nouvelle palette propre (identité, contraste, mode clair/sombre, daltonisme) ; ces valeurs ne servent qu'à comprendre les rôles.
 
 ### 7.3 Clavier d'ordinateur → notes (vélocité 80)
 
@@ -967,7 +967,7 @@ Positions physiques (codes de touche), indépendantes de la disposition AZERTY/Q
 | `←` / `→` | Début de boucle − / + 1 mesure |
 | Ctrl `←` / Ctrl `→` | Fin de boucle − / + 1 mesure |
 
-**→ MyPiano :** reprendre l'esprit, aligné sur les conventions macOS et exposé dans la barre de menus (Phase 7).
+**→ Pianissimac :** reprendre l'esprit, aligné sur les conventions macOS et exposé dans la barre de menus (Phase 7).
 
 ### 7.5 Constantes
 

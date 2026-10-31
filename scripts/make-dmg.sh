@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# Packs dist/MyPiano.app into dist/MyPiano-<version>.dmg with a link to /Applications.
+# Packs dist/Pianissimac.app into dist/Pianissimac-<version>.dmg with a link to /Applications.
 #
 # Usage:
-#   scripts/make-dmg.sh [path/to/MyPiano.app]
+#   scripts/make-dmg.sh [path/to/Pianissimac.app]
 #   SIGN_IDENTITY="Developer ID Application: …" scripts/make-dmg.sh   # also signs the disk image
 #
 # Run scripts/build-release.sh first. Notarization is described in docs/RELEASE.md.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-APP="${1:-dist/MyPiano.app}"
+APP="${1:-dist/Pianissimac.app}"
 SIGN_IDENTITY="${SIGN_IDENTITY:-}"
 
 if [[ ! -d "$APP" ]]; then
@@ -18,16 +18,16 @@ if [[ ! -d "$APP" ]]; then
 fi
 
 version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP/Contents/Info.plist")
-DMG="dist/MyPiano-$version.dmg"
+DMG="dist/Pianissimac-$version.dmg"
 staging=$(mktemp -d)
 trap 'rm -rf "$staging"' EXIT
 
-ditto "$APP" "$staging/MyPiano.app"
+ditto "$APP" "$staging/Pianissimac.app"
 ln -s /Applications "$staging/Applications"
 
 rm -f "$DMG"
 hdiutil create \
-  -volname "MyPiano $version" \
+  -volname "Pianissimac $version" \
   -srcfolder "$staging" \
   -fs HFS+ \
   -format UDZO \

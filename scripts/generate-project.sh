@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Regenerates MyPiano.xcodeproj from project.yml with XcodeGen.
+# Regenerates Pianissimac.xcodeproj from project.yml with XcodeGen.
 # Uses a local `xcodegen` (brew install xcodegen) or, if XCODEGEN is set, that binary.
 set -euo pipefail
 cd "$(dirname "$0")/.."

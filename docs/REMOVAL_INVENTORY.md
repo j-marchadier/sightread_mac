@@ -2,7 +2,7 @@
 
 Tout ce qui suit appartenait à l'application web d'origine, qui n'a servi que de spécification fonctionnelle.
 Son code a été rangé en lecture seule dans `reference/web/` pendant la réécriture, puis **supprimé du dépôt en
-Phase 9**. Aucun de ces éléments n'est repris dans MyPiano.
+Phase 9**. Aucun de ces éléments n'est repris dans Pianissimac.
 
 Deux scripts servent de garde-fou avant chaque publication :
 
@@ -15,7 +15,7 @@ Le nom, le domaine et la société de l'ancien produit ne sont cités que dans `
 
 ## 1. Tracking et appels réseau à des services tiers
 
-| Élément retiré | Remplacement dans MyPiano |
+| Élément retiré | Remplacement dans Pianissimac |
 |---|---|
 | Google Analytics (script de suivi, mesure d'audience des pages et événements) | Aucun : aucune télémétrie |
 | Variable d'environnement de l'identifiant de suivi | Aucune |
@@ -24,9 +24,9 @@ Le nom, le domaine et la société de l'ancien produit ne sont cités que dans `
 
 ## 2. Identité de l'ancien produit
 
-| Élément retiré | Remplacement dans MyPiano |
+| Élément retiré | Remplacement dans Pianissimac |
 |---|---|
-| Nom, titre, auteur, variables CSS au nom du produit | « MyPiano », © Julien Marchadier |
+| Nom, titre, auteur, variables CSS au nom du produit | « Pianissimac », © Julien Marchadier |
 | Logo, favicon, icônes PWA, manifest PWA | Icône macOS dédiée (`Assets.xcassets/AppIcon`) |
 | Domaine web, `robots.txt`, `sitemap.txt`, balises Open Graph et Twitter, captures marketing | Aucun |
 | Liens GitHub, YouTube, e-mail de contact, copyright de l'ancienne société | Fenêtres « À propos » et « Mentions » de l'app |
@@ -44,7 +44,7 @@ Le nom, le domaine et la société de l'ancien produit ne sont cités que dans `
 
 ## 4. Fonctionnalités purement web
 
-| Élément | Remplacement dans MyPiano |
+| Élément | Remplacement dans Pianissimac |
 |---|---|
 | Wake lock navigateur | Assertion système pendant la lecture |
 | File System Access API, IndexedDB, permissions | Dossier surveillé (bookmark security-scoped) |
@@ -63,7 +63,7 @@ Le nom, le domaine et la société de l'ancien produit ne sont cités que dans `
 | Images des touches noires (PNG) | Graphismes de l'ancien projet ; rendu vectoriel |
 | *Swan Lake* (MIDI) | Provenance non vérifiable (URL source identique à celle du *Minuet in G*) — retiré (décision) |
 | Polices Bravura et Gootville | Inutilisées (seule Leland est reprise) |
-| Fiches de référence MuseScore des tests | Remplacées par nos propres attendus (`Packages/MyPianoKit/Tests`) |
+| Fiches de référence MuseScore des tests | Remplacées par nos propres attendus (`Packages/PianissimacKit/Tests`) |
 
 ## 6. Vérification (Phase 9)
 

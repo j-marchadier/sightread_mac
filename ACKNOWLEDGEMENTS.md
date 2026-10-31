@@ -2,15 +2,15 @@
 
 ## Inspiration
 
-MyPiano est une application originale, écrite en Swift. Sa conception fonctionnelle s'inspire de **Sightread**,
+Pianissimac est une application originale, écrite en Swift. Sa conception fonctionnelle s'inspire de **Sightread**,
 une application web libre d'apprentissage du piano publiée sous licence GNU GPL-3.0
-(<https://github.com/sightread/sightread>). Aucun code de ce projet n'est repris dans MyPiano ; seuls les morceaux et
+(<https://github.com/sightread/sightread>). Aucun code de ce projet n'est repris dans Pianissimac ; seuls les morceaux et
 la police listés ci-dessous, qui ont leurs propres licences, proviennent de son dépôt. Le texte de la licence GPL-3.0
 est conservé dans [`LICENSE`](LICENSE) tant que le dépôt contient des fichiers issus du projet d'origine.
 
 ## Icône
 
-L'icône de MyPiano est une création originale, dessinée pour l'application (`scripts/render-app-icon.swift`).
+L'icône de Pianissimac est une création originale, dessinée pour l'application (`scripts/render-app-icon.swift`).
 
 ## Police de notation musicale
 

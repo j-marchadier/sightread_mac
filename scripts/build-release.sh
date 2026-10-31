@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Archives MyPiano in Release and exports the .app to dist/MyPiano.app.
+# Archives Pianissimac in Release and exports the .app to dist/Pianissimac.app.
 #
 # Usage:
 #   scripts/build-release.sh                       # ad-hoc signed build (local testing only)
@@ -9,17 +9,17 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-SCHEME=MyPiano
+SCHEME=Pianissimac
 BUILD_DIR=build/release
-ARCHIVE="$BUILD_DIR/MyPiano.xcarchive"
+ARCHIVE="$BUILD_DIR/Pianissimac.xcarchive"
 DIST=dist
 TEAM_ID="${TEAM_ID:-}"
 
-rm -rf "$BUILD_DIR" "$DIST/MyPiano.app"
+rm -rf "$BUILD_DIR" "$DIST/Pianissimac.app"
 mkdir -p "$BUILD_DIR" "$DIST"
 
 # Xcode rewrites the string catalog on every build; keep the committed version.
-restore_strings() { git checkout -- MyPiano/Resources/Localizable.xcstrings 2>/dev/null || true; }
+restore_strings() { git checkout -- Pianissimac/Resources/Localizable.xcstrings 2>/dev/null || true; }
 trap restore_strings EXIT
 
 signing_args=()
@@ -34,7 +34,7 @@ fi
 
 echo "==> Archiving $SCHEME (Release)"
 xcodebuild archive \
-  -project MyPiano.xcodeproj \
+  -project Pianissimac.xcodeproj \
   -scheme "$SCHEME" \
   -configuration Release \
   -destination 'generic/platform=macOS' \
@@ -64,12 +64,12 @@ PLIST
     -archivePath "$ARCHIVE" \
     -exportOptionsPlist "$BUILD_DIR/ExportOptions.plist" \
     -exportPath "$BUILD_DIR/export"
-  ditto "$BUILD_DIR/export/MyPiano.app" "$DIST/MyPiano.app"
+  ditto "$BUILD_DIR/export/Pianissimac.app" "$DIST/Pianissimac.app"
 else
   echo "==> No TEAM_ID: copying the ad-hoc signed app (not distributable)"
-  ditto "$ARCHIVE/Products/Applications/MyPiano.app" "$DIST/MyPiano.app"
+  ditto "$ARCHIVE/Products/Applications/Pianissimac.app" "$DIST/Pianissimac.app"
 fi
 
-codesign --verify --deep --strict "$DIST/MyPiano.app"
-version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$DIST/MyPiano.app/Contents/Info.plist")
-echo "==> $DIST/MyPiano.app ($version) is ready"
+codesign --verify --deep --strict "$DIST/Pianissimac.app"
+version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$DIST/Pianissimac.app/Contents/Info.plist")
+echo "==> $DIST/Pianissimac.app ($version) is ready"

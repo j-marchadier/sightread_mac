@@ -1,0 +1,570 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02FBBC1DFEB804FF1F5CE74A /* PianissimacRendering in Frameworks */ = {isa = PBXBuildFile; productRef = 597244B3CD1DB17126C1DA6B /* PianissimacRendering */; };
+		09699E44A9FDD86E24B802CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C0F536118E320A9A4BA9B6D /* Assets.xcassets */; };
+		0B5C37D93053B3BFD87D8793 /* SongArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772ECCC09AECBDA1496064B2 /* SongArtwork.swift */; };
+		0D59D3588608DCBF214A29A8 /* LibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B436F2B2A9CAEE84AE96956B /* LibraryModel.swift */; };
+		10896DEC79F117071657CC21 /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CBD1D793718F10FE80E582 /* MainWindow.swift */; };
+		1B609A3BDCC16717ABA951D0 /* LibrarySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E1753B6EFF9E1793B25860 /* LibrarySettingsView.swift */; };
+		1CE2E7F8FA7AA07010DEAD64 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048AF4601828A03052C89C93 /* AboutView.swift */; };
+		2762DC1E9C03F494AA868BF9 /* ScoreEditorWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9478AC52DE7603CC6901A2 /* ScoreEditorWindow.swift */; };
+		33FE51C7CB4F407F20182E32 /* BuiltinSongs in Resources */ = {isa = PBXBuildFile; fileRef = 797288C54EA0B13AC9F3C4A7 /* BuiltinSongs */; };
+		36287E19853D6E094653DA6F /* PianissimacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B270E96FC2BA60F206D0A /* PianissimacApp.swift */; };
+		4298E7F53B2FF881B835E55E /* SongBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3650AAAE583062BA49E2A5A1 /* SongBrowserView.swift */; };
+		52EC5012E521FF3151FC1819 /* PianissimacAudio in Frameworks */ = {isa = PBXBuildFile; productRef = AC28BD6AF5BC2F70E05F4D74 /* PianissimacAudio */; };
+		5B6464EDC181473290622A52 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1C181DBCAABDFDF4611F9015 /* Fonts */; };
+		5F5E801AFF094B38442FA319 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7289594B862DB69C39680 /* AppDelegate.swift */; };
+		62653BCFADBABFCF1AD76856 /* ScoreExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC264D39255FFF2D53249200 /* ScoreExport.swift */; };
+		645EBADD5A182B38F8B207A2 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CA9EA188A34456A18C3FCD /* Commands.swift */; };
+		6A189981E2C2B30FB593F7D1 /* WatchedFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC98985B4AB703C18D76AE9 /* WatchedFolder.swift */; };
+		75EDD61A5F257D54D9D28FF5 /* PianissimacLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 4B26167C220203A282405700 /* PianissimacLibrary */; };
+		8149D63A48D6B0170C4EAA42 /* PianissimacMIDI in Frameworks */ = {isa = PBXBuildFile; productRef = FCEC4FB46F5D2BD8F3C2F23F /* PianissimacMIDI */; };
+		882C807519F213A67081A555 /* SessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA35B9CB3EEEDDCA227E7B /* SessionSummaryView.swift */; };
+		88CB9EB231524377134460D5 /* PianissimacCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA19134A5021F63C66D6D44 /* PianissimacCore */; };
+		8B067C2B6532E6B832246EDE /* PlayerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1CAF144FE30DFB670EBCD /* PlayerWindow.swift */; };
+		9CF46886D8DC49A0608E32CC /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C1D4A79F493111C6FEA71 /* AcknowledgementsView.swift */; };
+		A53B218CB51EEA45A0B70D3F /* MeasureTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007362E2F6A967D3970E197A /* MeasureTimelineView.swift */; };
+		B387512782664B7E5CE3E781 /* VolumeControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21E585F0430551997A2AFBB /* VolumeControls.swift */; };
+		B78A316E8D9C11AA787B0E1C /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD472DA2D28F9FE306999ADD /* PlayerView.swift */; };
+		C1839B69DEF0342253B1C0CF /* KeyboardDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE4EBC70EDBF98978D7E91C /* KeyboardDiagnosticsView.swift */; };
+		CB98953DD0723C79D58785AF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E3BE9BFEDDA1C21456F173 /* OnboardingView.swift */; };
+		D6A0B99A22FAABB83F38B034 /* SongEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46483D0510DA4CA92C1B0ADC /* SongEditorView.swift */; };
+		D77D748BBE8EB9BEA9A3AA48 /* FreePlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC1B11CFFAA540634D5A43 /* FreePlayView.swift */; };
+		D7839F30FE527D023198E4B5 /* ExercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2436783F954376E75C070EE6 /* ExercisesView.swift */; };
+		D980211124CAE486B25478C3 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E824373E99C9D5FC8AE1F804 /* AppModel.swift */; };
+		DBA379C9A74E2C8B07D670D7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1053F702EECF6D739C626192 /* Localizable.xcstrings */; };
+		E377BC5CFEA98E07776ED685 /* PerformanceProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5BC57E288C978FF7AE7F6 /* PerformanceProbe.swift */; };
+		E4B5E88B93EB5D17DC8E65E8 /* PlayerTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D5691BD3827003FE95B3C7 /* PlayerTarget.swift */; };
+		E5B9F40C482574435B273D72 /* ArtworkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B172756A04D387D81B59C22B /* ArtworkStore.swift */; };
+		E5F20633C0FA5B71F1104401 /* ScoreSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87A3A319F43A8E29E9ACF76 /* ScoreSourcesView.swift */; };
+		F33EFD96E133D130CE24C6D5 /* SongDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACCA137BAE99F46C4AADFC /* SongDetailView.swift */; };
+		F418BCEFAC51F77CF10F5F5D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1ED9D096520DD7BAD2C89 /* SettingsView.swift */; };
+		F4C211091C8135026912D308 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FCF2BF180FF4EEABCCAAA /* PlayerViewModel.swift */; };
+		F671C6EEACCD5E9572D98950 /* ScoreEditorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6770C3FEF3D4047B7BDEB5 /* ScoreEditorModel.swift */; };
+		F8BB1816EA59C94E72894810 /* ACKNOWLEDGEMENTS.md in Resources */ = {isa = PBXBuildFile; fileRef = AA5CA47213C82CFCE6772A0C /* ACKNOWLEDGEMENTS.md */; };
+		FA3D50B150C0F9E5DCC96E84 /* PlayerInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1349EBAEA4F2286EE16C9C5C /* PlayerInspector.swift */; };
+		FDECE3C16E4A8714E1B9CEF8 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42F796CF539D6B30DA671C /* Preferences.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		007362E2F6A967D3970E197A /* MeasureTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureTimelineView.swift; sourceTree = "<group>"; };
+		048AF4601828A03052C89C93 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		09CBD1D793718F10FE80E582 /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
+		1053F702EECF6D739C626192 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		1349EBAEA4F2286EE16C9C5C /* PlayerInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInspector.swift; sourceTree = "<group>"; };
+		1C181DBCAABDFDF4611F9015 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Pianissimac/Resources/Fonts; sourceTree = SOURCE_ROOT; };
+		2436783F954376E75C070EE6 /* ExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesView.swift; sourceTree = "<group>"; };
+		26E3BE9BFEDDA1C21456F173 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		3650AAAE583062BA49E2A5A1 /* SongBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongBrowserView.swift; sourceTree = "<group>"; };
+		46483D0510DA4CA92C1B0ADC /* SongEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongEditorView.swift; sourceTree = "<group>"; };
+		4E42F796CF539D6B30DA671C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		53CA9EA188A34456A18C3FCD /* Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
+		57D5691BD3827003FE95B3C7 /* PlayerTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTarget.swift; sourceTree = "<group>"; };
+		5A1FCF2BF180FF4EEABCCAAA /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
+		5FCC1B11CFFAA540634D5A43 /* FreePlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreePlayView.swift; sourceTree = "<group>"; };
+		68A5BC57E288C978FF7AE7F6 /* PerformanceProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceProbe.swift; sourceTree = "<group>"; };
+		6AF1CAF144FE30DFB670EBCD /* PlayerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerWindow.swift; sourceTree = "<group>"; };
+		772ECCC09AECBDA1496064B2 /* SongArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongArtwork.swift; sourceTree = "<group>"; };
+		797288C54EA0B13AC9F3C4A7 /* BuiltinSongs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinSongs; path = Pianissimac/Resources/BuiltinSongs; sourceTree = SOURCE_ROOT; };
+		7A9478AC52DE7603CC6901A2 /* ScoreEditorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreEditorWindow.swift; sourceTree = "<group>"; };
+		84E7289594B862DB69C39680 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8FE4EBC70EDBF98978D7E91C /* KeyboardDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDiagnosticsView.swift; sourceTree = "<group>"; };
+		9C0F536118E320A9A4BA9B6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A21E585F0430551997A2AFBB /* VolumeControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControls.swift; sourceTree = "<group>"; };
+		A6ACCA137BAE99F46C4AADFC /* SongDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailView.swift; sourceTree = "<group>"; };
+		AA5CA47213C82CFCE6772A0C /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
+		AD472DA2D28F9FE306999ADD /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		B172756A04D387D81B59C22B /* ArtworkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkStore.swift; sourceTree = "<group>"; };
+		B436F2B2A9CAEE84AE96956B /* LibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModel.swift; sourceTree = "<group>"; };
+		B5678ABD3395E5E327CCBFCC /* Pianissimac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pianissimac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B92C1D4A79F493111C6FEA71 /* AcknowledgementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsView.swift; sourceTree = "<group>"; };
+		BC264D39255FFF2D53249200 /* ScoreExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreExport.swift; sourceTree = "<group>"; };
+		C6FA35B9CB3EEEDDCA227E7B /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
+		C87A3A319F43A8E29E9ACF76 /* ScoreSourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSourcesView.swift; sourceTree = "<group>"; };
+		C929F3741516B751F82C0606 /* PianissimacKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PianissimacKit; path = Packages/PianissimacKit; sourceTree = SOURCE_ROOT; };
+		E4E1753B6EFF9E1793B25860 /* LibrarySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySettingsView.swift; sourceTree = "<group>"; };
+		E7B1ED9D096520DD7BAD2C89 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E824373E99C9D5FC8AE1F804 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		EB6770C3FEF3D4047B7BDEB5 /* ScoreEditorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreEditorModel.swift; sourceTree = "<group>"; };
+		EFC98985B4AB703C18D76AE9 /* WatchedFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedFolder.swift; sourceTree = "<group>"; };
+		F43B270E96FC2BA60F206D0A /* PianissimacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianissimacApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		29D2F1D9E32FE77BE77340C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88CB9EB231524377134460D5 /* PianissimacCore in Frameworks */,
+				8149D63A48D6B0170C4EAA42 /* PianissimacMIDI in Frameworks */,
+				52EC5012E521FF3151FC1819 /* PianissimacAudio in Frameworks */,
+				02FBBC1DFEB804FF1F5CE74A /* PianissimacRendering in Frameworks */,
+				75EDD61A5F257D54D9D28FF5 /* PianissimacLibrary in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		046A88E72082577A10E12FC3 = {
+			isa = PBXGroup;
+			children = (
+				4F00C9840C549790A2847AFA /* Packages */,
+				7D289342DEB8960D0C97716B /* Pianissimac */,
+				AA5CA47213C82CFCE6772A0C /* ACKNOWLEDGEMENTS.md */,
+				C139BB200332D58C017D39B4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0A2B608F197A2B1D4EA42A7B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				84E7289594B862DB69C39680 /* AppDelegate.swift */,
+				E824373E99C9D5FC8AE1F804 /* AppModel.swift */,
+				B172756A04D387D81B59C22B /* ArtworkStore.swift */,
+				53CA9EA188A34456A18C3FCD /* Commands.swift */,
+				B436F2B2A9CAEE84AE96956B /* LibraryModel.swift */,
+				68A5BC57E288C978FF7AE7F6 /* PerformanceProbe.swift */,
+				F43B270E96FC2BA60F206D0A /* PianissimacApp.swift */,
+				4E42F796CF539D6B30DA671C /* Preferences.swift */,
+				EFC98985B4AB703C18D76AE9 /* WatchedFolder.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		2792A14D34E1FE4503E3C7E5 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				26E3BE9BFEDDA1C21456F173 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		443B342FD77B11A3AFAD0CDE /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				007362E2F6A967D3970E197A /* MeasureTimelineView.swift */,
+				1349EBAEA4F2286EE16C9C5C /* PlayerInspector.swift */,
+				57D5691BD3827003FE95B3C7 /* PlayerTarget.swift */,
+				AD472DA2D28F9FE306999ADD /* PlayerView.swift */,
+				5A1FCF2BF180FF4EEABCCAAA /* PlayerViewModel.swift */,
+				6AF1CAF144FE30DFB670EBCD /* PlayerWindow.swift */,
+				C6FA35B9CB3EEEDDCA227E7B /* SessionSummaryView.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		4F00C9840C549790A2847AFA /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				C929F3741516B751F82C0606 /* PianissimacKit */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		50CCEC22A09CE1436C7B9F75 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8FE4EBC70EDBF98978D7E91C /* KeyboardDiagnosticsView.swift */,
+				E4E1753B6EFF9E1793B25860 /* LibrarySettingsView.swift */,
+				E7B1ED9D096520DD7BAD2C89 /* SettingsView.swift */,
+				A21E585F0430551997A2AFBB /* VolumeControls.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		572A33E09558F015E1F5A4C2 /* FreePlay */ = {
+			isa = PBXGroup;
+			children = (
+				5FCC1B11CFFAA540634D5A43 /* FreePlayView.swift */,
+			);
+			path = FreePlay;
+			sourceTree = "<group>";
+		};
+		5EE637708022862E54BB1FFF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9C0F536118E320A9A4BA9B6D /* Assets.xcassets */,
+				797288C54EA0B13AC9F3C4A7 /* BuiltinSongs */,
+				1C181DBCAABDFDF4611F9015 /* Fonts */,
+				1053F702EECF6D739C626192 /* Localizable.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7C60FDC5457A64A967205DAE /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				EB6770C3FEF3D4047B7BDEB5 /* ScoreEditorModel.swift */,
+				7A9478AC52DE7603CC6901A2 /* ScoreEditorWindow.swift */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		7D289342DEB8960D0C97716B /* Pianissimac */ = {
+			isa = PBXGroup;
+			children = (
+				0A2B608F197A2B1D4EA42A7B /* App */,
+				9F380EB21549E483CF5FDAB1 /* Features */,
+				5EE637708022862E54BB1FFF /* Resources */,
+			);
+			path = Pianissimac;
+			sourceTree = "<group>";
+		};
+		9806C1139F87A034BAFD9C1D /* Exercises */ = {
+			isa = PBXGroup;
+			children = (
+				2436783F954376E75C070EE6 /* ExercisesView.swift */,
+			);
+			path = Exercises;
+			sourceTree = "<group>";
+		};
+		9F380EB21549E483CF5FDAB1 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				A9120F1A7E839A916FED0186 /* About */,
+				7C60FDC5457A64A967205DAE /* Editor */,
+				9806C1139F87A034BAFD9C1D /* Exercises */,
+				DE6703A69E756AF3D0E90375 /* Export */,
+				572A33E09558F015E1F5A4C2 /* FreePlay */,
+				CFE886A50895BC708A7567AB /* Library */,
+				2792A14D34E1FE4503E3C7E5 /* Onboarding */,
+				443B342FD77B11A3AFAD0CDE /* Player */,
+				50CCEC22A09CE1436C7B9F75 /* Settings */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		A9120F1A7E839A916FED0186 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				048AF4601828A03052C89C93 /* AboutView.swift */,
+				B92C1D4A79F493111C6FEA71 /* AcknowledgementsView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		C139BB200332D58C017D39B4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B5678ABD3395E5E327CCBFCC /* Pianissimac.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CFE886A50895BC708A7567AB /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				09CBD1D793718F10FE80E582 /* MainWindow.swift */,
+				C87A3A319F43A8E29E9ACF76 /* ScoreSourcesView.swift */,
+				772ECCC09AECBDA1496064B2 /* SongArtwork.swift */,
+				3650AAAE583062BA49E2A5A1 /* SongBrowserView.swift */,
+				A6ACCA137BAE99F46C4AADFC /* SongDetailView.swift */,
+				46483D0510DA4CA92C1B0ADC /* SongEditorView.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		DE6703A69E756AF3D0E90375 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				BC264D39255FFF2D53249200 /* ScoreExport.swift */,
+			);
+			path = Export;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2540E38BF8630183DA2F8C11 /* Pianissimac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED59B53A9EDA520F3F6F1984 /* Build configuration list for PBXNativeTarget "Pianissimac" */;
+			buildPhases = (
+				B63731CFE1F04A293F5A38F8 /* Sources */,
+				9A9797A6A421E8DB892B5426 /* Resources */,
+				29D2F1D9E32FE77BE77340C1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Pianissimac;
+			packageProductDependencies = (
+				7FA19134A5021F63C66D6D44 /* PianissimacCore */,
+				FCEC4FB46F5D2BD8F3C2F23F /* PianissimacMIDI */,
+				AC28BD6AF5BC2F70E05F4D74 /* PianissimacAudio */,
+				597244B3CD1DB17126C1DA6B /* PianissimacRendering */,
+				4B26167C220203A282405700 /* PianissimacLibrary */,
+			);
+			productName = Pianissimac;
+			productReference = B5678ABD3395E5E327CCBFCC /* Pianissimac.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA4CEF1AF8854CA77C14A19B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					2540E38BF8630183DA2F8C11 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F5F39389DD07751C2141B0A1 /* Build configuration list for PBXProject "Pianissimac" */;
+			developmentRegion = fr;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				fr,
+			);
+			mainGroup = 046A88E72082577A10E12FC3;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2AC100BF109B5F53BAA7404D /* XCLocalSwiftPackageReference "Packages/PianissimacKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = C139BB200332D58C017D39B4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2540E38BF8630183DA2F8C11 /* Pianissimac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9A9797A6A421E8DB892B5426 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8BB1816EA59C94E72894810 /* ACKNOWLEDGEMENTS.md in Resources */,
+				09699E44A9FDD86E24B802CB /* Assets.xcassets in Resources */,
+				33FE51C7CB4F407F20182E32 /* BuiltinSongs in Resources */,
+				5B6464EDC181473290622A52 /* Fonts in Resources */,
+				DBA379C9A74E2C8B07D670D7 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B63731CFE1F04A293F5A38F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CE2E7F8FA7AA07010DEAD64 /* AboutView.swift in Sources */,
+				9CF46886D8DC49A0608E32CC /* AcknowledgementsView.swift in Sources */,
+				5F5E801AFF094B38442FA319 /* AppDelegate.swift in Sources */,
+				D980211124CAE486B25478C3 /* AppModel.swift in Sources */,
+				E5B9F40C482574435B273D72 /* ArtworkStore.swift in Sources */,
+				645EBADD5A182B38F8B207A2 /* Commands.swift in Sources */,
+				D7839F30FE527D023198E4B5 /* ExercisesView.swift in Sources */,
+				D77D748BBE8EB9BEA9A3AA48 /* FreePlayView.swift in Sources */,
+				C1839B69DEF0342253B1C0CF /* KeyboardDiagnosticsView.swift in Sources */,
+				0D59D3588608DCBF214A29A8 /* LibraryModel.swift in Sources */,
+				1B609A3BDCC16717ABA951D0 /* LibrarySettingsView.swift in Sources */,
+				10896DEC79F117071657CC21 /* MainWindow.swift in Sources */,
+				A53B218CB51EEA45A0B70D3F /* MeasureTimelineView.swift in Sources */,
+				CB98953DD0723C79D58785AF /* OnboardingView.swift in Sources */,
+				E377BC5CFEA98E07776ED685 /* PerformanceProbe.swift in Sources */,
+				36287E19853D6E094653DA6F /* PianissimacApp.swift in Sources */,
+				FA3D50B150C0F9E5DCC96E84 /* PlayerInspector.swift in Sources */,
+				E4B5E88B93EB5D17DC8E65E8 /* PlayerTarget.swift in Sources */,
+				B78A316E8D9C11AA787B0E1C /* PlayerView.swift in Sources */,
+				F4C211091C8135026912D308 /* PlayerViewModel.swift in Sources */,
+				8B067C2B6532E6B832246EDE /* PlayerWindow.swift in Sources */,
+				FDECE3C16E4A8714E1B9CEF8 /* Preferences.swift in Sources */,
+				F671C6EEACCD5E9572D98950 /* ScoreEditorModel.swift in Sources */,
+				2762DC1E9C03F494AA868BF9 /* ScoreEditorWindow.swift in Sources */,
+				62653BCFADBABFCF1AD76856 /* ScoreExport.swift in Sources */,
+				E5F20633C0FA5B71F1104401 /* ScoreSourcesView.swift in Sources */,
+				882C807519F213A67081A555 /* SessionSummaryView.swift in Sources */,
+				F418BCEFAC51F77CF10F5F5D /* SettingsView.swift in Sources */,
+				0B5C37D93053B3BFD87D8793 /* SongArtwork.swift in Sources */,
+				4298E7F53B2FF881B835E55E /* SongBrowserView.swift in Sources */,
+				F33EFD96E133D130CE24C6D5 /* SongDetailView.swift in Sources */,
+				D6A0B99A22FAABB83F38B034 /* SongEditorView.swift in Sources */,
+				B387512782664B7E5CE3E781 /* VolumeControls.swift in Sources */,
+				6A189981E2C2B30FB593F7D1 /* WatchedFolder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		51682933B9A5E0E73257DE90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		72C56CFE5462DAF0CA7F16BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		BE887745F550107D160FA9FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Pianissimac/Pianissimac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Pianissimac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.jmarchadier.Pianissimac;
+				PRODUCT_NAME = Pianissimac;
+			};
+			name = Release;
+		};
+		F78FEA1FF0F025B790D6C47F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Pianissimac/Pianissimac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Pianissimac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.jmarchadier.Pianissimac;
+				PRODUCT_NAME = Pianissimac;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ED59B53A9EDA520F3F6F1984 /* Build configuration list for PBXNativeTarget "Pianissimac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F78FEA1FF0F025B790D6C47F /* Debug */,
+				BE887745F550107D160FA9FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F5F39389DD07751C2141B0A1 /* Build configuration list for PBXProject "Pianissimac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51682933B9A5E0E73257DE90 /* Debug */,
+				72C56CFE5462DAF0CA7F16BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		2AC100BF109B5F53BAA7404D /* XCLocalSwiftPackageReference "Packages/PianissimacKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/PianissimacKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4B26167C220203A282405700 /* PianissimacLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PianissimacLibrary;
+		};
+		597244B3CD1DB17126C1DA6B /* PianissimacRendering */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PianissimacRendering;
+		};
+		7FA19134A5021F63C66D6D44 /* PianissimacCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PianissimacCore;
+		};
+		AC28BD6AF5BC2F70E05F4D74 /* PianissimacAudio */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PianissimacAudio;
+		};
+		FCEC4FB46F5D2BD8F3C2F23F /* PianissimacMIDI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PianissimacMIDI;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AA4CEF1AF8854CA77C14A19B /* Project object */;
+}

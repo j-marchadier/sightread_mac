@@ -1,5 +1,5 @@
 #!/usr/bin/env swift
-// Renders the MyPiano app icon (Liquid Glass style) at every macOS size into the AppIcon asset catalog.
+// Renders the Pianissimac app icon (Liquid Glass style) at every macOS size into the AppIcon asset catalog.
 // The icon is drawn as vectors at each size, so small sizes stay crisp.
 //
 // Usage: swift scripts/render-app-icon.swift [output .appiconset directory]
@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 
 let output = CommandLine.arguments.count > 1
     ? CommandLine.arguments[1]
-    : "MyPiano/Resources/Assets.xcassets/AppIcon.appiconset"
+    : "Pianissimac/Resources/Assets.xcassets/AppIcon.appiconset"
 
 func color(_ hex: UInt32, alpha: CGFloat = 1) -> CGColor {
     CGColor(

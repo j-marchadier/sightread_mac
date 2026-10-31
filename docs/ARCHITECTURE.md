@@ -1,4 +1,4 @@
-# MyPiano — Architecture technique
+# Pianissimac — Architecture technique
 
 > Choix techniques pour la réécriture native macOS, établis à partir de `docs/SPEC.md` et des décisions validées
 > (§6.4 de la spec). Chaque écart par rapport à la proposition initiale est justifié dans la section **Arbitrages**.
@@ -10,8 +10,8 @@
 | Besoin | Choix retenu | Écart vs proposition |
 |---|---|---|
 | Langage / UI | Swift 6 (mode de langage 6, concurrence stricte), **SwiftUI**, AppKit ponctuellement (ouverture de fichiers par le Dock, curseur, assertions de veille) ; cible **macOS 26+**, design **Liquid Glass** (`glassEffect`, `GlassEffectContainer`, boutons `.glass`/`.glassProminent`, `ToolbarSpacer`, `backgroundExtensionEffect`) | cible relevée de 14 à 26 (décision après la Phase 9) |
-| Organisation | **Un** paquet Swift local `MyPianoKit` exposant 5 bibliothèques (`MyPianoCore`, `MyPianoMIDI`, `MyPianoAudio`, `MyPianoRendering`, `MyPianoLibrary`) + cible App. MVVM avec `@Observable` | 1 paquet multi-cibles au lieu de 4 paquets ; ajout de `MyPianoLibrary` (persistance/import) |
-| Projet Xcode | `project.yml` (**XcodeGen**) versionné ; `MyPiano.xcodeproj` généré **et** versionné | ajout |
+| Organisation | **Un** paquet Swift local `PianissimacKit` exposant 5 bibliothèques (`PianissimacCore`, `PianissimacMIDI`, `PianissimacAudio`, `PianissimacRendering`, `PianissimacLibrary`) + cible App. MVVM avec `@Observable` | 1 paquet multi-cibles au lieu de 4 paquets ; ajout de `PianissimacLibrary` (persistance/import) |
+| Projet Xcode | `project.yml` (**XcodeGen**) versionné ; `Pianissimac.xcodeproj` généré **et** versionné | ajout |
 | Entrée MIDI | **CoreMIDI** (API UMP/MIDI 1.0, notifications de branchement), horodatage des paquets conservé | = |
 | Son | **AVAudioEngine + AVAudioUnitSampler**, piano seul. Banque par défaut : **banque General MIDI intégrée à macOS** (aucun fichier à redistribuer) ; banque `.sf2` CC0 embarquée en option | soundfont embarquée devient optionnelle |
 | Horloge | **Horloge hôte** (`mach_absolute_time`, base de temps commune à CoreAudio et CoreMIDI) corrigée de la latence de sortie | précisé (cf. Arbitrage A2) |
@@ -48,7 +48,7 @@ environnement. Le code est identique (on charge l'une ou l'autre).
 fois, et on ne dessine que la fenêtre visible (recherche dichotomique). Metal reste une option si les mesures de la
 Phase 6 le justifient.
 
-**A5 — Core indépendant d'Apple.** `MyPianoCore` n'importe que Foundation (et `FoundationXML` sous Linux). Cela
+**A5 — Core indépendant d'Apple.** `PianissimacCore` n'importe que Foundation (et `FoundationXML` sous Linux). Cela
 permet de compiler et tester le Core dans mon environnement (Linux, Swift 6.1 en conteneur), donc de livrer un Core
 vérifié avant même qu'il passe par Xcode. Les modules qui touchent au matériel ou à l'UI ne compilent que sur macOS
 (ta machine).
@@ -78,7 +78,7 @@ formulaires) reste opaque.
   visualisation pour ne jamais masquer le clavier. Le décompte s'affiche dans une bulle de verre circulaire.
 - **Pochettes** : `GeneratedArtwork` dessine une pochette par morceau (16 dégradés, choisis par un hachage stable
   du compositeur ; motif clé de sol, portée, anneaux ou clavier selon le titre ; titre et compositeur). Les images
-  choisies par l'utilisateur sont recadrées en carré 800 px et rangées dans `Application Support/MyPiano/Artwork`
+  choisies par l'utilisateur sont recadrées en carré 800 px et rangées dans `Application Support/Pianissimac/Artwork`
   (`ArtworkStore`). La bibliothèque s'affiche en grille de pochettes ou en tableau.
 - **Fiche d'un morceau** : pochette et titre sur un bandeau aux couleurs de la pochette (image floutée ou dégradé)
   qui passe sous la barre d'outils avec `backgroundExtensionEffect()`.
@@ -90,8 +90,8 @@ formulaires) reste opaque.
 ## 3. Arborescence du dépôt (état livré, Phase 9)
 
 ```
-MyPiano/                          Cible App (SwiftUI)
-  App/                            MyPianoApp, AppDelegate (Dock, Ouvrir avec), commandes de menu
+Pianissimac/                          Cible App (SwiftUI)
+  App/                            PianissimacApp, AppDelegate (Dock, Ouvrir avec), commandes de menu
   Features/
     Library/                      Barre latérale, liste/grille, détail, recherche, import
     Player/                       Fenêtre de jeu, barre d'outils, inspecteur, bilan de session
@@ -99,7 +99,7 @@ MyPiano/                          Cible App (SwiftUI)
     Exercises/                    Lecture de notes, Phrases
     Settings/                     Scène Réglages (MIDI, Audio, Affichage, Pratique)
     Onboarding/                   Bienvenue au premier lancement
-    About/                        À propos de MyPiano, Mentions (ACKNOWLEDGEMENTS.md embarqué)
+    About/                        À propos de Pianissimac, Mentions (ACKNOWLEDGEMENTS.md embarqué)
     Export/                       Export PDF et impression de la partition
     Editor/                       Édition des notes sur la portée (modèle, fenêtre, palette)
   Resources/
@@ -107,11 +107,11 @@ MyPiano/                          Cible App (SwiftUI)
     Localizable.xcstrings         FR + EN
     BuiltinSongs/                 Fichiers MIDI intégrés + catalog.json
     Fonts/Leland.otf, OFL.txt
-  Info.plist, MyPiano.entitlements
-Packages/MyPianoKit/
+  Info.plist, Pianissimac.entitlements
+Packages/PianissimacKit/
   Package.swift
   Sources/
-    MyPianoCore/
+    PianissimacCore/
       Model/                      Song, Note, Track, Measure, TempoMap, TimeSignature, KeySignature, Hand
       Theory/                     Pitch, orthographe, armures, transposition, noms de notes (Do fixe / alphabétique)
       Parsing/MIDI/               Lecteur SMF, écriture SMF (enregistrements, tests)
@@ -125,15 +125,15 @@ Packages/MyPianoKit/
       Exercises/                  Générateurs « Lecture de notes » et « Phrases »
       Library/                    Métadonnées, heuristique de difficulté, catalogue intégré
       Platform/                   Horloge, verrou, abstractions des sorties (ports)
-    MyPianoMIDI/                  CoreMIDI : sources, connexion, décodage, horodatage
-    MyPianoAudio/                 AVAudioEngine : samplers, métronome, latence
-    MyPianoRendering/             Canvas : notes qui tombent, clavier, partitions, glyphes SMuFL, pages PDF
-    MyPianoLibrary/               SwiftData, import, dossiers surveillés, bookmarks
+    PianissimacMIDI/                  CoreMIDI : sources, connexion, décodage, horodatage
+    PianissimacAudio/                 AVAudioEngine : samplers, métronome, latence
+    PianissimacRendering/             Canvas : notes qui tombent, clavier, partitions, glyphes SMuFL, pages PDF
+    PianissimacLibrary/               SwiftData, import, dossiers surveillés, bookmarks
   Tests/
-    MyPianoCoreTests/             + Fixtures/ (17 MIDI, MusicXML de test, attendus)
-    MyPianoLibraryTests/          (macOS)
+    PianissimacCoreTests/             + Fixtures/ (17 MIDI, MusicXML de test, attendus)
+    PianissimacLibraryTests/          (macOS)
 project.yml                       Spécification XcodeGen
-MyPiano.xcodeproj                 Généré par XcodeGen (versionné)
+Pianissimac.xcodeproj                 Généré par XcodeGen (versionné)
 scripts/                          generate-project.sh, test-core-linux.sh, render-app-icon.swift,
                                   build-release.sh, make-dmg.sh, check-offline.sh, check-legacy-traces.sh
 docs/                             SPEC, ARCHITECTURE, PLAN, RELEASE, REMOVAL_INVENTORY
@@ -143,9 +143,9 @@ ACKNOWLEDGEMENTS.md, LICENSE      Mentions (aussi affichées dans l'app), GPL-3.
 ### Graphe de dépendances
 
 ```
-               MyPianoCore  (Foundation seulement — Linux + macOS)
+               PianissimacCore  (Foundation seulement — Linux + macOS)
               /     |      \          \
-     MyPianoMIDI MyPianoAudio MyPianoRendering MyPianoLibrary
+     PianissimacMIDI PianissimacAudio PianissimacRendering PianissimacLibrary
      (CoreMIDI)  (AVFAudio)   (SwiftUI, CoreText) (SwiftData)
               \     |      /          /
                     App (SwiftUI)
@@ -238,7 +238,7 @@ jugement (instant du paquet MIDI) → le jugement ne dépend plus de la fréquen
 
 ---
 
-## 6. MIDI (`MyPianoMIDI`)
+## 6. MIDI (`PianissimacMIDI`)
 
 - `MIDIClientCreateWithBlock` : notifications d'ajout/retrait de sources → liste observable, **reconnexion
   automatique** à la source mémorisée (identifiée par `kMIDIPropertyUniqueID`, nom en secours).
@@ -252,7 +252,7 @@ jugement (instant du paquet MIDI) → le jugement ne dépend plus de la fréquen
 - Sortie MIDI vers un instrument externe : hors périmètre (piano seul, son interne) — à rouvrir si besoin.
 - Pas d'entitlement particulier : CoreMIDI fonctionne dans le sandbox (le serveur MIDI système gère l'USB).
 
-## 7. Audio (`MyPianoAudio`)
+## 7. Audio (`PianissimacAudio`)
 
 - Graphe : `samplerMorceau` + `samplerUtilisateur` (piano) + `métronome` (`AVAudioSourceNode` qui synthétise un clic,
   aucun fichier) + son d'erreur synthétisé → `mainMixer` → sortie.
@@ -264,10 +264,10 @@ jugement (instant du paquet MIDI) → le jugement ne dépend plus de la fréquen
   `os_signpost`, valeur affichée dans Réglages > Audio.
 - Reconfiguration automatique sur changement de périphérique de sortie (`AVAudioEngineConfigurationChange`).
 
-## 8. Rendu (`MyPianoRendering`)
+## 8. Rendu (`PianissimacRendering`)
 
 - `TimelineView(.animation)` cadencée par l'écran (60/120 Hz ProMotion) ; `Canvas` en mode
-  `rendersAsynchronously`. Géométrie calculée dans `MyPianoCore/Layout` (pure, testée) : couloirs du clavier,
+  `rendersAsynchronously`. Géométrie calculée dans `PianissimacCore/Layout` (pure, testée) : couloirs du clavier,
   positions des notes, géométrie des portées en **unités d'interligne**.
 - **Notes qui tombent** : clavier 88 touches ou tessiture du morceau, couleurs par main (palette nommée, clair/sombre,
   variante daltonisme), touches jouées mises en évidence, **erreurs signalées** (touche rouge brève), noms de notes
@@ -307,11 +307,11 @@ l'affichage.
   (temps, portée, degré, note sous le pointeur).
 - **App** : `ScoreEditorModel` garde des notes étiquetées (l'étiquette survit aux changements d'identifiant),
   la sélection, le curseur d'insertion et la valeur de note ; chaque action passe par l'`UndoManager` de la fenêtre.
-  Les modifications sont enregistrées automatiquement dans `Application Support/MyPiano/Edits/<hash>.json` ;
+  Les modifications sont enregistrées automatiquement dans `Application Support/Pianissimac/Edits/<hash>.json` ;
   `LibraryModel.song(for:)` les applique au fichier d'origine, jamais modifié. La saisie au clavier MIDI passe par
   `AppModel.noteObserver`.
 
-## 9. Bibliothèque et persistance (`MyPianoLibrary`)
+## 9. Bibliothèque et persistance (`PianissimacLibrary`)
 
 - SwiftData : `SongRecord` (id, titre, compositeur, difficulté, source intégré/importé/surveillé, chemin relatif,
   empreinte SHA-256, durée, nb pistes, date d'ajout, dernière ouverture, favori, réglages `Data`),
@@ -319,7 +319,7 @@ l'affichage.
   `WatchedFolderRecord` (bookmark security-scoped).
 - Morceaux intégrés : dans le bundle + `catalog.json` (titre, compositeur, licence, source), insérés au premier
   lancement avec des identifiants stables.
-- Import : copie dans `~/Library/Containers/<bundle>/Data/Library/Application Support/MyPiano/Songs/<uuid>.<ext>`,
+- Import : copie dans `~/Library/Containers/<bundle>/Data/Library/Application Support/Pianissimac/Songs/<uuid>.<ext>`,
   dédoublonnage par empreinte, parsing de validation, erreurs explicites.
 - Dossier surveillé : bookmark security-scoped, `FSEvents`/`DispatchSource`, import automatique des nouveaux fichiers.
 
@@ -328,8 +328,8 @@ l'affichage.
 - **Génération du projet** : `scripts/generate-project.sh` (XcodeGen). Je peux générer le projet depuis mon
   environnement Linux (XcodeGen y compile), toi depuis ton Mac (`brew install xcodegen`).
 - **Tests Core sous Linux** : `scripts/test-core-linux.sh` lance `swift test` dans le conteneur officiel Swift 6.1.
-- **Tests complets sous macOS** : `xcodebuild test -scheme MyPiano`.
-- **Pas de CI** (décision) : à chaque phase, je fournis la commande à lancer sur ton Mac (`xcodebuild test -scheme MyPiano`) ; le code dépendant d'Apple est gardé mince pour limiter les surprises.
+- **Tests complets sous macOS** : `xcodebuild test -scheme Pianissimac`.
+- **Pas de CI** (décision) : à chaque phase, je fournis la commande à lancer sur ton Mac (`xcodebuild test -scheme Pianissimac`) ; le code dépendant d'Apple est gardé mince pour limiter les surprises.
 - Couverture : objectif ≥ 90 % des lignes sur `Playback`, `Scoring`, `Parsing` ; tests de géométrie pour `Layout`.
 - **Garde-fous de publication** : `scripts/check-legacy-traces.sh` (aucune trace de l'ancien produit hors
   `ACKNOWLEDGEMENTS.md`, aucun outillage web) et `scripts/check-offline.sh` (aucun entitlement ni API réseau, aucune

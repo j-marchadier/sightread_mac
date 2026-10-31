@@ -1,8 +1,8 @@
-# MyPiano
+# Pianissimac
 
-**MyPiano** est une application macOS native pour apprendre le piano avec un clavier MIDI.
+**Pianissimac** est une application macOS native pour apprendre le piano avec un clavier MIDI.
 Branchez votre clavier, choisissez un morceau, et jouez en suivant les notes qui tombent ou la partition :
-MyPiano écoute ce que vous jouez, vous attend si vous le souhaitez et mesure vos progrès. Tout fonctionne
+Pianissimac écoute ce que vous jouez, vous attend si vous le souhaitez et mesure vos progrès. Tout fonctionne
 **hors ligne** : aucune connexion réseau, aucune collecte de données.
 
 Écrite en Swift 6 et SwiftUI pour macOS 26 Tahoe et plus récent, avec le design **Liquid Glass**.
@@ -125,23 +125,23 @@ fiche du morceau ou le menu contextuel) :
 Prérequis : Xcode 26 ou plus récent, [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`).
 
 ```sh
-scripts/generate-project.sh                               # (re)génère MyPiano.xcodeproj à partir de project.yml
-open -a Xcode MyPiano.xcodeproj                           # puis ⌘R
-xcodebuild test -scheme MyPiano -destination 'platform=macOS'
+scripts/generate-project.sh                               # (re)génère Pianissimac.xcodeproj à partir de project.yml
+open -a Xcode Pianissimac.xcodeproj                           # puis ⌘R
+xcodebuild test -scheme Pianissimac -destination 'platform=macOS'
 ```
 
-Xcode réécrit `MyPiano/Resources/Localizable.xcstrings` à chaque build ; pour revenir à la version suivie :
-`git checkout -- MyPiano/Resources/Localizable.xcstrings`.
+Xcode réécrit `Pianissimac/Resources/Localizable.xcstrings` à chaque build ; pour revenir à la version suivie :
+`git checkout -- Pianissimac/Resources/Localizable.xcstrings`.
 
-Le cœur de l'application (`Packages/MyPianoKit`, module `MyPianoCore`, Foundation seul) se teste aussi sous Linux :
+Le cœur de l'application (`Packages/PianissimacKit`, module `PianissimacCore`, Foundation seul) se teste aussi sous Linux :
 `scripts/test-core-linux.sh` (Docker, image `swift:6.1-noble`).
 
 ## Publication
 
 ```sh
-TEAM_ID=ABCDE12345 scripts/build-release.sh   # archive Release, export signé Developer ID → dist/MyPiano.app
+TEAM_ID=ABCDE12345 scripts/build-release.sh   # archive Release, export signé Developer ID → dist/Pianissimac.app
 scripts/check-offline.sh                      # aucun entitlement ni API réseau, aucune URL inattendue
-scripts/make-dmg.sh                           # dist/MyPiano-<version>.dmg avec un lien vers /Applications
+scripts/make-dmg.sh                           # dist/Pianissimac-<version>.dmg avec un lien vers /Applications
 ```
 
 Signature, notarisation (`notarytool`) et agrafage (`stapler`) : voir [`docs/RELEASE.md`](docs/RELEASE.md).
@@ -158,4 +158,4 @@ Sans `TEAM_ID`, `build-release.sh` produit une app signée *ad hoc*, utile pour 
 ## Licence et mentions
 
 © Julien Marchadier. Voir [`LICENSE`](LICENSE) et [`ACKNOWLEDGEMENTS.md`](ACKNOWLEDGEMENTS.md), également affichés
-dans l'application (MyPiano › À propos de MyPiano › Mentions et licences).
+dans l'application (Pianissimac › À propos de Pianissimac › Mentions et licences).

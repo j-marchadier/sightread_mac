@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
-# Release gate: checks that MyPiano cannot reach the network.
+# Release gate: checks that Pianissimac cannot reach the network.
 #   1. no network entitlement (com.apple.security.network.*) in the project or the signed app;
 #   2. no networking API in the Swift sources;
 #   3. no URL in the binary other than the score sources listed in ScoreSourcesView.swift,
 #      which are only handed to the browser with openURL.
 #
-# Usage: scripts/check-offline.sh [path/to/MyPiano.app]   (defaults to dist/MyPiano.app if present)
+# Usage: scripts/check-offline.sh [path/to/Pianissimac.app]   (defaults to dist/Pianissimac.app if present)
 # Steps 1 (signed app) and 3 need macOS and a built app; they are skipped otherwise.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-APP="${1:-dist/MyPiano.app}"
-SOURCES=(MyPiano Packages/MyPianoKit/Sources)
-SCORE_SOURCES=MyPiano/Features/Library/ScoreSourcesView.swift
+APP="${1:-dist/Pianissimac.app}"
+SOURCES=(Pianissimac Packages/PianissimacKit/Sources)
+SCORE_SOURCES=Pianissimac/Features/Library/ScoreSourcesView.swift
 status=0
 fail() { echo "FAIL: $*"; status=1; }
 
@@ -20,10 +20,10 @@ fail() { echo "FAIL: $*"; status=1; }
 allowed_urls=$(grep -oE 'https?://[^"]+' "$SCORE_SOURCES" | sort -u)
 
 echo "==> 1. Entitlements"
-if grep -n 'com\.apple\.security\.network' project.yml MyPiano/MyPiano.entitlements; then
+if grep -n 'com\.apple\.security\.network' project.yml Pianissimac/Pianissimac.entitlements; then
   fail "network entitlement declared"
 fi
-if grep -n 'NSAppTransportSecurity\|NSAllowsArbitraryLoads' project.yml MyPiano/Info.plist; then
+if grep -n 'NSAppTransportSecurity\|NSAllowsArbitraryLoads' project.yml Pianissimac/Info.plist; then
   fail "App Transport Security exception declared"
 fi
 if [[ -d "$APP" ]] && command -v codesign >/dev/null; then
@@ -51,7 +51,7 @@ if grep -nE 'contentsOf:|dataTask|downloadTask|\.data\(from' "$SCORE_SOURCES"; t
 fi
 
 echo "==> 3. URLs in the binary"
-binary="$APP/Contents/MacOS/MyPiano"
+binary="$APP/Contents/MacOS/Pianissimac"
 if [[ -f "$binary" ]] && command -v strings >/dev/null; then
   found=$(strings -a "$binary" | grep -oE 'https?://[^[:space:]"<>]+' | sort -u || true)
   unexpected=$(comm -23 <(echo "$found") <(echo "$allowed_urls") | sed '/^$/d')
